@@ -1,7 +1,9 @@
 package com.banking_system.service_users.models;
 
 import jakarta.persistence.Entity;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Entity
 public class Client extends Person {
 
