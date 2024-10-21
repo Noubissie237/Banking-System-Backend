@@ -73,11 +73,22 @@ comme framework backend, **_Java_**, **_Python_** pour la logique métier, **_Ja
 ## 3. Technologies Utilisées
 L'application utilise les technologies suivantes :
 
+- ###  $Dev$
+
 **- Langage de Programmation**: Java, Python, JavaScript, Dart  <br>
 **- Framework Backend** : _Spring Boot_, _DJANGO_ <br>
 **- Framework Frontend** : _React_, _Bootstrap_  <br>
 **- Technologie Mobile** : _Flutter_ <br>
 **- Base de Données** : _MySQL_ <br>
+
+- ###  $Ops$
+**- Versionning**: _Git_ & _Github_  <br>
+**- Conteneurisation**: _Docker_  <br>
+**- Orchestration**: _Kubernetes_  <br>
+**- Communication Asynchrone**: _RabbitMQ_  <br>
+
+
+
 
 # FONCTIONNEMENT
 
