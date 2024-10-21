@@ -4,7 +4,7 @@
 
 # PROJET : Mise sur pieds d'une Système Bancaire
 
-## Application de Gestion d'un hopital en utilisant les langages de programmation Python, javaScript, et les framework Django et Bootstrap
+## Application de Gestion d'un Système bancaire (Porte feuille electronique) en utilisant les langages de programmation Java, Python, javaScript, et les framework Spring boot Django, React et Bootstrap
 
 
 
