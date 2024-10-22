@@ -32,7 +32,7 @@ public class ClientService {
             event.setRecto_cni(saveClient.getRecto_cni());
             event.setVerso_cni(saveClient.getVerso_cni());
             event.setPassword(saveClient.getPassword());
-            rabbitTemplate.convertAndSend("ClientExchange", "client.create", event);
+            rabbitTemplate.convertAndSend("clientExchange", "client.create", event);
         } catch (Exception e) {
             throw new RuntimeException("Client Insertion Error : ", e);
         }

@@ -1,16 +1,14 @@
-package com.banking_system.service_users.events;
+package com.banking_system.service_admin.events;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class ClientEvent {
     @JsonProperty("id")
     private Long id;
