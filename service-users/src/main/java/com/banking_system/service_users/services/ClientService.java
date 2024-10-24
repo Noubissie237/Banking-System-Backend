@@ -22,6 +22,7 @@ public class ClientService {
     public void addClient(Client client) {
         try {
             Client saveClient = clientRepository.save(client);
+            //table qui contiendra tous les attributs
             ClientEvent event = new ClientEvent();
             event.setId(saveClient.getId());
             event.setNom(saveClient.getNom());
@@ -32,6 +33,7 @@ public class ClientService {
             event.setRecto_cni(saveClient.getRecto_cni());
             event.setVerso_cni(saveClient.getVerso_cni());
             event.setPassword(saveClient.getPassword());
+            //accede a chaque canal a travers une cle de routage
             rabbitTemplate.convertAndSend("clientExchange", "client.create", event);
         } catch (Exception e) {
             throw new RuntimeException("Client Insertion Error : ", e);
