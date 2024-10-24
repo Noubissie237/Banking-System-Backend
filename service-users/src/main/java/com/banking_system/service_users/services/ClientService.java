@@ -1,18 +1,19 @@
 package com.banking_system.service_users.services;
 
-import com.banking_system.service_users.events.ClientEvent;
-import com.banking_system.service_users.models.Client;
-import com.banking_system.service_users.repositories.ClientRepository;
+import java.util.List;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.banking_system.service_users.events.ClientEvent;
+import com.banking_system.service_users.models.Client;
+import com.banking_system.service_users.repositories.ClientRepository;
+
 
 @Service
 public class ClientService {
-
+        // utilisation des autowired permet d'injecter la dependance donc a chaque fois qu'on a une nouvelle dependance on met @autowired
     @Autowired
     ClientRepository clientRepository;
 
@@ -33,8 +34,7 @@ public class ClientService {
             event.setRecto_cni(saveClient.getRecto_cni());
             event.setVerso_cni(saveClient.getVerso_cni());
             event.setPassword(saveClient.getPassword());
-            //accede a chaque canal a travers une cle de routage
-            rabbitTemplate.convertAndSend("clientExchange", "client.create", event);
+            rabbitTemplate.convertAndSend("clientExchange", "client.create", event); // chaque event a une cle de routage mais dans un meme canal echange
         } catch (Exception e) {
             throw new RuntimeException("Client Insertion Error : ", e);
         }
