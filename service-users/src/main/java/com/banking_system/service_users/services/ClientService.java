@@ -23,6 +23,7 @@ public class ClientService {
     public void addClient(Client client) {
         try {
             Client saveClient = clientRepository.save(client);
+            //table qui contiendra tous les attributs
             ClientEvent event = new ClientEvent();
             event.setId(saveClient.getId());
             event.setNom(saveClient.getNom());
