@@ -16,8 +16,6 @@ public class ClientEvent {
     private String nom;
     @JsonProperty("prenom")
     private String prenom;
-    @JsonProperty("email")
-    private String email;
     @JsonProperty("tel")
     private String tel;
     @JsonProperty("numero_cni")
@@ -26,6 +24,4 @@ public class ClientEvent {
     private String recto_cni;
     @JsonProperty("verso_cni")
     private String verso_cni;
-    @JsonProperty("password")
-    private String password;
 }

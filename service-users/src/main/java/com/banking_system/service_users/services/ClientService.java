@@ -26,12 +26,10 @@ public class ClientService {
             event.setId(saveClient.getId());
             event.setNom(saveClient.getNom());
             event.setPrenom(saveClient.getPrenom());
-            event.setEmail(saveClient.getEmail());
             event.setTel(saveClient.getTel());
             event.setNumero_cni(saveClient.getNumero_cni());
             event.setRecto_cni(saveClient.getRecto_cni());
             event.setVerso_cni(saveClient.getVerso_cni());
-            event.setPassword(saveClient.getPassword());
             rabbitTemplate.convertAndSend("clientExchange", "client.create", event);
         } catch (Exception e) {
             throw new RuntimeException("Client Insertion Error : ", e);
