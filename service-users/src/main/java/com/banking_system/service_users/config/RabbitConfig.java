@@ -31,12 +31,12 @@ public class RabbitConfig {
 
     @Bean
     public TopicExchange clientExchange(){
-        return new TopicExchange("clientExchange");
+        return new TopicExchange("clientExchange", true, false);
     }
 
     @Bean
     public Queue clientQueue(){
-        return new Queue("clientQueue");
+        return new Queue("clientQueue", true, false, false);
     }
 
     @Bean
