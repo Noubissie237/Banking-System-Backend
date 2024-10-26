@@ -1,6 +1,5 @@
-package com.banking_system.service_admin.config;
+package com.banking_system.service_account_management.config;
 
-import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
@@ -12,36 +11,35 @@ import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.banking_system.service_admin.broker.ClientEventConsumer;
+import com.banking_system.service_account_management.broker.AccountConsumer;
 
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+
+import org.springframework.amqp.core.Binding;
+
 
 @Configuration
 @EnableRabbit
 public class RabbitConfig {
-
+    
     @Bean
-    public Queue clientQueue() {
-        return new Queue("clientQueue");
+    public Queue demandeQueue() {
+        return new Queue("demandeQueue");
     }
 
     @Bean
-    public SimpleMessageListenerContainer container(ConnectionFactory connectionFactory,
-            MessageListenerAdapter listenerAdapter) {
+    public SimpleMessageListenerContainer container(ConnectionFactory connectionFactory, MessageListenerAdapter listenerAdapter) {
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
         container.setConnectionFactory(connectionFactory);
-        container.setQueueNames("clientQueue");
+        container.setQueueNames("demandeQueue");
         container.setMessageListener(listenerAdapter);
         return container;
     }
 
     @Bean
-    public MessageListenerAdapter listenerAdapter(ClientEventConsumer consumer) {
-        MessageListenerAdapter adapter = new MessageListenerAdapter(consumer, "receiveClientEvent");
-        adapter.setMessageConverter(converter());
-        return adapter;
+    public MessageListenerAdapter listenerAdapter(AccountConsumer consumer){
+        return new MessageListenerAdapter(consumer, "receiveAccountEvent");
     }
-    
 
     @Bean
     public Jackson2JsonMessageConverter converter() {
@@ -57,16 +55,17 @@ public class RabbitConfig {
 
     @Bean
     public TopicExchange clientExchange() {
-        return new TopicExchange("clientExchange", true, false);
+        return new TopicExchange("clientExchange");
     }
 
     @Bean
-    public Queue demandeQueue() {
-        return new Queue("demandeQueue", true, false, false);
+    public Queue accountQueue() {
+        return new Queue("accountQueue", true, false, false);
     }
 
     @Bean
-    public Binding binding(TopicExchange clientExchange, Queue demandeQueue) {
-        return BindingBuilder.bind(demandeQueue).to(clientExchange).with("demande.accepted");
+    public Binding binding(TopicExchange clientExchange, Queue accountQueue) {
+        return BindingBuilder.bind(accountQueue).to(clientExchange).with("account.create");
     }
+    
 }
