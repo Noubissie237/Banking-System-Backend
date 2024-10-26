@@ -3,6 +3,7 @@ import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 // import java.util.Date;
@@ -10,29 +11,35 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Demande {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String titre;
-    // @ManyToOne
-    // @JoinColumn(name = "id", nullable = false)
-    // private Client client;
-    // @Temporal(TemporalType.TIMESTAMP)
-    // private Date dateCreation;
     private LocalDateTime dateCreation;
     private Long clientId;
+    private String clientNom;
+    private String clientPrenom;
+    private String clientTel;
+    private String clientNumeroCni;
+    private String clientRectoCni;
+    private String clientVersoCni;
     @Enumerated(EnumType.STRING)
     private StatutDemande statut;
 
-    public Demande() {}
-
-    public Demande(String titre, Long clientId, StatutDemande statut, LocalDateTime date) {
+    public Demande(String titre, Long clientId, String clientNom, String clientPrenom, String clientTel, String clientNumeroCni, String clientRectoCni, String clientVersoCni, StatutDemande statut, LocalDateTime date) {
         this.titre = titre;
         this.clientId = clientId;
-        this.statut = statut != null ? statut : StatutDemande.EN_ATTENTE;
-        this.dateCreation = date != null ? date : LocalDateTime.now(); ;
+        this.statut = statut;
+        this.dateCreation = date;
+        this.clientNom = clientNom;
+        this.clientPrenom = clientPrenom;
+        this.clientTel = clientTel;
+        this.clientNumeroCni = clientNumeroCni;
+        this.clientRectoCni = clientRectoCni;
+        this.clientVersoCni = clientVersoCni;
     }
 
 
