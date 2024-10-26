@@ -1,18 +1,19 @@
 package com.banking_system.service_users.services;
 
-import com.banking_system.service_users.events.ClientEvent;
-import com.banking_system.service_users.models.Client;
-import com.banking_system.service_users.repositories.ClientRepository;
+import java.util.List;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
- 
-import java.util.List;
+
+import com.banking_system.service_users.events.ClientEvent;
+import com.banking_system.service_users.models.Client;
+import com.banking_system.service_users.repositories.ClientRepository;
+
 
 @Service
 public class ClientService {
-
+        // utilisation des autowired permet d'injecter la dependance donc a chaque fois qu'on a une nouvelle dependance on met @autowired
     @Autowired
     ClientRepository clientRepository;
 
@@ -22,6 +23,7 @@ public class ClientService {
     public void addClient(Client client) {
         try {
             Client saveClient = clientRepository.save(client);
+            //table qui contiendra tous les attributs
             ClientEvent event = new ClientEvent();
             event.setId(saveClient.getId());
             event.setNom(saveClient.getNom());
