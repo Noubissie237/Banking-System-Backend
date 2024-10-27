@@ -29,7 +29,11 @@ public class DemandeService {
         return demandeRepository.findAll();
     }
 
-    public Demande updateDemandeStatut(Long id, StatutDemande statut) {
+    public void deleteDemande(Long id) {
+        demandeRepository.deleteById(id);
+    }
+
+    public List<Demande> updateDemandeStatut(Long id, StatutDemande statut) {
         Optional<Demande> demandeOptional = demandeRepository.findById(id);
         
         if (demandeOptional.isPresent()) {
@@ -42,8 +46,13 @@ public class DemandeService {
                 event.setIdAgence(1L);
                 event.setNumeroClient(demandeUpdated.getClientTel());
                 rabbitTemplate.convertAndSend("clientExchange", "demande.accepted", event);
+                deleteDemande(demandeUpdated.getId());
             }
-            return demandeUpdated;
+            else if (statut == StatutDemande.REJETEE) {
+                String message = "Echec de création de votre compte 😣";
+                rabbitTemplate.convertAndSend("clientExchange", "demande.reject", message);
+            }
+            return demandeRepository.findAll();
         } else {
             throw new RuntimeException("Aucune demande avec l'id: " + id);
         }

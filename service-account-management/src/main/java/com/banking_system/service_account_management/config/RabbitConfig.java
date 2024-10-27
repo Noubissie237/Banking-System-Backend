@@ -37,8 +37,8 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Queue demandeQueue() {
-        return new Queue("demandeQueue");
+    public Queue acceptDemandeQueue() {
+        return new Queue("acceptDemandeQueue");
     }
 
     @Bean

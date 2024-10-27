@@ -40,12 +40,22 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Queue demandeQueue() {
-        return new Queue("demandeQueue", true, false, false);
+    public Queue acceptDemandeQueue() {
+        return new Queue("acceptDemandeQueue", true, false, false);
     }
 
     @Bean
-    public Binding binding(TopicExchange clientExchange, Queue demandeQueue) {
-        return BindingBuilder.bind(demandeQueue).to(clientExchange).with("demande.accepted");
+    public Queue rejectDemandeQueue() {
+        return new Queue("rejectDemandeQueue", true, false, false);
+    }
+
+    @Bean
+    public Binding binding1(TopicExchange clientExchange, Queue acceptDemandeQueue) {
+        return BindingBuilder.bind(acceptDemandeQueue).to(clientExchange).with("demande.accepted");
+    }
+
+    @Bean
+    public Binding binding2(TopicExchange clientExchange, Queue rejectDemandeQueue) {
+        return BindingBuilder.bind(rejectDemandeQueue).to(clientExchange).with("demande.reject");
     }
 }

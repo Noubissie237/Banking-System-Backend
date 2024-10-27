@@ -12,4 +12,9 @@ public class ClientConsumer {
     public void accountCreated(ClientAccountCreated event) {
         System.out.println(event.getMessage());
     }
+
+    @RabbitListener(queues = "rejectDemandeQueue")
+    public void accountNotCreated(ClientAccountCreated event) {
+        System.out.println(event.getMessage());
+    }
 }

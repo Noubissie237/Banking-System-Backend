@@ -28,7 +28,7 @@ public class DemandeController {
     }
 
     @PutMapping("/update-statut/{id}")
-    public Demande updateDemandeStatut(@PathVariable Long id, @RequestParam StatutDemande statut) {
+    public List<Demande> updateDemandeStatut(@PathVariable Long id, @RequestParam StatutDemande statut) {
         return demandeService.updateDemandeStatut(id, statut);
     }
     
