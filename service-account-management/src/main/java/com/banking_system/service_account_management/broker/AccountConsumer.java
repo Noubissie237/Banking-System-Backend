@@ -4,13 +4,13 @@ import java.time.LocalDateTime;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.banking_system.service_account_management.event.AccountEventJson;
 import com.banking_system.service_account_management.models.Account;
 import com.banking_system.service_account_management.services.AccountService;
 
-@Component
+@Service
 public class AccountConsumer {
     
     @Autowired

@@ -22,8 +22,9 @@ public class ClientService {
     public void addClient(Client client) {
         try {
             Client saveClient = clientRepository.save(client);
+            String message = "Bienvenu M./Mme "+(client.getPrenom().substring(0, 1).toUpperCase()+client.getPrenom().substring(1).toLowerCase())+" "+client.getNom().toUpperCase()+" \nMerci de vous être enregistré. Votre compte est en cours de création. Cela peut prendre quelques instants.";
+            System.out.println(message);
             ClientEvent event = new ClientEvent();
-            event.setId(saveClient.getId());
             event.setNom(saveClient.getNom());
             event.setPrenom(saveClient.getPrenom());
             event.setTel(saveClient.getTel());
@@ -48,4 +49,5 @@ public class ClientService {
         clientRepository.deleteById(id);
         return clientRepository.findAll();
     }
+
 }

@@ -7,41 +7,15 @@ import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
-import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.banking_system.service_admin.broker.ClientEventConsumer;
 
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 
 @Configuration
 @EnableRabbit
-public class RabbitConfig {
-
-    @Bean
-    public Queue clientQueue() {
-        return new Queue("clientQueue");
-    }
-
-    @Bean
-    public SimpleMessageListenerContainer container(ConnectionFactory connectionFactory,
-            MessageListenerAdapter listenerAdapter) {
-        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-        container.setConnectionFactory(connectionFactory);
-        container.setQueueNames("clientQueue");
-        container.setMessageListener(listenerAdapter);
-        return container;
-    }
-
-    @Bean
-    public MessageListenerAdapter listenerAdapter(ClientEventConsumer consumer) {
-        MessageListenerAdapter adapter = new MessageListenerAdapter(consumer, "receiveClientEvent");
-        adapter.setMessageConverter(converter());
-        return adapter;
-    }
-    
+public class RabbitConfig { 
 
     @Bean
     public Jackson2JsonMessageConverter converter() {
@@ -58,6 +32,11 @@ public class RabbitConfig {
     @Bean
     public TopicExchange clientExchange() {
         return new TopicExchange("clientExchange", true, false);
+    }
+
+    @Bean
+    public Queue clientQueue() {
+        return new Queue("clientQueue", true, false, false);
     }
 
     @Bean

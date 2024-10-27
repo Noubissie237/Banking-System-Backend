@@ -19,7 +19,6 @@ public class Demande {
     private Long id;
     private String titre;
     private LocalDateTime dateCreation;
-    private Long clientId;
     private String clientNom;
     private String clientPrenom;
     private String clientTel;
@@ -29,9 +28,8 @@ public class Demande {
     @Enumerated(EnumType.STRING)
     private StatutDemande statut;
 
-    public Demande(String titre, Long clientId, String clientNom, String clientPrenom, String clientTel, String clientNumeroCni, String clientRectoCni, String clientVersoCni, StatutDemande statut, LocalDateTime date) {
+    public Demande(String titre, String clientNom, String clientPrenom, String clientTel, String clientNumeroCni, String clientRectoCni, String clientVersoCni, StatutDemande statut, LocalDateTime date) {
         this.titre = titre;
-        this.clientId = clientId;
         this.statut = statut;
         this.dateCreation = date;
         this.clientNom = clientNom;
