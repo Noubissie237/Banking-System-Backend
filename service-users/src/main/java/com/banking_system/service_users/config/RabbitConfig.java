@@ -26,6 +26,7 @@ public class RabbitConfig {
     @Bean
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+        rabbitTemplate.setMessageConverter(jsonMessageConverter());
         return rabbitTemplate;
     }
 //topic va permettre aux diff consommateur de recevoir le meme message
