@@ -15,15 +15,15 @@ public class Account {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
-    private String clientNumber;
-    private Long agenceId;
+    private String number;
+    private int agenceId;
     private double solde = 0;
     private LocalDateTime dateCreation;
 
-    public Account(String clientNumber, Long agenceId, double solde, LocalDateTime dateCreation) {
-        this.clientNumber = clientNumber;
+    public Account(String number, int agenceId, double solde, LocalDateTime dateCreation) {
+        this.number = number;
         this.agenceId = agenceId;
         this.solde = solde;
         this.dateCreation = dateCreation;

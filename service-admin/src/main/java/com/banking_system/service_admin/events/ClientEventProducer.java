@@ -13,7 +13,7 @@ import lombok.ToString;
 @ToString
 public class ClientEventProducer {
     @JsonProperty("id_agence")
-    private Long idAgence;
+    private int idAgence;
     @JsonProperty("numero_client")
     private String numeroClient;    
 }

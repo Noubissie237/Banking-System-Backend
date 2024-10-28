@@ -16,7 +16,7 @@ public class Demande {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     private String titre;
     private LocalDateTime dateCreation;
     private String clientNom;

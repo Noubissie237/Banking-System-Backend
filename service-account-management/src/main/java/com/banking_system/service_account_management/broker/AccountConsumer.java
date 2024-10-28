@@ -20,7 +20,7 @@ public class AccountConsumer {
     public void receiveAccountEvent(AccountEventJson event) {
         Account account = new Account();
         account.setAgenceId(event.getIdAgence());
-        account.setClientNumber(event.getNumeroClient());
+        account.setNumber(event.getNumeroClient());
         account.setDateCreation(LocalDateTime.now());
         account.setSolde(0);
 

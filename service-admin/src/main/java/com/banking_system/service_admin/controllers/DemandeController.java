@@ -7,12 +7,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.banking_system.service_admin.events.AgentEventProducer;
 import com.banking_system.service_admin.models.Demande;
 import com.banking_system.service_admin.models.StatutDemande;
-import com.banking_system.service_admin.services.DemandeService;
+import com.banking_system.service_admin.services.AdminService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
@@ -20,16 +23,21 @@ import org.springframework.web.bind.annotation.PutMapping;
 public class DemandeController {
     
     @Autowired
-    DemandeService demandeService;
+    AdminService adminService;
 
     @GetMapping("/get-all")
     public List<Demande> getDemandes() {
-        return demandeService.getAllDemandes();
+        return adminService.getAllDemandes();
     }
 
     @PutMapping("/update-statut/{id}")
-    public List<Demande> updateDemandeStatut(@PathVariable Long id, @RequestParam StatutDemande statut) {
-        return demandeService.updateDemandeStatut(id, statut);
+    public List<Demande> updateDemandeStatut(@PathVariable int id, @RequestParam StatutDemande statut) {
+        return adminService.updateDemandeStatut(id, statut);
+    }
+
+    @PostMapping("/add-agent")
+    public AgentEventProducer addAgentController(@RequestBody AgentEventProducer agent) {
+        return adminService.createAgent(agent);
     }
     
 }

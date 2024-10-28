@@ -50,8 +50,28 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Binding binding(TopicExchange clientExchange, Queue clientQueue) {
+    public Queue agentQueue() {
+        return new Queue("agentQueue", true, false, false);
+    }
+
+    @Bean
+    public Queue agentCreateQueue() {
+        return new Queue("agentCreateQueue", true, false, false);
+    }
+
+    @Bean
+    public Queue agentAccountQueue() {
+        return new Queue("agentAccountQueue", true, false, false);
+    }
+
+    @Bean
+    public Binding binding1(TopicExchange clientExchange, Queue clientQueue) {
         return BindingBuilder.bind(clientQueue).to(clientExchange).with("client.create");
+    }
+
+    @Bean
+    public Binding binding2(TopicExchange clientExchange, Queue agentCreateQueue) {
+        return BindingBuilder.bind(agentCreateQueue).to(clientExchange).with("agent.create");
     }
 
 }

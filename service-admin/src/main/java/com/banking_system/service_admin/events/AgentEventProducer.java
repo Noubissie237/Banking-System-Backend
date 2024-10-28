@@ -13,13 +13,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ClientEventConsumerJson {
-    @JsonProperty("id")
-    private int id;
+public class AgentEventProducer {
     @JsonProperty("nom")
     private String nom;
     @JsonProperty("prenom")
     private String prenom;
+    @JsonProperty("email")
+    private String email;
     @JsonProperty("tel")
     private String tel;
     @JsonProperty("numero_cni")
@@ -28,4 +28,8 @@ public class ClientEventConsumerJson {
     private String recto_cni;
     @JsonProperty("verso_cni")
     private String verso_cni;
+    @JsonProperty("password")
+    private String password;
+
 }
+

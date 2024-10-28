@@ -3,7 +3,7 @@ package com.banking_system.service_admin.broker;
 import com.banking_system.service_admin.events.ClientEventConsumerJson;
 import com.banking_system.service_admin.models.Demande;
 import com.banking_system.service_admin.models.StatutDemande;
-import com.banking_system.service_admin.repositories.DemandeRepository;
+import com.banking_system.service_admin.repositories.AdminRepository;
 
 import java.time.LocalDateTime;
 
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class ClientEventConsumer {
 
     @Autowired
-    private DemandeRepository demandeRepo;
+    private AdminRepository adminRepo;
 
     @RabbitListener(queues = "clientQueue")
     public void receiveClientEvent(ClientEventConsumerJson event) {
@@ -31,7 +31,7 @@ public class ClientEventConsumer {
         demande.setClientVersoCni(event.getVerso_cni());
         demande.setStatut(StatutDemande.EN_ATTENTE);
         demande.setDateCreation(LocalDateTime.now());
-        demandeRepo.save(demande);
+        adminRepo.save(demande);
 
     }
 }

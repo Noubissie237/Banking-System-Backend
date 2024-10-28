@@ -1,9 +1,10 @@
 package com.banking_system.service_admin.services;
 
+import com.banking_system.service_admin.events.AgentEventProducer;
 import com.banking_system.service_admin.events.ClientEventProducer;
 import com.banking_system.service_admin.models.Demande;
 import com.banking_system.service_admin.models.StatutDemande;
-import com.banking_system.service_admin.repositories.DemandeRepository;
+import com.banking_system.service_admin.repositories.AdminRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,37 +14,37 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DemandeService {
+public class AdminService {
 
     @Autowired
-    private DemandeRepository demandeRepository;
+    private AdminRepository adminRepository;
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
     public Demande createDemande(Demande demande) {
-        return demandeRepository.save(demande);
+        return adminRepository.save(demande);
     }
 
     public List<Demande> getAllDemandes() {
-        return demandeRepository.findAll();
+        return adminRepository.findAll();
     }
 
-    public void deleteDemande(Long id) {
-        demandeRepository.deleteById(id);
+    public void deleteDemande(int id) {
+        adminRepository.deleteById(id);
     }
 
-    public List<Demande> updateDemandeStatut(Long id, StatutDemande statut) {
-        Optional<Demande> demandeOptional = demandeRepository.findById(id);
+    public List<Demande> updateDemandeStatut(int id, StatutDemande statut) {
+        Optional<Demande> demandeOptional = adminRepository.findById(id);
         
         if (demandeOptional.isPresent()) {
             Demande demande = demandeOptional.get();
             demande.setStatut(statut);
-            Demande demandeUpdated = demandeRepository.save(demande);
+            Demande demandeUpdated = adminRepository.save(demande);
             if (statut == StatutDemande.ACCEPTEE)
             {                
                 ClientEventProducer event = new ClientEventProducer();
-                event.setIdAgence(1L);
+                event.setIdAgence(1);
                 event.setNumeroClient(demandeUpdated.getClientTel());
                 rabbitTemplate.convertAndSend("clientExchange", "demande.accepted", event);
                 deleteDemande(demandeUpdated.getId());
@@ -52,10 +53,24 @@ public class DemandeService {
                 String message = "Echec de création de votre compte 😣";
                 rabbitTemplate.convertAndSend("clientExchange", "demande.reject", message);
             }
-            return demandeRepository.findAll();
+            return adminRepository.findAll();
         } else {
             throw new RuntimeException("Aucune demande avec l'id: " + id);
         }
+    }
+
+    public AgentEventProducer createAgent(AgentEventProducer agent) {
+        AgentEventProducer eventAgent = new AgentEventProducer();
+        eventAgent.setNom(agent.getNom());
+        eventAgent.setPrenom(agent.getPrenom());
+        eventAgent.setEmail(agent.getEmail());
+        eventAgent.setTel(agent.getTel());
+        eventAgent.setNumero_cni(agent.getNumero_cni());
+        eventAgent.setRecto_cni(agent.getRecto_cni());
+        eventAgent.setVerso_cni(agent.getVerso_cni());
+        eventAgent.setPassword("12345678");
+        rabbitTemplate.convertAndSend("clientExchange", "agent.demande");
+        return eventAgent;
     }
 
 }
