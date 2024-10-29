@@ -8,7 +8,7 @@ import com.banking_system.service_users.events.ClientAccountCreated;
 @Component
 public class ClientConsumer {
     
-    @RabbitListener(queues = "accountQueue")
+    @RabbitListener(queues = "clientAccountQueue")
     public void accountCreated(ClientAccountCreated event) {
         System.out.println(event.getMessage());
     }
