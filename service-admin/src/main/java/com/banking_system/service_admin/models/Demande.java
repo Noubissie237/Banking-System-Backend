@@ -23,6 +23,7 @@ public class Demande {
     private String clientNumeroCni;
     private String clientRectoCni;
     private String clientVersoCni;
+    private int agence;
     @Enumerated(EnumType.STRING)
     private StatutDemande statut;
 

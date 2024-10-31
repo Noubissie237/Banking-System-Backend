@@ -78,4 +78,53 @@ public class Utils {
         return jourCarac;
     }
 
+
+    public static boolean isANumber(String number) {
+        if (number == null || number.isEmpty()) return false;
+        try {
+            Integer.parseInt(number);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    public boolean isBeginBy6(String number) {
+        return number.startsWith("6");
+    }
+
+    public boolean isInRange(int value, int start, int end) {
+        return value >= start && value <= end;
+    }
+
+    public boolean isAnOrangeNumber(String number) {        
+        int debut = Integer.parseInt(number.substring(1, 3));
+        return isInRange(debut, 55, 59) || isInRange(debut, 85, 99);
+    }
+
+    public boolean isAnMtnNumber(String number) {        
+        int debut = Integer.parseInt(number.substring(1, 3));
+        return isInRange(debut, 50, 54) || isInRange(debut, 70, 84);
+    }
+
+    public boolean isAValidNumber(String number) {
+        if (!isANumber(number))
+            throw new IllegalArgumentException("Le numéro de téléphone doit être constitué uniquement de chiffres");
+        
+        if (!isBeginBy6(number))
+            throw new IllegalArgumentException("Le numéro de téléphone doit commencer par 6");
+
+        if (!isAnMtnNumber(number) && !isAnOrangeNumber(number))
+            throw new IllegalArgumentException("Numéro invalide !");
+
+        return true;
+    }
+
+    public int getAgenceId(String numero) {
+        if (isAValidNumber(numero)) {
+            return isAnMtnNumber(numero) ? 1 : 2;
+        }
+        throw new IllegalArgumentException("Numéro de téléphone invalide.");
+    }
+
 }

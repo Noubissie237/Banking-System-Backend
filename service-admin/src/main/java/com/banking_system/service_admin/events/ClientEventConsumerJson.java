@@ -28,4 +28,6 @@ public class ClientEventConsumerJson {
     private String recto_cni;
     @JsonProperty("verso_cni")
     private String verso_cni;
+    @JsonProperty("agence")
+    private int agence;
 }
