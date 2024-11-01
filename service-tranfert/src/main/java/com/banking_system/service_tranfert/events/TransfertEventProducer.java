@@ -9,11 +9,11 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Data
+@ToString
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
-public class TransfertProducer {
+public class TransfertEventProducer {
     @JsonProperty("numero_source")
     private String numero_source;
     @JsonProperty("numero_cible")
@@ -22,4 +22,6 @@ public class TransfertProducer {
     private Double montant;
     @JsonProperty("agence")
     private int agence;
+    @JsonProperty("frais")
+    private Double frais;
 }

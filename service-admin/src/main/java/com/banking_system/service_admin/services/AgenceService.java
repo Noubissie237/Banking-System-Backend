@@ -15,4 +15,12 @@ public class AgenceService {
     public Agence createAgence(Agence agence) {
         return agenceRepository.save(agence);
     }
+
+    public void inscrementCapital(int idAgence, Double montant)
+    {
+        Agence agence;
+        agence = agenceRepository.findById(idAgence).orElseThrow(() -> new IllegalArgumentException("Agence non trouvée !"));
+        agence.setCapital((agence.getCapital() + montant));
+        agenceRepository.save(agence);
+    }
 }
