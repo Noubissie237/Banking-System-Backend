@@ -24,4 +24,5 @@ public class ClientController {
     public List<Client> deleteClientController(@PathVariable("id") int id) {
         return clientService.deleteClient(id);
     }
+
 }

@@ -30,6 +30,7 @@ public class ClientEventConsumer {
         demande.setClientVersoCni(event.getVerso_cni());
         demande.setStatut(StatutDemande.EN_ATTENTE);
         demande.setDateCreation(LocalDateTime.now());
+        demande.setAgence(event.getAgence());
         adminRepo.save(demande);
 
     }

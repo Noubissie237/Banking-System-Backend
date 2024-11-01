@@ -44,7 +44,7 @@ public class AdminService {
             if (statut == StatutDemande.ACCEPTEE)
             {                
                 ClientEventProducer event = new ClientEventProducer();
-                event.setIdAgence(1);
+                event.setIdAgence(demandeUpdated.getAgence());
                 event.setNumeroClient(demandeUpdated.getClientTel());
                 rabbitTemplate.convertAndSend("clientExchange", "demande.accepted", event);
                 deleteDemande(demandeUpdated.getId());

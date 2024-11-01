@@ -1,10 +1,14 @@
 package com.banking_system.service_users.models;
 
 import jakarta.persistence.Entity;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
 @Entity
+@Getter
+@Setter
 public class Client extends Person {
 
     public Client(String nom, String prenom, String email, String tel, String numero_cni, String recto_cni, String verso_cni, String password) {

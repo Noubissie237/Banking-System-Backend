@@ -35,6 +35,11 @@ public class RabbitConfig {
     }
 
     @Bean
+    public TopicExchange transactionExchange(){
+        return new TopicExchange("transactionExchange", true, false);
+    }
+
+    @Bean
     public Queue clientQueue(){
         return new Queue("clientQueue", true, false, false);
     }
@@ -65,6 +70,11 @@ public class RabbitConfig {
     }
 
     @Bean
+    public Queue transfertMoneyQueue() {
+        return new Queue("transfertMoneyQueue", true, false, false);
+    }
+
+    @Bean
     public Binding binding1(TopicExchange clientExchange, Queue clientQueue) {
         return BindingBuilder.bind(clientQueue).to(clientExchange).with("client.create");
     }
@@ -72,6 +82,11 @@ public class RabbitConfig {
     @Bean
     public Binding binding2(TopicExchange clientExchange, Queue agentCreateQueue) {
         return BindingBuilder.bind(agentCreateQueue).to(clientExchange).with("agent.create");
+    }
+
+    @Bean
+    public Binding binding3(TopicExchange transactionExchange, Queue transfertMoneyQueue) {
+        return BindingBuilder.bind(transfertMoneyQueue).to(transactionExchange).with("start-transfert");
     }
 
 }

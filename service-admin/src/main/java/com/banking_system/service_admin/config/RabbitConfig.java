@@ -35,6 +35,11 @@ public class RabbitConfig {
     }
 
     @Bean
+    public TopicExchange transactionExchange(){
+        return new TopicExchange("transactionExchange", true, false);
+    }
+
+    @Bean
     public Queue clientQueue() {
         return new Queue("clientQueue", true, false, false);
     }
@@ -52,6 +57,11 @@ public class RabbitConfig {
     @Bean
     public Queue agentQueue() {
         return new Queue("agentQueue", true, false, false);
+    }
+
+    @Bean
+    public Queue transfertMoneyQueueAgence() {
+        return new Queue("transfertMoneyQueueAgence", true, false, false);
     }
 
     @Bean
