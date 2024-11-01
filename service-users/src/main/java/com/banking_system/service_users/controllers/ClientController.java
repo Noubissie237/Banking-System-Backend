@@ -1,6 +1,5 @@
 package com.banking_system.service_users.controllers;
 
-import com.banking_system.service_users.events.TransfertProducer;
 import com.banking_system.service_users.models.Client;
 import com.banking_system.service_users.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +25,4 @@ public class ClientController {
         return clientService.deleteClient(id);
     }
 
-    @PostMapping("/money/transfert")
-    public void transfertMoney(@RequestBody TransfertProducer transfertProducer) {
-        clientService.transfertMoney(transfertProducer);
-    }
 }

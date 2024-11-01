@@ -1,5 +1,7 @@
 package com.banking_system.service_account_management.services;
 
+import java.util.Optional;
+
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,7 +44,7 @@ public class AccountService {
         }
     }
 
-    public Account findAccountByNumber(String numero) {
+    public Optional<Account> findAccountByNumber(String numero) {
         return accountRepository.findByNumber(numero);
     }
 

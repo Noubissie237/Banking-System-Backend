@@ -13,6 +13,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Agence {
+
+    public final static Double FRAIS_TRANSFERT_ORANGE_MONEY = 0.5;
+    public final static Double FRAIS_RETRAIT_ORANGE_MONEY = 3.0;
+    public final static Double FRAIS_TRANSFERT_MOBILE_MONEY = 1.0;
+    public final static Double FRAIS_RETRAIT_MOBILE_MONEY = 2.5;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

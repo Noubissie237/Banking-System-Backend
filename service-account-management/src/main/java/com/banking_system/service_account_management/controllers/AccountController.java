@@ -1,5 +1,7 @@
 package com.banking_system.service_account_management.controllers;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +20,7 @@ public class AccountController {
     AccountService accountService;
 
     @GetMapping("/get/{number}")
-    public Account getAccountByNumber(@PathVariable String number) {
+    public Optional<Account> getAccountByNumber(@PathVariable String number) {
         return accountService.findAccountByNumber(number);
     }
     

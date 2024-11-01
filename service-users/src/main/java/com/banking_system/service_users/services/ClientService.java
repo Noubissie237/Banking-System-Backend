@@ -1,7 +1,6 @@
 package com.banking_system.service_users.services;
 
 import com.banking_system.service_users.events.ClientEvent;
-import com.banking_system.service_users.events.TransfertProducer;
 import com.banking_system.service_users.models.Client;
 import com.banking_system.service_users.repositories.ClientRepository;
 import com.banking_system.service_users.utils.Utils;
@@ -54,15 +53,6 @@ public class ClientService {
     public List<Client> deleteClient(int id) {
         clientRepository.deleteById(id);
         return clientRepository.findAll();
-    }
-
-    public void transfertMoney(TransfertProducer event)
-    {
-        TransfertProducer transfert = new TransfertProducer();
-        transfert.setMontant(event.getMontant());
-        transfert.setNumero_cible(event.getNumero_cible());
-        transfert.setNumero_source(event.getNumero_source());
-        rabbitTemplate.convertAndSend("transactionExchange", "start-transfert", transfert);
     }
 
 }

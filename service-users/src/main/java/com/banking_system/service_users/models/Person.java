@@ -24,7 +24,7 @@ public class Person {
     private String prenom;
     @Column(unique = true)
     private String email;
-    @Column(nullable = false, unique = true, length = 9)
+    // @Column(nullable = false, unique = true, length = 9)
     private String tel;
     @Column(nullable = false)
     private String numero_cni;
