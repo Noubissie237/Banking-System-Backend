@@ -4,6 +4,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.banking_system.service_account_management.event.TransfertEventConsumer;
 import com.banking_system.service_account_management.models.Account;
 import com.banking_system.service_account_management.models.AgentAccount;
 import com.banking_system.service_account_management.repositories.AccountRepository;
@@ -39,5 +40,13 @@ public class AccountService {
         } catch (Exception e) {
             throw new RuntimeException("Account Creation Error : ",e);
         }
+    }
+
+    public Account findAccountByNumber(String numero) {
+        return accountRepository.findByNumber(numero);
+    }
+
+    public void makeTransfert(TransfertEventConsumer transfert) {
+        
     }
 }
