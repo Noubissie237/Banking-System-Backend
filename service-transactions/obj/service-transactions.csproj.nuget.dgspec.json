@@ -1,0 +1,83 @@
+{
+  "format": 1,
+  "restore": {
+    "/media/nk-wilfried/NKW/UY1/M1/INF4057-Architecture-Logicielle/Projet/Services/service-transactions/service-transactions.csproj": {}
+  },
+  "projects": {
+    "/media/nk-wilfried/NKW/UY1/M1/INF4057-Architecture-Logicielle/Projet/Services/service-transactions/service-transactions.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/media/nk-wilfried/NKW/UY1/M1/INF4057-Architecture-Logicielle/Projet/Services/service-transactions/service-transactions.csproj",
+        "projectName": "service-transactions",
+        "projectPath": "/media/nk-wilfried/NKW/UY1/M1/INF4057-Architecture-Logicielle/Projet/Services/service-transactions/service-transactions.csproj",
+        "packagesPath": "/home/nk-wilfried/.nuget/packages/",
+        "outputPath": "/media/nk-wilfried/NKW/UY1/M1/INF4057-Architecture-Logicielle/Projet/Services/service-transactions/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/nk-wilfried/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Steeltoe.Discovery.ClientCore": {
+              "target": "Package",
+              "version": "[3.2.8, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.6.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.403/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
