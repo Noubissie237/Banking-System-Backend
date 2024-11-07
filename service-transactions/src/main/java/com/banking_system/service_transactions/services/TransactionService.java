@@ -35,6 +35,7 @@ public class TransactionService {
         transactionEvent.setNumeroReceiver(event.getNumeroReceiver());
         transactionEvent.setAmount(event.getAmount());
         transactionEvent.setTransactionType(event.getTransactionType());
+        transactionEvent.setAgenceId(event.getAgenceId());
         transactionEvent.setDateEvent(LocalDateTime.now());
         writeEvent("transactionsStream", transactionEvent.getTransactionType().toString(), transactionEvent);
     }

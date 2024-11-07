@@ -19,6 +19,9 @@ public class TransactionEvent {
     
     @JsonProperty("numeroSender")
     private String numeroSender;
+
+    @JsonProperty("agenceId")
+    private int agenceId;
     
     @JsonProperty("numeroReceiver")
     private String numeroReceiver;
