@@ -1,7 +1,7 @@
 package com.banking_system.service_transactions.models;
 
-public enum TypeTransaction {
+public enum TransactionType {
+    TRANSFERT,
     DEPOT,
-    RETRAIT,
-    TRANSFERT
+    RETRAIT
 }
