@@ -1,13 +1,6 @@
 package com.banking_system.service_users.services;
 
-<<<<<<< HEAD
 import java.util.List;
-=======
-import com.banking_system.service_users.events.ClientEvent;
-import com.banking_system.service_users.models.Client;
-import com.banking_system.service_users.repositories.ClientRepository;
-import com.banking_system.service_users.utils.Utils;
->>>>>>> a0f6b6ed3a7835813e2275331a65fd0d6a084c07
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.banking_system.service_users.events.ClientEvent;
 import com.banking_system.service_users.models.Client;
 import com.banking_system.service_users.repositories.ClientRepository;
+import com.banking_system.service_users.utils.Utils;
 
 @Service
 public class ClientService {
