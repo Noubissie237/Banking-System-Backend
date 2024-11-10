@@ -7,6 +7,7 @@ import com.banking_system.service_users.utils.Utils;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
  
 import java.util.List;
@@ -21,10 +22,15 @@ public class ClientService {
     Utils utils;
 
     @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @Autowired
     private RabbitTemplate rabbitTemplate;
 
     public void addClient(Client client) {
         try {
+            String encodedPassword = passwordEncoder.encode(client.getPassword());
+            client.setPassword(encodedPassword);
             ClientEvent event = new ClientEvent();
             event.setAgence(utils.getAgenceId(client.getTel()));
             String message = "Bienvenu M./Mme "+(client.getPrenom().substring(0, 1).toUpperCase()+client.getPrenom().substring(1).toLowerCase())+" "+client.getNom().toUpperCase()+" \nMerci de vous être enregistré. Votre compte est en cours de création. Cela peut prendre quelques instants.";
