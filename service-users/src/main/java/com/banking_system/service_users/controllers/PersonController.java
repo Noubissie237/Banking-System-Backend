@@ -1,6 +1,7 @@
 package com.banking_system.service_users.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,5 +36,10 @@ public class PersonController {
     @GetMapping("/delete-user/{id}")
     public List<Person> deleteUserController(@PathVariable("id") int id){
         return userService.deleteUser(id);
+    }
+
+    @GetMapping("/get-user/{number}")
+    public Optional<Person> getUserController(@PathVariable("number") String number){
+        return userService.getUserByNumber(number);
     }
 }

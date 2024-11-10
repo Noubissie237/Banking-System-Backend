@@ -2,6 +2,7 @@ package com.banking_system.service_users.services;
 
 import java.util.List;
 
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,4 +35,8 @@ public class PersonService {
     public Person getUserById(int id){
         return userRepository.findById(id).orElse(null);
     }
-}
+
+    public Optional<Person> getUserByNumber(String number) {
+        return userRepository.findByTel(number);
+    }
+} 
