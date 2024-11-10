@@ -1,7 +1,12 @@
 package com.banking_system.service_authentification.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -14,6 +19,7 @@ public class AuthService {
     
     private final RestTemplate restTemplate;
     private final String allUsers = "http://localhost:8079/SERVICE-USERS/api/get-persons";
+    private String token;
 
     @Autowired
     Utils utils;
@@ -23,6 +29,7 @@ public class AuthService {
 
     public AuthService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
+        addAuthorizationHeaderInterceptor(restTemplate);
     }
 
     public String login(String phone, String password) {
@@ -30,7 +37,7 @@ public class AuthService {
         if (users != null) {
             for(Person user : users) {
                 if(user.getTel().equals(phone) && passwordEncoder.matches(password, user.getPassword())) {
-                    String token = utils.generateToken(user);
+                    token = utils.generateToken(user);
                     return token;
                 }
             }
@@ -42,6 +49,17 @@ public class AuthService {
     private Person[] getUsers() {
         ResponseEntity<Person[]> response = restTemplate.getForEntity(allUsers, Person[].class);
         return response.getBody();
+    }
+
+        private void addAuthorizationHeaderInterceptor(RestTemplate restTemplate) {
+        List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>(restTemplate.getInterceptors());
+        interceptors.add((request, body, execution) -> {
+            if (token != null) {
+                request.getHeaders().add(HttpHeaders.AUTHORIZATION, "Bearer " + token);
+            }
+            return execution.execute(request, body);
+        });
+        restTemplate.setInterceptors(interceptors);
     }
 
 }
