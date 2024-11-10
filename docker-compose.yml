@@ -1,30 +1,30 @@
 services:
   # Service de configuration
-  # service-config:
-  #   build: ./service-config
-  #   ports:
-  #     - "2370:2370"
-  #   environment:
-  #     - SPRING_APPLICATION_NAME=service-config
-  #     - SPRING_CLOUD_CONFIG_SERVER_GIT_URI=https://github.com/Noubissie237/banking-system-cloud-conf
-  #   networks:
-  #     - banking-system-network
+  service-config:
+    build: ./service-config
+    ports:
+      - "2370:2370"
+    environment:
+      - SPRING_APPLICATION_NAME=service-config
+      - SPRING_CLOUD_CONFIG_SERVER_GIT_URI=https://github.com/Noubissie237/banking-system-cloud-conf
+    networks:
+      - banking-system-network
 
-  # # Service d'enrégistrement
-  # service-registry:
-  #   build: ./service-registry
-  #   ports:
-  #     - "8761:8761"
-  #   environment:
-  #     - SPRING_APPLICATION_NAME=service-registry
-  #     - SPRING_CLOUD_CONFIG_URI=http://service-config:2370
-  #     - SPRING_CONFIG_IMPORT=configserver:http://service-config:2370
-  #   networks:
-  #     - banking-system-network
-    # depends_on:
-    #   - service-config
+  # Service d'enrégistrement
+  service-registry:
+    build: ./service-registry
+    ports:
+      - "8761:8761"
+    environment:
+      - SPRING_APPLICATION_NAME=service-registry
+      - SPRING_CLOUD_CONFIG_URI=http://service-config:2370
+      - SPRING_CONFIG_IMPORT=configserver:http://service-config:2370
+    networks:
+      - banking-system-network
+    depends_on:
+      - service-config
 
-  # # Service proxy
+  # Service proxy
   service-proxy:
     build: ./service-proxy
     ports:
@@ -35,9 +35,9 @@ services:
       - SPRING_CONFIG_IMPORT=configserver:http://service-config:2370
     networks:
       - banking-system-network
-  #   depends_on:
-  #     - service-config
-  #     - service-registry
+    depends_on:
+      - service-config
+      - service-registry
 
 
 networks:
