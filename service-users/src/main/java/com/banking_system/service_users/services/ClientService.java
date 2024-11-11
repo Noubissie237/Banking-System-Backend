@@ -1,6 +1,6 @@
 package com.banking_system.service_users.services;
 
-import com.banking_system.service_authentification.dto.LoginRequest;
+import com.banking_system.service_users.dto.LoginRequest;
 import com.banking_system.service_users.events.ClientEvent;
 import com.banking_system.service_users.models.Client;
 import com.banking_system.service_users.repositories.ClientRepository;
@@ -80,8 +80,7 @@ public class ClientService {
         try {
             return restTemplate.postForObject(url, loginRequest, String.class);
         } catch (Exception e) {
-            return "Echec !!!";
+            return "Echec : "+e.getMessage();  
         }
     }
-
 }

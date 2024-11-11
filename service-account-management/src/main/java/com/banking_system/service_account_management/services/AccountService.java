@@ -55,7 +55,7 @@ public class AccountService {
     }
 
     public Account findAccountByNumber(String numero) {
-        return accountRepository.findByNumber(numero).orElseThrow();
+        return accountRepository.findByNumber(numero).orElseThrow(null);
     }
 
     @Transactional

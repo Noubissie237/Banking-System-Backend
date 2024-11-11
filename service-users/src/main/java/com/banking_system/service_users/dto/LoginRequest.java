@@ -1,4 +1,4 @@
-package com.banking_system.service_authentification.dto;
+package com.banking_system.service_users.dto;
 
 import lombok.Getter;
 import lombok.Setter;
