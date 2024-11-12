@@ -17,8 +17,8 @@ services:
       - "8761:8761"
     environment:
       - SPRING_APPLICATION_NAME=service-registry
-      - SPRING_CLOUD_CONFIG_URI=http://service-config:2370
-      - SPRING_CONFIG_IMPORT=configserver:http://service-config:2370
+      - SPRING_CLOUD_CONFIG_URI=https://config.simpletraining.store
+      - SPRING_CONFIG_IMPORT=configserver:https://config.simpletraining.store
     networks:
       - banking-system-network
     depends_on:
@@ -31,8 +31,8 @@ services:
       - "8079:8079"
     environment:
       - SPRING_APPLICATION_NAME=service-proxy
-      - SPRING_CLOUD_CONFIG_URI=http://service-config:2370
-      - SPRING_CONFIG_IMPORT=configserver:http://service-config:2370
+      - SPRING_CLOUD_CONFIG_URI=https://config.simpletraining.store
+      - SPRING_CONFIG_IMPORT=configserver:https://config.simpletraining.store
     networks:
       - banking-system-network
     depends_on:
