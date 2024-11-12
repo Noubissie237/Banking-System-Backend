@@ -32,7 +32,7 @@ public class Transaction {
 
     public void retraitClient(Retrait retrait) {
         try {
-            String message = "Retrait de" +retrait.getMontant() + " effectué avec succès ! Nouveau solde ";
+            String message = "Retrait de " +retrait.getMontant() + " effectué avec succès ! Nouveau solde ";
             rabbitTemplate.convertAndSend("clientExchange", "retraitclientmessage", message);
         } catch (Exception e) {
             throw new RuntimeException("Retrait Creation Error : ",e);
@@ -41,7 +41,7 @@ public class Transaction {
 // ajout du montant recu
     public void retraitRecepteurAgent(Retrait retrait) {
         try {
-            String message = "Depot effectuer de" + " Montant " +retrait.getMontant() + " effectué avec succès !";
+            String message = "Depot effectuer de " + " Montant " +retrait.getMontant() + " effectué avec succès !";
             rabbitTemplate.convertAndSend("clientExchange", "retraitagentmessage", message);
         } catch (Exception e) {
             throw new RuntimeException("Retrait Creation Error : ",e);

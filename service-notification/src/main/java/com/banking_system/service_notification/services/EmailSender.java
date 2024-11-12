@@ -16,7 +16,7 @@ public class EmailSender {
                         String body){
                 
                 SimpleMailMessage message = new SimpleMailMessage();
-                message.setFrom("pharma.prjt.yde@gmail.com");
+                message.setFrom("supp0rt.quicksend@gmail.com");
                 message.setTo(toEmail);
                 message.setText(body);
                 message.setSubject(subject);

@@ -24,7 +24,7 @@ public class AccountService {
 
     public void createAgentAccount(AgentEvent event) {
         try {
-            String message = "Compte Agent créé avec succès ! Votre numero est " +event.getNumero() + " Matricule " +event.getMatricule() + " Vous pouvez à présent profiter de nos services 😀 ";
+            String message = "Compte Agent créé avec succès ! \n Votre numero est " +event.getNumero() + "\n Matricule " +event.getMatricule() + "\n Vous pouvez à présent profiter de nos services 😀 ";
             rabbitTemplate.convertAndSend("clientExchange", "agent-account.create", message);
         } catch (Exception e) {
             throw new RuntimeException("Account Creation Error : ",e);
