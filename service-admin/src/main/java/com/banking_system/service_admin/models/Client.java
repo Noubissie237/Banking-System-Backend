@@ -11,17 +11,12 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 public class Client {
-
     @Id
-    private Long id;
+    private int id;
     private String nom;
     private String prenom;
-    private String email;
     private String tel;
     private String numero_cni;
     private String recto_cni;
     private String verso_cni;
-    private String password;
-
-
 }

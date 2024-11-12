@@ -1,7 +1,11 @@
 package com.banking_system.service_users.services;
 
+import com.banking_system.service_users.events.AgentEventProducer;
 import com.banking_system.service_users.models.Agent;
 import com.banking_system.service_users.repositories.AgentRepository;
+import com.banking_system.service_users.utils.Utils;
+
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +17,22 @@ public class AgentService {
     @Autowired
     AgentRepository agentRepository;
 
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    Utils utils;
+
     public void addAgent(Agent agent) {
-        agentRepository.save(agent);
+        String matricule = utils.generateMatricule();
+        agent.setMatricule(matricule);
+        Agent savAgent = agentRepository.save(agent);
+        String message = "Bienvenu M./Mme "+(agent.getPrenom().substring(0, 1).toUpperCase()+agent.getPrenom().substring(1).toLowerCase())+" "+agent.getNom().toUpperCase()+"\nMATRICULE : "+savAgent.getMatricule()+"\nVotre compte agent est en cours de création, cela peut prendre quelques instants.";
+        System.out.println(message);
+        AgentEventProducer event = new AgentEventProducer();
+        event.setNumero(savAgent.getTel());
+        event.setMatricule(savAgent.getMatricule());
+        rabbitTemplate.convertAndSend("clientExchange", "agent.create", event);
     }
 
     public List<Agent> getAllAgents() {
@@ -29,4 +47,6 @@ public class AgentService {
         agentRepository.deleteById(id);
         return agentRepository.findAll();
     }
+
+
 }

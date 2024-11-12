@@ -11,5 +11,5 @@ public class ServiceProxyApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ServiceProxyApplication.class, args);
 	}
-
+	 
 }

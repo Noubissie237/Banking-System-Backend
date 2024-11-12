@@ -15,34 +15,78 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableRabbit
 public class RabbitConfig {
-    // transformer le json en message car rabbit lit les message et non le event json qui sera envoyer par evenement
+    
     @Bean
     public Jackson2JsonMessageConverter jsonMessageConverter()
-    { // permet de convertir le json en message
+    {
         return new Jackson2JsonMessageConverter();
     }
 
-//rabbit cree la connexion entre notre production avec rabbit(qui est le canal)
     @Bean
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(jsonMessageConverter());
         return rabbitTemplate;
     }
-//topic va permettre aux diff consommateur de recevoir le meme message
+
     @Bean
     public TopicExchange clientExchange(){
-        return new TopicExchange("clientExchange");
-    }
-// la queue va permttre de creer un queue ou sera enregistre notre message qui viendra sous la forme message et non json
-    @Bean
-    public Queue clientQueue(){
-        return new Queue("clientQueue");
+        return new TopicExchange("clientExchange", true, false);
     }
 
     @Bean
-    public Binding binding(TopicExchange clientExchange, Queue clientQueue) {
+    public TopicExchange transactionExchange(){
+        return new TopicExchange("transactionExchange", true, false);
+    }
+
+    @Bean
+    public Queue clientQueue(){
+        return new Queue("clientQueue", true, false, false);
+    }
+
+    @Bean
+    public Queue clientAccountQueue() {
+        return new Queue("clientAccountQueue", true, false, false);
+    }
+
+    @Bean
+    public Queue rejectDemandeQueue() {
+        return new Queue("rejectDemandeQueue", true, false, false);
+    }
+
+    @Bean
+    public Queue agentQueue() {
+        return new Queue("agentQueue", true, false, false);
+    }
+
+    @Bean
+    public Queue agentCreateQueue() {
+        return new Queue("agentCreateQueue", true, false, false);
+    }
+
+    @Bean
+    public Queue agentAccountQueue() {
+        return new Queue("agentAccountQueue", true, false, false);
+    }
+
+    @Bean
+    public Queue transfertMoneyQueue() {
+        return new Queue("transfertMoneyQueue", true, false, false);
+    }
+
+    @Bean
+    public Binding binding1(TopicExchange clientExchange, Queue clientQueue) {
         return BindingBuilder.bind(clientQueue).to(clientExchange).with("client.create");
+    }
+
+    @Bean
+    public Binding binding2(TopicExchange clientExchange, Queue agentCreateQueue) {
+        return BindingBuilder.bind(agentCreateQueue).to(clientExchange).with("agent.create");
+    }
+
+    @Bean
+    public Binding binding3(TopicExchange transactionExchange, Queue transfertMoneyQueue) {
+        return BindingBuilder.bind(transfertMoneyQueue).to(transactionExchange).with("start-transfert");
     }
 
 }

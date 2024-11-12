@@ -1,23 +1,38 @@
 package com.banking_system.service_users.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @Entity
+@NoArgsConstructor
+@Getter
+@Setter
 public class Person {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
+    private int id;
+    @Column(nullable = false)
     private String nom;
+    @Column(nullable = false)
     private String prenom;
+    @Column(unique = true)
     private String email;
+    // @Column(nullable = false, unique = true, length = 9)
     private String tel;
+    @Column(nullable = false)
     private String numero_cni;
+    @Column(nullable = false)
     private String recto_cni;
+    @Column(nullable = false)
     private String verso_cni;
+    @Column(nullable = false)
     private String password;
 
     public Person(String nom, String prenom, String email, String tel, String numero_cni, String recto_cni, String verso_cni, String password){
@@ -30,26 +45,5 @@ public class Person {
         this.verso_cni = verso_cni;
         this.password = password;
     }
-
-    public Person(){}
-
-    public Long getId(){ return id; }
-    public void setId(Long id) { this.id = id; }
-    public String getNom(){ return nom; }
-    public void setNom(String nom) { this.nom = nom; }
-    public String getPrenom(){ return prenom; }
-    public void setPrenom(String prenom) { this.prenom = prenom; }
-    public String getEmail(){ return email; }
-    public void setEmail(String email) { this.email = email; }
-    public String getTel(){ return tel; }
-    public void setTel(String tel) { this.tel = tel; }
-    public String getNumero_cni(){ return numero_cni; }
-    public void setNumero_cni(String numero_cni) { this.numero_cni = numero_cni; }
-    public String getRecto_cni(){ return recto_cni; }
-    public void setRecto_cni(String recto_cni) { this.recto_cni = recto_cni; }
-    public String getVerso_cni(){ return verso_cni; }
-    public void setVerso_cni(String verso_cni) { this.verso_cni = verso_cni; }
-    public String getPassword(){ return password; }
-    public void setPassword(String password) { this.password = password; }
     
 }
