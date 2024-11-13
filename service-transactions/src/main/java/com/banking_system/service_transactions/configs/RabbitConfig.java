@@ -38,6 +38,11 @@ public class RabbitConfig {
     public Queue transfertMoneyQueue1() {
         return new Queue("transfertMoneyQueue1", true, false, false);
     }
+    
+    @Bean
+    public Queue retraitMoneyQueueForTransactions() {
+        return new Queue("retraitMoneyQueueForTransactions", true, false, false);
+    }
 
     
 }

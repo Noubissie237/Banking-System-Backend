@@ -67,6 +67,12 @@ public class RabbitConfig {
     }
 
     @Bean
+    public Queue retraitMoneyQueue() {
+        return new Queue("retraitMoneyQueue", true, false, false);
+    }
+
+
+    @Bean
     public Binding binding1(TopicExchange clientExchange, Queue clientAccountQueue) {
         return BindingBuilder.bind(clientAccountQueue).to(clientExchange).with("client-account.create");
     }

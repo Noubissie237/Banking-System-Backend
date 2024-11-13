@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.banking_system.service_account_management.event.TransfertEventConsumer;
+import com.banking_system.service_account_management.event.RetraitEventConsumer;
 import com.banking_system.service_account_management.models.Account;
 import com.banking_system.service_account_management.models.AgentAccount;
 import com.banking_system.service_account_management.repositories.AccountRepository;
@@ -64,5 +65,14 @@ public class AccountService {
         Account source = findAccountByNumber(transfert.getNumero_source());
         incrementSolde(cible, transfert.getMontant());
         decrementSolde(source, transfert.getMontant() + transfert.getFrais());
+    }
+
+    @Transactional
+    public void makeRetrait( RetraitEventConsumer retrait) {
+        Account cible = findAccountByNumber(retrait.getNumero_cible());
+        Account agent = findAccountByNumber(retrait.getNumero_agent());
+        Double agentGain = (retrait.getFrais() * 0.25 ) ;
+        incrementSolde(agent, retrait.getMontant() + agentGain);
+        decrementSolde(cible, retrait.getMontant() + retrait.getFrais());
     }
 }
