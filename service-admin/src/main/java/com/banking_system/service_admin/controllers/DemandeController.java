@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.banking_system.service_admin.events.AgentEventProducer;
+import com.banking_system.service_admin.events.RechargeEventProducer;
 import com.banking_system.service_admin.models.Demande;
 import com.banking_system.service_admin.models.StatutDemande;
 import com.banking_system.service_admin.services.AdminService;
@@ -35,9 +35,9 @@ public class DemandeController {
         return adminService.updateDemandeStatut(id, statut);
     }
 
-    @PostMapping("/add-agent")
-    public AgentEventProducer addAgentController(@RequestBody AgentEventProducer agent) {
-        return adminService.createAgent(agent);
+    @PostMapping("/recharge-account")
+    public void rechargeAccount(@RequestBody RechargeEventProducer recharge) {
+        adminService.chargeAccount(recharge.getAgence(), recharge.getNumero(), recharge.getMontant());;
     }
     
 }

@@ -20,4 +20,5 @@ public class AgenceController {
     public Agence createAgence(@RequestBody Agence agence) {
         return agenceService.createAgence(agence);
     }
+
 }

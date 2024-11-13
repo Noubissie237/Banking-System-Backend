@@ -2,6 +2,7 @@ package com.banking_system.service_admin.services;
 
 import com.banking_system.service_admin.events.AgentEventProducer;
 import com.banking_system.service_admin.events.ClientEventProducer;
+import com.banking_system.service_admin.events.RechargeEventProducer;
 import com.banking_system.service_admin.models.Demande;
 import com.banking_system.service_admin.models.StatutDemande;
 import com.banking_system.service_admin.repositories.AdminRepository;
@@ -18,6 +19,9 @@ public class AdminService {
 
     @Autowired
     private AdminRepository adminRepository;
+
+    @Autowired
+    AgenceService agenceService;
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
@@ -71,6 +75,17 @@ public class AdminService {
         eventAgent.setPassword("12345678");
         rabbitTemplate.convertAndSend("clientExchange", "agent.demande");
         return eventAgent;
+    }
+
+    public void chargeAccount(int idAgence, String number, Double montant) {
+        RechargeEventProducer event = new RechargeEventProducer();
+        event.setAgence(idAgence);
+        event.setNumero(number);
+        event.setMontant(montant);
+
+        rabbitTemplate.convertAndSend("transactionExchange", "recharge.send", event);
+        
+        agenceService.decrementCapital(idAgence, montant);
     }
 
 }
