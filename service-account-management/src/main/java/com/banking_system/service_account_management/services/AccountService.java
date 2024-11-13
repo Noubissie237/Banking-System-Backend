@@ -75,6 +75,7 @@ public class AccountService {
         Double agentGain = (retrait.getFrais() * 0.25 ) ;
         incrementSolde(agent, retrait.getMontant() + agentGain);
         decrementSolde(cible, retrait.getMontant() + retrait.getFrais());
+    }
     
     @Transactional
     public void makeRecharge(RechargeEventConsumer recharge) {
