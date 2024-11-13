@@ -39,5 +39,8 @@ public class RabbitConfig {
         return new Queue("transfertMoneyQueue1", true, false, false);
     }
 
-    
+    @Bean
+    public Queue rechargeByAgence() {
+        return new Queue("rechargeByAgence", true, false, false);
+    }
 }

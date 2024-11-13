@@ -16,11 +16,19 @@ public class AgenceService {
         return agenceRepository.save(agence);
     }
 
-    public void inscrementCapital(int idAgence, Double montant)
-    {
+    public void incrementCapital(int idAgence, Double montant) {
         Agence agence;
         agence = agenceRepository.findById(idAgence).orElseThrow(() -> new IllegalArgumentException("Agence non trouvée !"));
         agence.setCapital((agence.getCapital() + montant));
         agenceRepository.save(agence);
     }
+
+    public void decrementCapital(int idAgence, Double montant) {
+        Agence agence;
+        agence = agenceRepository.findById(idAgence).orElseThrow(() -> new IllegalArgumentException("Agence non trouvée !"));
+        agence.setCapital((agence.getCapital() - montant));
+        agenceRepository.save(agence);
+    }
+
+
 }

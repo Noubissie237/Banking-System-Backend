@@ -4,6 +4,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.banking_system.service_account_management.event.RechargeEventConsumer;
 import com.banking_system.service_account_management.event.TransfertEventConsumer;
 import com.banking_system.service_account_management.models.Account;
 import com.banking_system.service_account_management.models.AgentAccount;
@@ -64,5 +65,13 @@ public class AccountService {
         Account source = findAccountByNumber(transfert.getNumero_source());
         incrementSolde(cible, transfert.getMontant());
         decrementSolde(source, transfert.getMontant() + transfert.getFrais());
+    }
+
+    @Transactional
+    public void makeRecharge(RechargeEventConsumer recharge) {
+        Account account = findAccountByNumber(recharge.getNumero());
+        incrementSolde(account, recharge.getMontant());
+
+        rabbitTemplate.convertAndSend("transactionExchange", "recharge.send.agence", recharge);
     }
 }

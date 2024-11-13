@@ -65,6 +65,11 @@ public class RabbitConfig {
     }
 
     @Bean
+    public Queue rechargeByAgence() {
+        return new Queue("rechargeByAgence", true, false, false);
+    }
+
+    @Bean
     public Binding binding1(TopicExchange clientExchange, Queue acceptDemandeQueue) {
         return BindingBuilder.bind(acceptDemandeQueue).to(clientExchange).with("demande.accepted");
     }
@@ -77,5 +82,10 @@ public class RabbitConfig {
     @Bean
     public Binding binding3(TopicExchange clientExchange, Queue agentQueue) {
         return BindingBuilder.bind(agentQueue).to(clientExchange).with("agent.demande");
+    }
+
+    @Bean
+    public Binding binding4(TopicExchange transactionExchange, Queue rechargeByAgence) {
+        return BindingBuilder.bind(rechargeByAgence).to(transactionExchange).with("recharge.send");
     }
 }
