@@ -32,13 +32,7 @@ public class RetraitService {
             throw new IllegalArgumentException("Aucun compte enregistré avec ce numéro " + event.getNumero_cible() );
         }
 
-        Account  agentAccount;
-        try {
-            agentAccount = utils.getAccount(event.getNumero_agent());
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Aucun compte d'agent enregistré avec ce numéro : " + event.getNumero_agent());
-        }
-        
+
         Double frais = utils.getToRemove(event.getMontant(),Accountcible.getAgenceId());
     
 
