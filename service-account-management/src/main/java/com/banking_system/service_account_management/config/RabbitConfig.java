@@ -67,6 +67,11 @@ public class RabbitConfig {
     }
 
     @Bean
+    public Queue retraitMoneyQueue() {
+        return new Queue("retraitMoneyQueue", true, false, false);
+    }
+    
+    @Bean
     public Queue rechargeAccountQueue() {
         return new Queue("transfertMoneyQueue", true, false, false);
     }
