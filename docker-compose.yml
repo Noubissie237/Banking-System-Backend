@@ -145,7 +145,7 @@ services:
       - MYSQL_ROOT_PASSWORD=
       - MYSQL_DATABASE=agence_bank
     ports:
-      - "3307:3306"
+      - "3307:3307"
     networks:
       - banking-system-network
     volumes:
@@ -155,7 +155,7 @@ services:
   service-users:
     image: noubissie237/service-users:latest
     ports:
-      - "8082:8082"
+      - "8082"
     environment:
       - SPRING_APPLICATION_NAME=service-users
       - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
