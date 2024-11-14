@@ -26,12 +26,12 @@ jobs:
       - name: Push Docker image to Docker Hub
         run: docker push noubissie237/service-config:latest
 
-      # # Service registry
-      # - name: Build Docker image for service-registry
-      #   run: docker build -t noubissie237/service-registry:latest ./service-registry/.
+      # Service registry
+      - name: Build Docker image for service-registry
+        run: docker build -t noubissie237/service-registry:latest ./service-registry/.
 
-      # - name: Push Docker image to Docker Hub
-      #   run: docker push noubissie237/service-registry:latest
+      - name: Push Docker image to Docker Hub
+        run: docker push noubissie237/service-registry:latest
 
 
       # # Service proxy
