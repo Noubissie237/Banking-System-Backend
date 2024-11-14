@@ -22,7 +22,7 @@ public class AccountConsumer {
         account.setAgenceId(event.getIdAgence());
         account.setNumber(event.getNumeroClient());
         account.setDateCreation(LocalDateTime.now());
-        account.setSolde(5000.0);
+        account.setSolde(0.0);
 
         accountService.createAccount(account);
     }

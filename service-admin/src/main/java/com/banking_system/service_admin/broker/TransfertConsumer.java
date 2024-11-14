@@ -15,6 +15,6 @@ public class TransfertConsumer {
 
     @RabbitListener(queues = "transfertMoneyQueueAgence")
     public void receiveEventTransfert(TransfertEventConsumer event) {
-        agenceService.inscrementCapital(event.getAgence(), event.getFrais());
+        agenceService.incrementCapital(event.getAgence(), event.getFrais());
     }
 }
