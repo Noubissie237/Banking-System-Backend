@@ -10,19 +10,19 @@ services:
     networks:
       - banking-system-network
 
-  # # Service d'enrégistrement
-  # service-registry:
-  #   image: noubissie237/service-registry:latest
-  #   ports:
-  #     - "8761:8761"
-  #   environment:
-  #     - SPRING_APPLICATION_NAME=service-registry
-  #     - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
-  #     - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
-  #   networks:
-  #     - banking-system-network
-  #   depends_on:
-  #     - service-config
+  # Service d'enrégistrement
+  service-registry:
+    image: noubissie237/service-registry:latest
+    ports:
+      - "8761:8761"
+    environment:
+      - SPRING_APPLICATION_NAME=service-registry
+      - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
+      - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
+    networks:
+      - banking-system-network
+    depends_on:
+      - service-config
 
   # # Service proxy
   # service-proxy:
