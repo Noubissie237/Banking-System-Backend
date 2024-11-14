@@ -38,7 +38,7 @@ public class TransactionsConsumer {
         transac.setNumeroSender(event.getNumero_cible());
         transac.setNumeroReceiver(event.getNumero_agent());
         transac.setAmount(event.getMontant());
-        transac.setTransactionType(TransactionType.TRANSFERT);
+        transac.setTransactionType(TransactionType.RETRAIT);
 
         transactionService.createTransactionEvent(transac);
     }

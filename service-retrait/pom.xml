@@ -12,7 +12,7 @@
 	<artifactId>service-retrait</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>service-retrait</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Service de retrait</description>
 	<url/>
 	<licenses>
 		<license/>
