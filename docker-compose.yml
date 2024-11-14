@@ -24,20 +24,135 @@ services:
     depends_on:
       - service-config
 
-  # # Service proxy
-  # service-proxy:
-  #   image: noubissie237/service-proxy:latest
-  #   ports:
-  #     - "8079:8079"
-  #   environment:
-  #     - SPRING_APPLICATION_NAME=service-proxy
-  #     - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
-  #     - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
-  #   networks:
-  #     - banking-system-network
-  #   depends_on:
-  #     - service-config
-  #     - service-registry
+  # Service proxy
+  service-proxy:
+    image: noubissie237/service-proxy:latest
+    ports:
+      - "8079:8079"
+    environment:
+      - SPRING_APPLICATION_NAME=service-proxy
+      - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
+      - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
+    networks:
+      - banking-system-network
+    depends_on:
+      - service-config
+      - service-registry
+
+
+  # Service account-management
+  service-account-management:
+    image: noubissie237/service-account-management:latest
+    ports:
+      - "8084:8084"
+    environment:
+      - SPRING_APPLICATION_NAME=service-account-management
+      - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
+      - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
+    networks:
+      - banking-system-network
+    depends_on:
+      - service-config
+      - service-registry
+      - rabbitmq
+
+  # Service admin
+  service-admin:
+    image: noubissie237/service-admin:latest
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_APPLICATION_NAME=service-admin
+      - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
+      - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
+    networks:
+      - banking-system-network
+    depends_on:
+      - service-config
+      - service-registry
+      - rabbitmq
+
+  # Service authentification
+  service-authentification:
+    image: noubissie237/service-authentification:latest
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_APPLICATION_NAME=service-authentification
+      - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
+      - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
+    networks:
+      - banking-system-network
+    depends_on:
+      - service-config
+      - service-registry
+      - rabbitmq
+
+  # Service retrait
+  service-retrait:
+    image: noubissie237/service-retrait:latest
+    ports:
+      - "8086:8086"
+    environment:
+      - SPRING_APPLICATION_NAME=service-retrait
+      - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
+      - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
+    networks:
+      - banking-system-network
+    depends_on:
+      - service-config
+      - service-registry
+      - rabbitmq
+
+  # Service tranfert
+  service-tranfert:
+    image: noubissie237/service-tranfert:latest
+    ports:
+      - "8087:8087"
+    environment:
+      - SPRING_APPLICATION_NAME=service-tranfert
+      - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
+      - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
+    networks:
+      - banking-system-network
+    depends_on:
+      - service-config
+      - service-registry
+      - rabbitmq
+
+  # Service transactions
+  service-transactions:
+    image: noubissie237/service-transactions:latest
+    ports:
+      - "8088:8088"
+    environment:
+      - SPRING_APPLICATION_NAME=service-transactions
+      - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
+      - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
+    networks:
+      - banking-system-network
+    depends_on:
+      - service-config
+      - service-registry
+      - rabbitmq
+      - eventstore.db
+
+  # Service users
+  service-users:
+    image: noubissie237/service-users:latest
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_APPLICATION_NAME=service-users
+      - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
+      - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
+    networks:
+      - banking-system-network
+    depends_on:
+      - service-config
+      - service-registry
+      - rabbitmq
+  
 
   rabbitmq:
     image: rabbitmq:management
