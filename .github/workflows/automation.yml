@@ -13,20 +13,25 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      # Configurer Java 17 pour Maven
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+
       # Étape de construction du service de configuration
       - name: Build Docker image for service-config
         run: |
           cd service-config/
-          apt install openjdk-17-jdk
           mvn clean -X install
-    #       docker build -t noubissie237/banking-system/service-config:latest .
+      #     docker build -t noubissie237/banking-system/service-config:latest .
 
-    #   - name: Log in to Docker Hub
-    #     env:
-    #       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-    #       DOCKER_PASSWORD: ${{ secrets.MY_DOCKER_HUB_TOKEN }}
-    #     run: echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+      # - name: Log in to Docker Hub
+      #   env:
+      #     DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      #     DOCKER_PASSWORD: ${{ secrets.MY_DOCKER_HUB_TOKEN }}
+      #   run: echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
 
-    #   - name: Push Docker image to Docker Hub
-    #     run: |
-    #       docker push noubissie237/banking-system/service-config:latest
+      # - name: Push Docker image to Docker Hub
+      #   run: |
+      #     docker push noubissie237/banking-system/service-config:latest
