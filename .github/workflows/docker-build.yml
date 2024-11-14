@@ -84,6 +84,9 @@ jobs:
 
       # Service admin
       - name: Build Docker image for service-admin
+        env:
+          USERNAME_DB: ${{ secrets.USERNAME_DB }}
+          PASSWORD_DB: ${{ secrets.PASSWORD_DB }}
         run: docker build -t noubissie237/service-admin:latest ./service-admin/.
 
       - name: Push Docker image to Docker Hub
