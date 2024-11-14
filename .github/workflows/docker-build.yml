@@ -21,78 +21,78 @@ jobs:
 
       # Service config
       - name: Build Docker image for service-config
-        run: docker build -t noubissie237/banking-system/service-config:latest ./service-config/.
+        run: docker build -t noubissie237/service-config:latest ./service-config/.
 
       - name: Push Docker image to Docker Hub
-        run: docker push noubissie237/banking-system/service-config:latest
+        run: docker push noubissie237/service-config:latest
 
       # # Service registry
       # - name: Build Docker image for service-registry
-      #   run: docker build -t noubissie237/banking-system/service-registry:latest ./service-registry/.
+      #   run: docker build -t noubissie237/service-registry:latest ./service-registry/.
 
       # - name: Push Docker image to Docker Hub
-      #   run: docker push noubissie237/banking-system/service-registry:latest
+      #   run: docker push noubissie237/service-registry:latest
 
 
       # # Service proxy
       # - name: Build Docker image for service-proxy
-      #   run: docker build -t noubissie237/banking-system/service-proxy:latest ./service-proxy/.
+      #   run: docker build -t noubissie237/service-proxy:latest ./service-proxy/.
 
       # - name: Push Docker image to Docker Hub
-      #   run: docker push noubissie237/banking-system/service-proxy:latest
+      #   run: docker push noubissie237/service-proxy:latest
 
 
       # # Service users
       # - name: Build Docker image for service-users
-      #   run: docker build -t noubissie237/banking-system/service-users:latest ./service-users/.
+      #   run: docker build -t noubissie237/service-users:latest ./service-users/.
 
       # - name: Push Docker image to Docker Hub
-      #   run: docker push noubissie237/banking-system/service-users:latest
+      #   run: docker push noubissie237/service-users:latest
 
 
       # # Service transactions
       # - name: Build Docker image for service-transactions
-      #   run: docker build -t noubissie237/banking-system/service-transactions:latest ./service-transactions/.
+      #   run: docker build -t noubissie237/service-transactions:latest ./service-transactions/.
 
       # - name: Push Docker image to Docker Hub
-      #   run: docker push noubissie237/banking-system/service-transactions:latest
+      #   run: docker push noubissie237/service-transactions:latest
 
 
       # # Service tranfert
       # - name: Build Docker image for service-tranfert
-      #   run: docker build -t noubissie237/banking-system/service-tranfert:latest ./service-tranfert/.
+      #   run: docker build -t noubissie237/service-tranfert:latest ./service-tranfert/.
 
       # - name: Push Docker image to Docker Hub
-      #   run: docker push noubissie237/banking-system/service-tranfert:latest
+      #   run: docker push noubissie237/service-tranfert:latest
 
 
       # # Service retrait
       # - name: Build Docker image for service-retrait
-      #   run: docker build -t noubissie237/banking-system/service-retrait:latest ./service-retrait/.
+      #   run: docker build -t noubissie237/service-retrait:latest ./service-retrait/.
 
       # - name: Push Docker image to Docker Hub
-      #   run: docker push noubissie237/banking-system/service-retrait:latest
+      #   run: docker push noubissie237/service-retrait:latest
 
 
       # # Service authentification
       # - name: Build Docker image for service-authentification
-      #   run: docker build -t noubissie237/banking-system/service-authentification:latest ./service-authentification/.
+      #   run: docker build -t noubissie237/service-authentification:latest ./service-authentification/.
 
       # - name: Push Docker image to Docker Hub
-      #   run: docker push noubissie237/banking-system/service-authentification:latest
+      #   run: docker push noubissie237/service-authentification:latest
 
 
       # # Service admin
       # - name: Build Docker image for service-admin
-      #   run: docker build -t noubissie237/banking-system/service-admin:latest ./service-admin/.
+      #   run: docker build -t noubissie237/service-admin:latest ./service-admin/.
 
       # - name: Push Docker image to Docker Hub
-      #   run: docker push noubissie237/banking-system/service-admin:latest
+      #   run: docker push noubissie237/service-admin:latest
 
 
       # # Service account-management
       # - name: Build Docker image for service-account-management
-      #   run: docker build -t noubissie237/banking-system/service-account-management:latest ./service-account-management/.
+      #   run: docker build -t noubissie237/service-account-management:latest ./service-account-management/.
 
       # - name: Push Docker image to Docker Hub
-      #   run: docker push noubissie237/banking-system/service-account-management:latest
+      #   run: docker push noubissie237/service-account-management:latest
