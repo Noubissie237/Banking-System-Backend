@@ -1,0 +1,31 @@
+name: Docker Build and Push
+
+on:
+  push:
+    branches:
+      - main 
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Étape de construction du service de configuration
+      - name: Build Docker image for service-config
+        run: |
+          cd service-config/
+          mvn clean -X install
+          docker build -t noubissie237/banking-system/service-config:latest .
+
+      - name: Log in to Docker Hub
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.MY_DOCKER_HUB_TOKEN }}
+        run: echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+
+      - name: Push Docker image to Docker Hub
+        run: |
+          docker push noubissie237/banking-system/service-config:latest
