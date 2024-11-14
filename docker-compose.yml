@@ -145,7 +145,7 @@ services:
       - MYSQL_ROOT_PASSWORD=
       - MYSQL_DATABASE=agence_bank
     ports:
-      - "3306:3306"
+      - "3307:3306"
     networks:
       - banking-system-network
     volumes:
