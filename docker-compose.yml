@@ -1,0 +1,79 @@
+services:
+  # Service de configuration
+  service-config:
+    image: noubissie237/service-config:latest
+    ports:
+      - "2370:2370"
+    environment:
+      - SPRING_APPLICATION_NAME=service-config
+      - SPRING_CLOUD_CONFIG_SERVER_GIT_URI=https://github.com/Noubissie237/banking-system-cloud-conf
+    networks:
+      - banking-system-network
+
+  # # Service d'enrégistrement
+  # service-registry:
+  #   image: noubissie237/service-registry:latest
+  #   ports:
+  #     - "8761:8761"
+  #   environment:
+  #     - SPRING_APPLICATION_NAME=service-registry
+  #     - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
+  #     - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
+  #   networks:
+  #     - banking-system-network
+  #   depends_on:
+  #     - service-config
+
+  # # Service proxy
+  # service-proxy:
+  #   image: noubissie237/service-proxy:latest
+  #   ports:
+  #     - "8079:8079"
+  #   environment:
+  #     - SPRING_APPLICATION_NAME=service-proxy
+  #     - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
+  #     - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
+  #   networks:
+  #     - banking-system-network
+  #   depends_on:
+  #     - service-config
+  #     - service-registry
+
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - banking-system-network
+
+
+  eventstore.db:
+    image: docker.eventstore.com/eventstore-preview/eventstoredb-ee:24.10.0-preview1-x64-8.0-bookworm-slim
+    environment:
+      - EVENTSTORE_CLUSTER_SIZE=1
+      - EVENTSTORE_RUN_PROJECTIONS=All
+      - EVENTSTORE_START_STANDARD_PROJECTIONS=true
+      - EVENTSTORE_NODE_PORT=2113
+      - EVENTSTORE_INSECURE=true
+      - EVENTSTORE_ENABLE_ATOM_PUB_OVER_HTTP=true
+    ports:
+      - "2113:2113"
+    volumes:
+      - type: volume
+        source: eventstore-volume-data
+        target: /var/lib/eventstore
+      - type: volume
+        source: eventstore-volume-logs
+        target: /var/log/eventstore
+
+volumes:
+  eventstore-volume-data:
+  eventstore-volume-logs:
+
+
+networks:
+  banking-system-network:
+    driver: bridge
+
+  
