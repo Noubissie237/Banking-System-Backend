@@ -199,6 +199,7 @@ services:
 volumes:
   eventstore-volume-data:
   eventstore-volume-logs:
+  mysql-data:/var/lib/mysql:
 
 
 networks:
