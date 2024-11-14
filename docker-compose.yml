@@ -44,7 +44,7 @@ services:
   service-account-management:
     image: noubissie237/service-account-management:latest
     ports:
-      - "8084:8084"
+      - "8084"
     environment:
       - SPRING_APPLICATION_NAME=service-account-management
       - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
