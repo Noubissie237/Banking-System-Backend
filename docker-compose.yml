@@ -71,6 +71,7 @@ services:
       - service-config
       - service-registry
       - rabbitmq
+      - mysql
 
   # Service authentification
   service-authentification:
@@ -136,6 +137,19 @@ services:
       - service-registry
       - rabbitmq
       - eventstore.db
+
+  # Service MySQL
+  mysql:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_DATABASE=agence_bank
+    ports:
+      - "3306:3306"
+    networks:
+      - banking-system-network
+    volumes:
+      - mysql-data:/var/lib/mysql
 
   # Service users
   service-users:
