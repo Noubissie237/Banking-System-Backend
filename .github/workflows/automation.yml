@@ -17,6 +17,7 @@ jobs:
       - name: Build Docker image for service-config
         run: |
           cd service-config/
+          apt install openjdk-17-jdk
           mvn clean -X install
     #       docker build -t noubissie237/banking-system/service-config:latest .
 
