@@ -75,7 +75,7 @@ jobs:
 
       # Service users
       - name: Build Docker image for service-users
-        run: docker build -t noubissie237/service-users:latest ./service-users/.
+        run: docker build -t noubissie237/service-users:latest ./service-users/
 
       - name: Push Docker image to Docker Hub
         run: docker push noubissie237/service-users:latest
