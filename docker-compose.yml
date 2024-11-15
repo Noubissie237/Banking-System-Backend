@@ -14,7 +14,7 @@ services:
   # Service d'enrégistrement
   service-registry:
     image: noubissie237/service-registry:latest
-    build: ./service-registry/
+    # build: ./service-registry/
     ports:
       - "8761:8761"
     environment:
@@ -29,7 +29,7 @@ services:
   # Service proxy
   service-proxy:
     image: noubissie237/service-proxy:latest
-    build: ./service-proxy/
+    # build: ./service-proxy/
     ports:
       - "8079:8079"
     environment:
