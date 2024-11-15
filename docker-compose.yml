@@ -172,6 +172,20 @@ services:
       - banking-system-network
     volumes:
       - mysql-data:/var/lib/mysql
+
+  # Service PostgreSQL
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password 
+      POSTGRES_DB: banking_system
+    ports:
+      - "5432:5432"
+    networks:
+      - banking-system-network
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
       
 
   rabbitmq:
@@ -206,6 +220,7 @@ volumes:
   eventstore-volume-data:
   eventstore-volume-logs:
   mysql-data:
+  postgres-data:
 
 
 networks:
