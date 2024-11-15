@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:5173" , allowedHeaders = "*")
 @RestController
 @RequestMapping("/api")
 public class ClientController {
@@ -24,5 +25,7 @@ public class ClientController {
     public List<Client> deleteClientController(@PathVariable("id") int id) {
         return clientService.deleteClient(id);
     }
+
+    
 
 }
