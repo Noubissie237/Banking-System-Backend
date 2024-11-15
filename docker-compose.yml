@@ -45,7 +45,8 @@ services:
 
   # Service account-management
   service-account-management:
-    image: noubissie237/service-account-management:latest
+    # image: noubissie237/service-account-management:latest
+    build: ./service-account-management/
     ports:
       - "8084"
     environment:
@@ -145,7 +146,8 @@ services:
 
   # Service users
   service-users:
-    image: noubissie237/service-users:latest
+    # image: noubissie237/service-users:latest
+    build: ./service-users/
     ports:
       - "8082"
     environment:
@@ -167,7 +169,7 @@ services:
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
       - MYSQL_ROOT_PASSWORD=
-      - MYSQL_DATABASE=user_bank_db
+      - MYSQL_DATABASE=agence_bank
     ports:
       - "3307:3306"
     networks:
