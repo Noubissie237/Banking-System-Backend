@@ -206,8 +206,6 @@ volumes:
   eventstore-volume-data:
   eventstore-volume-logs:
   mysql-data:
-  postgres-data:
-
 
 networks:
   banking-system-network:
