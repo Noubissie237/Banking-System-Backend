@@ -58,6 +58,7 @@ services:
       - service-config
       - service-registry
       - rabbitmq
+      - mysql
 
   # Service admin
   service-admin:
@@ -157,6 +158,7 @@ services:
       - service-config
       - service-registry
       - rabbitmq
+      - mysql
   
 
   # Service MySQL
