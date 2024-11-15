@@ -163,10 +163,11 @@ services:
   mysql:
     image: mysql:latest
     environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
       - MYSQL_ROOT_PASSWORD=
       - MYSQL_DATABASE=agence_bank
     ports:
-      - "3307:3307"
+      - "3307:3306"
     networks:
       - banking-system-network
     volumes:
