@@ -37,8 +37,6 @@ public class MessageCompteCreate {
             // Gère l'exception
         }
 
-
-        
     }
 
     @RabbitListener(queues = "rejectDemandeQueue")

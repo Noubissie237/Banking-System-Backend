@@ -19,8 +19,11 @@ public class Transaction {
     private RabbitTemplate rabbitTemplate;
 
     public void transfertEnvoyeur(TransfertEventEnvoyeur transfertEventEnvoyeur) {
+        Solde sourceAccount;
         try {
-            String message = "Transfert de " + transfertEventEnvoyeur.getMontant() +  " Frais " + transfertEventEnvoyeur.getFrais() + " a " + transfertEventEnvoyeur.getNumero_cible() + " effectué avec succès !";
+            sourceAccount = util.getsoldeClient(transfertEventEnvoyeur.getNumero_source());
+           
+            String message = "Transfert de " + transfertEventEnvoyeur.getNumero_source() + " vers " + transfertEventEnvoyeur.getNumero_cible() + " Reussi. Information detaillees: Montant de transaction " + transfertEventEnvoyeur.getMontant() + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " + transfertEventEnvoyeur.getNumero_cible() + transfertEventEnvoyeur.getFrais() + ", Nouveau solde : " + transfertEventEnvoyeur.getMontant() + sourceAccount.getSolde() + " FCFA.";
             rabbitTemplate.convertAndSend("clientExchange", "transfertenvoyeurmessage", message);
         } catch (Exception e) {
             throw new RuntimeException("Transfert Error : ",e);
@@ -28,8 +31,11 @@ public class Transaction {
     }
 
     public void transfertRecepteur(TransfertEventRecepteur transfertEventRecepteur) {
+        Solde sourceAccount;
         try {
-            String message = "Transfert de " + transfertEventRecepteur.getMontant() + " Solde ";
+            sourceAccount = util.getsoldeClient(transfertEventRecepteur.getNumero_cible());
+           
+            String message = "Depot effectue par " + transfertEventRecepteur.getNumero_source() + " to " + transfertEventRecepteur.getNumero_cible() + ". Information detaillees: Montant de transaction " + transfertEventRecepteur.getMontant() + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " + transfertEventRecepteur.getNumero_cible() + ", Nouveau solde : " + transfertEventRecepteur.getMontant() + sourceAccount.getSolde() +  " FCFA.";
             rabbitTemplate.convertAndSend("clientExchange", "transfertrecepteurmessage", message);
         } catch (Exception e) {
             throw new RuntimeException("Transfert Error : ",e);
