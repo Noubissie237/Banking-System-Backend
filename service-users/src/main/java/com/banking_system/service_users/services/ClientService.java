@@ -1,30 +1,19 @@
 package com.banking_system.service_users.services;
 
-<<<<<<< HEAD
+
 import java.util.List;
-=======
+
 import com.banking_system.service_users.dto.LoginRequest;
 import com.banking_system.service_users.events.ClientEvent;
 import com.banking_system.service_users.models.Client;
 import com.banking_system.service_users.repositories.ClientRepository;
 import com.banking_system.service_users.utils.Utils;
->>>>>>> fd0a6e4972a24b6ff3ae230fd0fe6dfc1776bc0e
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-<<<<<<< HEAD
-
-import com.banking_system.service_users.events.ClientEvent;
-import com.banking_system.service_users.models.Client;
-import com.banking_system.service_users.repositories.ClientRepository;
-import com.banking_system.service_users.utils.Utils;
-=======
 import org.springframework.web.client.RestTemplate;
-
-import java.util.List;
->>>>>>> fd0a6e4972a24b6ff3ae230fd0fe6dfc1776bc0e
 
 @Service
 public class ClientService {
@@ -82,8 +71,6 @@ public class ClientService {
         return clientRepository.findAll();
     }
 
-<<<<<<< HEAD
-=======
     public String login(String phone, String password) {
         String url = "http://localhost:8079/SERVICE-AUTHENTIFICATION/auth/login";
         LoginRequest loginRequest = new LoginRequest();
@@ -97,5 +84,10 @@ public class ClientService {
             return "Echec : "+e.getMessage();  
         }
     }
->>>>>>> fd0a6e4972a24b6ff3ae230fd0fe6dfc1776bc0e
+
+    public Client findClient(String numero){
+        return clientRepository.findByTel(numero).orElseThrow();
+    }
+
+
 }

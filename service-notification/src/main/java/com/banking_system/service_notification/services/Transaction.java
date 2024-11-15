@@ -3,11 +3,17 @@ package com.banking_system.service_notification.services;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.banking_system.service_notification.events.Retrait;
+import com.banking_system.service_notification.events.RetraitEventProducer;
+import com.banking_system.service_notification.events.RetraitProducer;
+import com.banking_system.service_notification.events.Solde;
 import com.banking_system.service_notification.events.TransfertEventEnvoyeur;
 import com.banking_system.service_notification.events.TransfertEventRecepteur;
+import com.banking_system.service_notification.util.Util;
 
 public class Transaction {
+
+    @Autowired
+     Util util;
 
      @Autowired
     private RabbitTemplate rabbitTemplate;
@@ -30,18 +36,22 @@ public class Transaction {
         }
     }
 
-    public void retraitClient(Retrait retrait) {
+    public void retraitClient(RetraitEventProducer retrait) {
+         Solde sourceAccount;
         try {
-            String message = "Retrait de " +retrait.getMontant() + " effectué avec succès ! Nouveau solde ";
+            sourceAccount = util.getsoldeClient(retrait.getNumero_cible());
+            String message = "Retrait d'agent reussi par " + retrait.getNumero_agent() + " avec le code " +  retrait.getNumero_agent() + ". Information detaillees: Montant de transaction " + retrait.getMontant() + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " + retrait.getMontant() + retrait.getFrais() + ", Nouveau solde : " + retrait.getMontant() + sourceAccount.getSolde() + " FCFA.";
             rabbitTemplate.convertAndSend("clientExchange", "retraitclientmessage", message);
         } catch (Exception e) {
             throw new RuntimeException("Retrait Creation Error : ",e);
         }
     }
 // ajout du montant recu
-    public void retraitRecepteurAgent(Retrait retrait) {
+    public void retraitRecepteurAgent(RetraitProducer retrait) {
+        Solde sourceAccount;
         try {
-            String message = "Depot effectuer de " + " Montant " +retrait.getMontant() + " effectué avec succès !";
+            sourceAccount = util.getSoldeAgent(retrait.getNumero_agent());
+            String message = "Depot effectue par " + retrait.getNumero_cible() + " to " + retrait.getNumero_agent()+ ". Information detaillees: Montant de transaction " + retrait.getMontant() + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " + retrait.getMontant() + ", Nouveau solde : " + retrait.getMontant() + sourceAccount.getSolde() + " FCFA.";
             rabbitTemplate.convertAndSend("clientExchange", "retraitagentmessage", message);
         } catch (Exception e) {
             throw new RuntimeException("Retrait Creation Error : ",e);

@@ -50,6 +50,7 @@ public class AdminService {
                 ClientEventProducer event = new ClientEventProducer();
                 event.setIdAgence(demandeUpdated.getAgence());
                 event.setNumeroClient(demandeUpdated.getClientTel());
+            
                 rabbitTemplate.convertAndSend("clientExchange", "demande.accepted", event);
                 deleteDemande(demandeUpdated.getId());
             }

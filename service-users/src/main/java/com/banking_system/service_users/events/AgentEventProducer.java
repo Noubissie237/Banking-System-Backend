@@ -20,4 +20,5 @@ public class AgentEventProducer {
     private String numero;
     @JsonProperty("matricule")
     private String matricule;
+    
 }

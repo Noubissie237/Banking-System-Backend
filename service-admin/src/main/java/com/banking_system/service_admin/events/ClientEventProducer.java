@@ -15,5 +15,5 @@ public class ClientEventProducer {
     @JsonProperty("id_agence")
     private int idAgence;
     @JsonProperty("numero_client")
-    private String numeroClient;    
+    private String numeroClient;   
 }

@@ -1,29 +1,45 @@
 package com.banking_system.service_notification.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 
 @Service
 public class EmailSender {
 
-     @Autowired
+    @Autowired
     private JavaMailSender mail;
 
     public void sendMail(String toEmail,
-                        String subject,
-                        String body){
-                
-                SimpleMailMessage message = new SimpleMailMessage();
-                message.setFrom("supp0rt.quicksend@gmail.com");
-                message.setTo(toEmail);
-                message.setText(body);
-                message.setSubject(subject);
+                         String subject,
+                         String body) throws MessagingException {
+        
+        // Crée un objet MimeMessage
+        MimeMessage message = mail.createMimeMessage();
+        
+        // Utilise MimeMessageHelper pour spécifier le format HTML
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
-                mail.send(message);
+        // Définir le contenu HTML et la signature
+        String signature = "<br><br><center>----</center><br>" +
+                           "<span style='color: green; font-weight: bold; font-size:14px;'> Quick Send Team</span><br>" + "<span style='color: orange; font-weight: bold; font-size:13px;'> supp0rt.quicksend@gmail.com</span><br><br>" +
+                           "<img src='cid:logoImage' alt='Quick Send' width='45%' height='100px'/>";
+        String htmlContent = body + signature;
 
-                System.out.println("Mail envoyer avec succes!");
-                        }
-    
+        helper.setFrom("supp0rt.quicksend@gmail.com");
+        helper.setTo(toEmail);
+        helper.setSubject(subject);
+        helper.setText(htmlContent, true); 
+        helper.addInline("logoImage", new ClassPathResource("/img/b2.jpg"));
+
+        
+        mail.send(message);
+
+        System.out.println("Mail envoyé avec succès!");
+    }
 }

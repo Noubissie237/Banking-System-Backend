@@ -1,4 +1,4 @@
-package com.banking_system.service_account_management.event;
+package com.banking_system.service_notification.events;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

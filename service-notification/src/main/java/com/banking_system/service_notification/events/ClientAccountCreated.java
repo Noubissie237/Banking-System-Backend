@@ -14,6 +14,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ClientAccountCreated {
-    @JsonProperty("message")
-    private String message;
+    @JsonProperty("id_agence")
+    private int idAgence;
+    @JsonProperty("numero_client")
+    private String numeroClient;
+
 }

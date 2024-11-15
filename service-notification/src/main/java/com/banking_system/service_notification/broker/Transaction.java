@@ -1,14 +1,26 @@
 package com.banking_system.service_notification.broker;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.banking_system.service_notification.events.Retrait;
+import com.banking_system.service_notification.events.Account;
+import com.banking_system.service_notification.events.RetraitEventProducer;
+import com.banking_system.service_notification.events.RetraitProducer;
+import com.banking_system.service_notification.events.Solde;
 import com.banking_system.service_notification.events.TransfertEventEnvoyeur;
 import com.banking_system.service_notification.events.TransfertEventRecepteur;
+import com.banking_system.service_notification.services.EmailSender;
+import com.banking_system.service_notification.util.Util;
 
 @Component
 public class Transaction{
+        @Autowired
+        Util util;
+
+        @Autowired
+        private EmailSender mailservice;
+
 
     @RabbitListener(queues = "transfertMoneyQueue")
     public void transfertEnvoyeur(TransfertEventEnvoyeur transfertEventEnvoyeur) {
@@ -30,20 +42,36 @@ public class Transaction{
         }
     }
 
-    @RabbitListener(queues = "retraitmessageQueue")
-    public void retraitClient(Retrait retrait) {
+    @RabbitListener(queues = "retraitMoneyQueueForTransactions")
+    public void retraitClient(RetraitEventProducer retrait) {
+        
+        Solde sourceAccount;
+        Account mail;
+
         try {
-            String message = "Retrait d'agent reussi par " + retrait.getNumero_source() + " . Informations detaillees: Montant: " +retrait.getMontant() + " Nouveau solde : ";
+            sourceAccount = util.getsoldeClient(retrait.getNumero_cible());
+            mail = util.getEmail(retrait.getNumero_cible());
+           
+            String message = "Retrait d'agent reussi par " + retrait.getNumero_agent() + " avec le code " +  retrait.getNumero_agent() + ". Information detaillees: Montant de transaction " + retrait.getMontant() + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " + retrait.getMontant() + retrait.getFrais() + ", Nouveau solde : " + retrait.getMontant() + sourceAccount.getSolde() + " FCFA.";
+            mailservice.sendMail(mail.getEmail(),"Confirmation de création de compte", message);
+    
             System.out.println(message);
         } catch (Exception e) {
             throw new RuntimeException("Retrait Creation Error : ",e);
         }
     }
 
-    @RabbitListener(queues = "retraitmessageQueue")
-    public void retraitRecepteurAgent(Retrait retrait) {
+    @RabbitListener(queues = "retraitAgenceQueue")
+    public void retraitRecepteurAgent(RetraitProducer retrait) {
+
+        Solde sourceAccount;
+        Account mail;
         try {
-            String message = "Depot effectue par " + retrait.getNumero_source() + " to " + retrait.getNumero_cible() + ". Information detaillees: Montant de transaction " + retrait.getMontant() + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " + retrait.getNumero_cible() + ", Nouveau solde : " + " FCFA.";
+            sourceAccount = util.getSoldeAgent(retrait.getNumero_agent());
+            mail = util.getEmailAgent(retrait.getNumero_agent());
+           
+            String message = "Depot effectue par " + retrait.getNumero_cible() + " to " + retrait.getNumero_agent()+ ". Information detaillees: Montant de transaction " + retrait.getMontant() + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " + retrait.getMontant() + ", Nouveau solde : " + retrait.getMontant() + sourceAccount.getSolde() + " FCFA.";
+            
             System.out.println(message);
         } catch (Exception e) {
             throw new RuntimeException("Retrait Creation Error : ",e);
