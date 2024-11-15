@@ -1,8 +1,8 @@
 services:
   # Service de configuration
   service-config:
-    # image: noubissie237/service-config:latest
-    build: ./service-config/
+    image: noubissie237/service-config:latest
+    # build: ./service-config/
     ports:
       - "2370:2370"
     environment:
@@ -13,7 +13,7 @@ services:
 
   # Service d'enrégistrement
   service-registry:
-    # image: noubissie237/service-registry:latest
+    image: noubissie237/service-registry:latest
     build: ./service-registry/
     ports:
       - "8761:8761"
@@ -28,7 +28,7 @@ services:
 
   # Service proxy
   service-proxy:
-    # image: noubissie237/service-proxy:latest
+    image: noubissie237/service-proxy:latest
     build: ./service-proxy/
     ports:
       - "8079:8079"
