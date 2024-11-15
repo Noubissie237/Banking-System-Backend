@@ -161,37 +161,19 @@ services:
   #     - mysql
   
 
-  # # Service MySQL
-  # mysql:
-  #   image: mysql:latest
-  #   environment:
-  #     - MYSQL_ALLOW_EMPTY_PASSWORD=yes
-  #     - MYSQL_ROOT_PASSWORD=
-  #     - MYSQL_DATABASE=agence_bank
-  #   ports:
-  #     - "3307:3306"
-  #   networks:
-  #     - banking-system-network
-  #   volumes:
-  #     - mysql-data:/var/lib/mysql
-      
-
+  # Service MySQL
   mysql:
-    image: mysql:8.0
-    container_name: mysql
+    image: mysql:latest
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_DATABASE=agence_bank
     ports:
       - "3307:3306"
-    environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: yes 
-      MYSQL_ROOT_PASSWORD: ""        
-      MYSQL_DATABASE: banking_db     
-      MYSQL_USER: root       
-      MYSQL_PASSWORD: ""   
-    volumes:
-      - mysql-data:/var/lib/mysql
     networks:
       - banking-system-network
-    restart: always
+    volumes:
+      - mysql-data:/var/lib/mysql
 
 
   rabbitmq:
