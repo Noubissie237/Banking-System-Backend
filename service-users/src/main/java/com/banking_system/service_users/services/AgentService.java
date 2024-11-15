@@ -1,16 +1,18 @@
 package com.banking_system.service_users.services;
 
-import java.util.List;
+
+
+import com.banking_system.service_users.events.AgentEventProducer;
+import com.banking_system.service_users.models.Agent;
+import com.banking_system.service_users.repositories.AgentRepository;
+import com.banking_system.service_users.utils.Utils;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.banking_system.service_users.events.AgentEventProducer;
-import com.banking_system.service_users.models.Agent;
-import com.banking_system.service_users.repositories.AgentRepository;
-import com.banking_system.service_users.utils.Utils;
+import java.util.List;
 
 @Service
 public class AgentService {
