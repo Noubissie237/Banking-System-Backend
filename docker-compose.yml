@@ -45,8 +45,7 @@ services:
 
   # Service account-management
   service-account-management:
-    # image: noubissie237/service-account-management:latest
-    build: ./service-account-management/
+    image: noubissie237/service-account-management:latest
     ports:
       - "8084"
     environment:
@@ -146,8 +145,7 @@ services:
 
   # Service users
   service-users:
-    # image: noubissie237/service-users:latest
-    build: ./service-users/
+    image: noubissie237/service-users:latest
     ports:
       - "8082"
     environment:
