@@ -167,7 +167,7 @@ services:
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
       - MYSQL_ROOT_PASSWORD=
-      - MYSQL_DATABASE=agence_bank
+      - MYSQL_DATABASE=user_bank_db
     ports:
       - "3307:3306"
     networks:
