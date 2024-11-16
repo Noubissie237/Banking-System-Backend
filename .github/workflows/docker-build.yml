@@ -50,14 +50,6 @@ jobs:
         run: docker push noubissie237/service-users:latest
 
 
-      # Service transactions
-      - name: Build Docker image for service-transactions
-        run: docker build -t noubissie237/service-transactions:latest ./service-transactions/.
-
-      - name: Push Docker image to Docker Hub
-        run: docker push noubissie237/service-transactions:latest
-
-
       # Service tranfert
       - name: Build Docker image for service-tranfert
         run: docker build -t noubissie237/service-tranfert:latest ./service-tranfert/.
@@ -103,3 +95,11 @@ jobs:
 
       - name: Push Docker image to Docker Hub
         run: docker push noubissie237/service-account-management:latest
+
+
+      # Service transactions
+      - name: Build Docker image for service-transactions
+        run: docker build -t noubissie237/service-transactions:latest ./service-transactions/.
+
+      - name: Push Docker image to Docker Hub
+        run: docker push noubissie237/service-transactions:latest
