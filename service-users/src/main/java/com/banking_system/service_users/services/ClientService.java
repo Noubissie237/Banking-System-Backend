@@ -71,7 +71,7 @@ public class ClientService {
     }
 
     public String login(String phone, String password) {
-        String url = "http://localhost:8079/SERVICE-AUTHENTIFICATION/auth/login";
+        String url = "http://185.218.126.7:8079/SERVICE-AUTHENTIFICATION/auth/login";
         LoginRequest loginRequest = new LoginRequest();
 
         loginRequest.setPhone(phone);
