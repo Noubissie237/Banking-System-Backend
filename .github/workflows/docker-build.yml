@@ -3,7 +3,7 @@ name: Docker Build and Push
 on:
   push:
     branches:
-      - NK_Wilfried
+      - main
 
 jobs:
   build:
@@ -50,36 +50,36 @@ jobs:
       #   run: docker push noubissie237/service-users:latest
 
 
-      # Service transactions
-      - name: Build Docker image for service-transactions
-        run: docker build -t noubissie237/service-transactions:latest ./service-transactions/.
+      # # Service transactions
+      # - name: Build Docker image for service-transactions
+      #   run: docker build -t noubissie237/service-transactions:latest ./service-transactions/.
 
-      - name: Push Docker image to Docker Hub
-        run: docker push noubissie237/service-transactions:latest
-
-
-      # Service tranfert
-      - name: Build Docker image for service-tranfert
-        run: docker build -t noubissie237/service-tranfert:latest ./service-tranfert/.
-
-      - name: Push Docker image to Docker Hub
-        run: docker push noubissie237/service-tranfert:latest
+      # - name: Push Docker image to Docker Hub
+      #   run: docker push noubissie237/service-transactions:latest
 
 
-      # Service retrait
-      - name: Build Docker image for service-retrait
-        run: docker build -t noubissie237/service-retrait:latest ./service-retrait/.
+      # # Service tranfert
+      # - name: Build Docker image for service-tranfert
+      #   run: docker build -t noubissie237/service-tranfert:latest ./service-tranfert/.
 
-      - name: Push Docker image to Docker Hub
-        run: docker push noubissie237/service-retrait:latest
+      # - name: Push Docker image to Docker Hub
+      #   run: docker push noubissie237/service-tranfert:latest
 
 
-      # Service authentification
-      - name: Build Docker image for service-authentification
-        run: docker build -t noubissie237/service-authentification:latest ./service-authentification/.
+      # # Service retrait
+      # - name: Build Docker image for service-retrait
+      #   run: docker build -t noubissie237/service-retrait:latest ./service-retrait/.
 
-      - name: Push Docker image to Docker Hub
-        run: docker push noubissie237/service-authentification:latest
+      # - name: Push Docker image to Docker Hub
+      #   run: docker push noubissie237/service-retrait:latest
+
+
+      # # Service authentification
+      # - name: Build Docker image for service-authentification
+      #   run: docker build -t noubissie237/service-authentification:latest ./service-authentification/.
+
+      # - name: Push Docker image to Docker Hub
+      #   run: docker push noubissie237/service-authentification:latest
 
 
       # # Service admin
