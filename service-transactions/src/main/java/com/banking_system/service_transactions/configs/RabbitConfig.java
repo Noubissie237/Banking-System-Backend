@@ -35,8 +35,13 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Queue transfertMoneyQueue1() {
-        return new Queue("transfertMoneyQueue1", true, false, false);
+    public Queue depotMoneyQueueForEvent() {
+        return new Queue("depotMoneyQueueForEvent", true, false, false);
+    }
+
+    @Bean
+    public Queue depotMoneyQueue1() {
+        return new Queue("depotMoneyQueue1", true, false, false);
     }
     
     @Bean

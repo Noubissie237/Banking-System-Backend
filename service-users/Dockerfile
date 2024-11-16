@@ -21,7 +21,5 @@ COPY --from=build /app/target/service-users-0.0.1-SNAPSHOT.jar service-users.jar
 ENV SPRING_APPLICATION_NAME=service-users
 ENV SPRING_CLOUD_CONFIG_SERVER_GIT_URI=https://github.com/Noubissie237/banking-system-cloud-conf
 
-EXPOSE 8082
-
 ENTRYPOINT ["java", "-jar", "/app/service-users.jar"]
 >>>>>>> fd0a6e4972a24b6ff3ae230fd0fe6dfc1776bc0e

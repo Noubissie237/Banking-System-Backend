@@ -3,7 +3,7 @@ name: Docker Build and Push
 on:
   push:
     branches:
-      - main
+      - NK_Wilfried
 
 jobs:
   build:
@@ -42,12 +42,12 @@ jobs:
         run: docker push noubissie237/service-proxy:latest
 
 
-      # Service users
-      - name: Build Docker image for service-users
-        run: docker build -t noubissie237/service-users:latest ./service-users/.
+      # # Service users
+      # - name: Build Docker image for service-users
+      #   run: docker build -t noubissie237/service-users:latest ./service-users/.
 
-      - name: Push Docker image to Docker Hub
-        run: docker push noubissie237/service-users:latest
+      # - name: Push Docker image to Docker Hub
+      #   run: docker push noubissie237/service-users:latest
 
 
       # Service transactions
@@ -82,20 +82,20 @@ jobs:
         run: docker push noubissie237/service-authentification:latest
 
 
-      # Service admin
-      - name: Build Docker image for service-admin
-        env:
-          USERNAME_DB: ${{ secrets.USERNAME_DB }}
-          PASSWORD_DB: ${{ secrets.PASSWORD_DB }}
-        run: docker build -t noubissie237/service-admin:latest ./service-admin/.
+      # # Service admin
+      # - name: Build Docker image for service-admin
+      #   env:
+      #     USERNAME_DB: ${{ secrets.USERNAME_DB }}
+      #     PASSWORD_DB: ${{ secrets.PASSWORD_DB }}
+      #   run: docker build -t noubissie237/service-admin:latest ./service-admin/.
 
-      - name: Push Docker image to Docker Hub
-        run: docker push noubissie237/service-admin:latest
+      # - name: Push Docker image to Docker Hub
+      #   run: docker push noubissie237/service-admin:latest
 
 
-      # Service account-management
-      - name: Build Docker image for service-account-management
-        run: docker build -t noubissie237/service-account-management:latest ./service-account-management/.
+      # # Service account-management
+      # - name: Build Docker image for service-account-management
+      #   run: docker build -t noubissie237/service-account-management:latest ./service-account-management/.
 
-      - name: Push Docker image to Docker Hub
-        run: docker push noubissie237/service-account-management:latest
+      # - name: Push Docker image to Docker Hub
+      #   run: docker push noubissie237/service-account-management:latest
