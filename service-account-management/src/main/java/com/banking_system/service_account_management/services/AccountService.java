@@ -4,6 +4,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.banking_system.service_account_management.event.DepotEventConsumer;
 import com.banking_system.service_account_management.event.RechargeEventConsumer;
 import com.banking_system.service_account_management.event.TransfertEventConsumer;
 import com.banking_system.service_account_management.event.RetraitEventConsumer;
@@ -13,6 +14,7 @@ import com.banking_system.service_account_management.repositories.AccountReposit
 import com.banking_system.service_account_management.repositories.AgentAccountRepository;
 
 import jakarta.transaction.Transactional;
+
 
 @Service
 public class AccountService {
@@ -83,5 +85,17 @@ public class AccountService {
         incrementSolde(account, recharge.getMontant());
 
         rabbitTemplate.convertAndSend("transactionExchange", "recharge.send.agence", recharge);
+    }
+
+    @Transactional
+    public void makeDepot(DepotEventConsumer depot) { 
+        Account cible = findAccountByNumber(depot.getNumero_cible());
+        Account source = findAccountByNumber(depot.getNumero_source());
+
+        incrementSolde(cible, depot.getMontant());
+        decrementSolde(source, depot.getMontant()); 
+
+        rabbitTemplate.convertAndSend("transactionExchange", "getting.depot", depot);
+
     }
 }

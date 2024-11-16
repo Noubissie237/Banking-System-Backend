@@ -42,4 +42,17 @@ public class TransactionsConsumer {
 
         transactionService.createTransactionEvent(transac);
     }
+
+    @RabbitListener(queues = "depotMoneyQueueForEvent")
+    public void receiveDepotEvent(TransactionTemplate event) {
+        TransactionEvent transac = new TransactionEvent();
+
+        transac.setAgenceId(event.getAgence());
+        transac.setNumeroSender(event.getNumero_source());
+        transac.setNumeroReceiver(event.getNumero_cible());
+        transac.setAmount(event.getMontant());
+        transac.setTransactionType(TransactionType.DEPOT);
+
+        transactionService.createTransactionEvent(transac);
+    }
 }
