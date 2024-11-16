@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.banking_system.service_notification.events.Account;
+import com.banking_system.service_notification.events.RechargeEventConsumer;
 import com.banking_system.service_notification.events.RetraitEventProducer;
 import com.banking_system.service_notification.events.RetraitProducer;
 import com.banking_system.service_notification.events.Solde;
@@ -95,23 +96,57 @@ public class Transaction{
         }
     }
 
-    @RabbitListener(queues = "depotmessageQueue")
+    
+    @RabbitListener(queues = "depotMoneyQueueForEven")
     public void depotEnvoyeur(TransfertEventEnvoyeur transfertEventEnvoyeur) {
+        Solde sourceAccount;
+        Account mail;
+        Account mail2;
         try {
-            String message = "Depot effectue par " + transfertEventEnvoyeur.getNumero_source() + " to " + transfertEventEnvoyeur.getNumero_cible() + ". Information detaillees: Montant de transaction " + transfertEventEnvoyeur.getMontant() + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " + transfertEventEnvoyeur.getNumero_cible() + ", Nouveau solde : " + " FCFA.";
-            System.out.println(message);    
+            sourceAccount = util.getsoldeClient(transfertEventEnvoyeur.getNumero_source());
+            mail = util.getEmail(transfertEventEnvoyeur.getNumero_source());
+            mail2 = util.getEmail(transfertEventEnvoyeur.getNumero_cible());
+            String message = "Transfert de " + transfertEventEnvoyeur.getNumero_source() + " " + mail.getNom() + " vers " + transfertEventEnvoyeur.getNumero_cible() + " " + mail2.getNom() + " Reussi. Information detaillees: Montant de transaction " + transfertEventEnvoyeur.getMontant() + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " + transfertEventEnvoyeur.getNumero_cible() + transfertEventEnvoyeur.getFrais() + ", Nouveau solde : " + transfertEventEnvoyeur.getMontant() + sourceAccount.getSolde() + " FCFA.";
+            mailservice.sendMail(mail.getEmail(),"Transfert d'argent", message);
+    
+            System.out.println(message);
         } catch (Exception e) {
-            throw new RuntimeException("Depot Error : ",e);
+            throw new RuntimeException("Transfert Error : ",e);
         }
     }
 
-    @RabbitListener(queues = "depotmessageQueue")
+    @RabbitListener(queues = "depotMoneyQueueForEven")
     public void depotRecepteur(TransfertEventRecepteur transfertEventRecepteur) {
+        Solde sourceAccount;
+        Account mail;
+        Account mail2;
         try {
-            String message = "Transfert de " + transfertEventRecepteur.getNumero_source() + " vers " + transfertEventRecepteur.getNumero_cible() + ". Information detaillees: Montant de transaction " + transfertEventRecepteur.getMontant() + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " + transfertEventRecepteur.getNumero_cible() + ", Nouveau solde : " + " FCFA.";
+            sourceAccount = util.getsoldeClient(transfertEventRecepteur.getNumero_cible());
+            mail = util.getEmail(transfertEventRecepteur.getNumero_cible());
+            mail2 = util.getEmail(transfertEventRecepteur.getNumero_source());
+            String message = "Depot effectue par " + transfertEventRecepteur.getNumero_source() + " " + mail2.getNom() +  " to " + transfertEventRecepteur.getNumero_cible() + mail.getNom() + ". Information detaillees: Montant de transaction " + transfertEventRecepteur.getMontant() + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " + transfertEventRecepteur.getMontant() + ", Nouveau solde : " + transfertEventRecepteur.getMontant() + sourceAccount.getSolde() +  " FCFA.";
+            mailservice.sendMail(mail.getEmail(),"Depot d'agent", message);
+    
             System.out.println(message);
         } catch (Exception e) {
-            throw new RuntimeException("Depot Error : ",e);
+            throw new RuntimeException("Transfert Error : ",e);
+        }
+    }
+
+    @RabbitListener(queues = "rechargeByAgence")
+    public void rechargeByAgence(RechargeEventConsumer rechargeEventConsumer) {
+        Solde sourceAccount;
+        Account mail;
+        
+        try {
+            sourceAccount = util.getsoldeClient(rechargeEventConsumer.getNumero());
+            mail = util.getEmail(rechargeEventConsumer.getNumero());
+            String message = "Depot effectue par " + rechargeEventConsumer.getAgence() + " " + mail.getNom() +  " to " + rechargeEventConsumer.getNumero() + mail.getNom() + ". Information detaillees: Montant de transaction " + rechargeEventConsumer.getMontant() + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " + rechargeEventConsumer.getNumero() + ", Nouveau solde : " + rechargeEventConsumer.getMontant() + sourceAccount.getSolde() +  " FCFA.";
+            mailservice.sendMail(mail.getEmail(),"Depot d'agent", message);
+    
+            System.out.println(message);
+        } catch (Exception e) {
+            throw new RuntimeException("Transfert Error : ",e);
         }
     }
 
