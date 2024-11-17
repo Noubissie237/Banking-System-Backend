@@ -21,7 +21,7 @@ public class Utils {
     private final RestTemplate restTemplate = new RestTemplate();
 
     public Account getAccount(String number) throws IOException {
-        String url = "http://185.218.126.7:8079/SERVICE-ACCOUNT-MANAGEMENT/api/account/get/" + number;
+        String url = "http://localhost:8079/SERVICE-ACCOUNT-MANAGEMENT/api/account/get/" + number;
 
         try {
             Account account = restTemplate.getForObject(url, Account.class);

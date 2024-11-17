@@ -11,7 +11,7 @@ public class EventStoreConfig {
 
     @Bean
     public EventStoreDBClient eventStoreDBClient() {
-        String connectionString = "esdb://185.218.126.7:2113?tls=false"; 
+        String connectionString = "esdb://localhost:2113?tls=false"; 
         EventStoreDBClientSettings settings = EventStoreDBConnectionString.parseOrThrow(connectionString);
         return EventStoreDBClient.create(settings);
     }

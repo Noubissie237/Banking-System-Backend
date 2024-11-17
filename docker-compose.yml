@@ -19,8 +19,8 @@ services:
       - "8761:8761"
     environment:
       - SPRING_APPLICATION_NAME=service-registry
-      - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
-      - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
+      - SPRING_CLOUD_CONFIG_URI=http://localhost:2370
+      - SPRING_CONFIG_IMPORT=configserver:http://localhost:2370
     networks:
       - banking-system-network
     # depends_on:
@@ -34,8 +34,8 @@ services:
       - "8079:8079"
     environment:
       - SPRING_APPLICATION_NAME=service-proxy
-      - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
-      - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
+      - SPRING_CLOUD_CONFIG_URI=http://localhost:2370
+      - SPRING_CONFIG_IMPORT=configserver:http://localhost:2370
     networks:
       - banking-system-network
     depends_on:
@@ -50,8 +50,8 @@ services:
       - "8084:8084"
     environment:
       - SPRING_APPLICATION_NAME=service-account-management
-      - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
-      - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
+      - SPRING_CLOUD_CONFIG_URI=http://localhost:2370
+      - SPRING_CONFIG_IMPORT=configserver:http://localhost:2370
     networks:
       - banking-system-network
     depends_on:
@@ -65,8 +65,8 @@ services:
       - "8083:8083"
     environment:
       - SPRING_APPLICATION_NAME=service-admin
-      - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
-      - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
+      - SPRING_CLOUD_CONFIG_URI=http://localhost:2370
+      - SPRING_CONFIG_IMPORT=configserver:http://localhost:2370
     networks:
       - banking-system-network
     depends_on:
@@ -80,8 +80,8 @@ services:
       - "8081:8081"
     environment:
       - SPRING_APPLICATION_NAME=service-authentification
-      - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
-      - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
+      - SPRING_CLOUD_CONFIG_URI=http://localhost:2370
+      - SPRING_CONFIG_IMPORT=configserver:http://localhost:2370
     networks:
       - banking-system-network
     depends_on:
@@ -95,8 +95,8 @@ services:
       - "8086:8086"
     environment:
       - SPRING_APPLICATION_NAME=service-retrait
-      - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
-      - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
+      - SPRING_CLOUD_CONFIG_URI=http://localhost:2370
+      - SPRING_CONFIG_IMPORT=configserver:http://localhost:2370
     networks:
       - banking-system-network
     depends_on:
@@ -110,8 +110,8 @@ services:
       - "8087:8087"
     environment:
       - SPRING_APPLICATION_NAME=service-tranfert
-      - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
-      - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
+      - SPRING_CLOUD_CONFIG_URI=http://localhost:2370
+      - SPRING_CONFIG_IMPORT=configserver:http://localhost:2370
     networks:
       - banking-system-network
     depends_on:
@@ -125,8 +125,8 @@ services:
       - "8085:8085"
     environment:
       - SPRING_APPLICATION_NAME=service-depot
-      - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
-      - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
+      - SPRING_CLOUD_CONFIG_URI=http://localhost:2370
+      - SPRING_CONFIG_IMPORT=configserver:http://localhost:2370
     networks:
       - banking-system-network
     depends_on:
@@ -140,8 +140,8 @@ services:
       - "8088:8088"
     environment:
       - SPRING_APPLICATION_NAME=service-transactions
-      - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
-      - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
+      - SPRING_CLOUD_CONFIG_URI=http://localhost:2370
+      - SPRING_CONFIG_IMPORT=configserver:http://localhost:2370
     networks:
       - banking-system-network
     depends_on:
@@ -155,8 +155,8 @@ services:
       - "8082:8082"
     environment:
       - SPRING_APPLICATION_NAME=service-users
-      - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
-      - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
+      - SPRING_CLOUD_CONFIG_URI=http://localhost:2370
+      - SPRING_CONFIG_IMPORT=configserver:http://localhost:2370
       - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
       - EUREKA_INSTANCE_IP_ADDRESS=38.242.155.134
     networks:

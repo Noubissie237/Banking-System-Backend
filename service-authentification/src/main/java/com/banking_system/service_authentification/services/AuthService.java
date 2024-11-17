@@ -18,7 +18,7 @@ import com.banking_system.service_authentification.utils.Utils;
 public class AuthService {
     
     private final RestTemplate restTemplate;
-    private final String allUsers = "http://185.218.126.7:8079/SERVICE-USERS/api/get-persons";
+    private final String allUsers = "http://localhost:8079/SERVICE-USERS/api/get-persons";
     private String token;
 
     @Autowired
