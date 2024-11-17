@@ -76,6 +76,7 @@ services:
       - SPRING_APPLICATION_NAME=service-authentification
       - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
       - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
+      - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
     networks:
       - banking-system-network
 
