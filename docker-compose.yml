@@ -54,7 +54,7 @@ services:
       - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
     networks:
       - banking-system-network
-    # depends_on:
+    depends_on:
     #   # - service-config
       - service-registry
 
@@ -69,7 +69,7 @@ services:
       - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
     networks:
       - banking-system-network
-    # depends_on:
+    depends_on:
     #   # - service-config
       - service-registry
 
@@ -84,7 +84,7 @@ services:
       - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
     networks:
       - banking-system-network
-    # depends_on:
+    depends_on:
     #   # - service-config
       - service-registry
 
@@ -99,7 +99,7 @@ services:
       - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
     networks:
       - banking-system-network
-    # depends_on:
+    depends_on:
     #   # - service-config
       - service-registry
 
@@ -114,7 +114,7 @@ services:
       - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
     networks:
       - banking-system-network
-    # depends_on:
+    depends_on:
     #   # - service-config
       - service-registry
 
@@ -129,7 +129,7 @@ services:
       - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
     networks:
       - banking-system-network
-    # depends_on:
+    depends_on:
     #   # - service-config
       - service-registry
 
@@ -144,7 +144,7 @@ services:
       - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
     networks:
       - banking-system-network
-    # depends_on:
+    depends_on:
     #   # - service-config
       - service-registry
 
@@ -161,7 +161,7 @@ services:
       - EUREKA_INSTANCE_IP_ADDRESS=38.242.155.134
     networks:
       - banking-system-network
-    # depends_on:
+    depends_on:
     #   # - service-config
       - service-registry
 
