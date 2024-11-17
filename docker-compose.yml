@@ -11,36 +11,36 @@ services:
   #   networks:
   #     - banking-system-network
 
-  # # Service d'enrégistrement
-  # service-registry:
-  #   image: noubissie237/service-registry:latest
-  #   # build: ./service-registry/
-  #   ports:
-  #     - "8761:8761"
-  #   environment:
-  #     - SPRING_APPLICATION_NAME=service-registry
-  #     - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
-  #     - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
-  #   networks:
-  #     - banking-system-network
-  #   depends_on:
-  #     - service-config
+  # Service d'enrégistrement
+  service-registry:
+    image: noubissie237/service-registry:latest
+    # build: ./service-registry/
+    ports:
+      - "8761:8761"
+    environment:
+      - SPRING_APPLICATION_NAME=service-registry
+      - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
+      - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
+    networks:
+      - banking-system-network
+    # depends_on:
+    #   - service-config
 
-  # # Service proxy
-  # service-proxy:
-  #   image: noubissie237/service-proxy:latest
-  #   # build: ./service-proxy/
-  #   ports:
-  #     - "8079:8079"
-  #   environment:
-  #     - SPRING_APPLICATION_NAME=service-proxy
-  #     - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
-  #     - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
-  #   networks:
-  #     - banking-system-network
-  #   depends_on:
-  #     - service-config
-  #     - service-registry
+  # Service proxy
+  service-proxy:
+    image: noubissie237/service-proxy:latest
+    # build: ./service-proxy/
+    ports:
+      - "8079:8079"
+    environment:
+      - SPRING_APPLICATION_NAME=service-proxy
+      - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
+      - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
+    networks:
+      - banking-system-network
+    depends_on:
+      # - service-config
+      - service-registry
 
 
   # Service account-management
@@ -54,6 +54,9 @@ services:
       - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
     networks:
       - banking-system-network
+    depends_on:
+      # - service-config
+      - service-registry
 
   # Service admin
   service-admin:
@@ -66,6 +69,9 @@ services:
       - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
     networks:
       - banking-system-network
+    depends_on:
+      # - service-config
+      - service-registry
 
   # Service authentification
   service-authentification:
@@ -76,10 +82,11 @@ services:
       - SPRING_APPLICATION_NAME=service-authentification
       - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
       - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
-      - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
-      - EUREKA_INSTANCE_IP_ADDRESS=38.242.155.134
     networks:
       - banking-system-network
+    depends_on:
+      # - service-config
+      - service-registry
 
   # Service retrait
   service-retrait:
@@ -92,6 +99,9 @@ services:
       - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
     networks:
       - banking-system-network
+    depends_on:
+      # - service-config
+      - service-registry
 
   # Service tranfert
   service-tranfert:
@@ -104,6 +114,9 @@ services:
       - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
     networks:
       - banking-system-network
+    depends_on:
+      # - service-config
+      - service-registry
 
   # Service depot
   service-depot:
@@ -116,6 +129,9 @@ services:
       - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
     networks:
       - banking-system-network
+    depends_on:
+      # - service-config
+      - service-registry
 
   # Service transactions
   service-transactions:
@@ -128,6 +144,9 @@ services:
       - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
     networks:
       - banking-system-network
+    depends_on:
+      # - service-config
+      - service-registry
 
   # Service users
   service-users:
@@ -142,6 +161,9 @@ services:
       - EUREKA_INSTANCE_IP_ADDRESS=38.242.155.134
     networks:
       - banking-system-network
+    depends_on:
+      # - service-config
+      - service-registry
 
 #   # Service MySQL
 #   mysql:
