@@ -45,8 +45,8 @@ public class RabbitConfig {
     }
     
     @Bean
-    public Queue retraitMoneyQueueForTransactions() {
-        return new Queue("retraitMoneyQueueForTransactions", true, false, false);
+    public Queue retraitDoneQueue() {
+        return new Queue("retraitDoneQueue", true, false, false);
     }
 
     @Bean

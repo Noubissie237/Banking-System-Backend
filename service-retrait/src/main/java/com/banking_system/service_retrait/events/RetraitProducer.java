@@ -16,8 +16,8 @@ import lombok.ToString;
 public class RetraitProducer {
     @JsonProperty("numero_cible")
     private String numero_cible;
-    @JsonProperty("numero_agent")
-    private String numero_agent;
+    @JsonProperty("matricule_agent")
+    private String matricule_agent;
     @JsonProperty("montant")
     private Double montant;
     @JsonProperty("agence")

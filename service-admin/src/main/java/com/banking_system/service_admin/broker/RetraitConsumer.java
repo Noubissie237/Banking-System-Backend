@@ -12,7 +12,7 @@ public class RetraitConsumer {
     @Autowired
     private AgenceService agenceService;
 
-    @RabbitListener(queues = "retraitAgenceQueue")
+    @RabbitListener(queues = "retraitDoneForAgenceQueue")
     public void receiveRetraitEvent(RetraitEventConsumer event) {
         agenceService.incrementCapital(event.getAgence(), (event.getFrais() * 0.75));
     }

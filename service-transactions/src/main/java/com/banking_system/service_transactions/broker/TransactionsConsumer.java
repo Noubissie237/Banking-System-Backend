@@ -30,13 +30,13 @@ public class TransactionsConsumer {
         transactionService.createTransactionEvent(transac);
     }
 
-    @RabbitListener(queues = "retraitMoneyQueueForTransactions")
+    @RabbitListener(queues = "retraitDoneQueue")
     public void receiveRetraitEvent(RetraitTemplate event) {
         TransactionEvent transac = new TransactionEvent();
 
         transac.setAgenceId(event.getAgence());
         transac.setNumeroSender(event.getNumero_cible());
-        transac.setNumeroReceiver(event.getNumero_agent());
+        transac.setNumeroReceiver(event.getMatricule_agent());
         transac.setAmount(event.getMontant());
         transac.setTransactionType(TransactionType.RETRAIT);
 

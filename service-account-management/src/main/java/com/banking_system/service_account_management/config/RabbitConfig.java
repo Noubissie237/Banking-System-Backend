@@ -80,6 +80,16 @@ public class RabbitConfig {
     public Queue retraitMoneyQueue() {
         return new Queue("retraitMoneyQueue", true, false, false);
     }
+
+    @Bean
+    public Queue retraitDoneQueue() {
+        return new Queue("retraitDoneQueue", true, false, false);
+    }
+
+    @Bean
+    public Queue retraitDoneForAgenceQueue() {
+        return new Queue("retraitDoneForAgenceQueue", true, false, false);
+    }
     
     @Bean
     public Queue rechargeAccountQueue() {
@@ -109,6 +119,16 @@ public class RabbitConfig {
     @Bean
     public Binding binding4(TopicExchange transactionExchange, Queue depotMoneyQueueForEvent) {
         return BindingBuilder.bind(depotMoneyQueueForEvent).to(transactionExchange).with("getting.depot");
+    }
+
+    @Bean
+    public Binding binding5(TopicExchange transactionExchange, Queue retraitDoneQueue) {
+        return BindingBuilder.bind(retraitDoneQueue).to(transactionExchange).with("retrait.done");
+    }
+
+    @Bean
+    public Binding binding6(TopicExchange transactionExchange, Queue retraitDoneForAgenceQueue) {
+        return BindingBuilder.bind(retraitDoneForAgenceQueue).to(transactionExchange).with("retrait.done.agence");
     }
     
 }

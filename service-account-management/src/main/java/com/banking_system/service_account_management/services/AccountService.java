@@ -62,6 +62,10 @@ public class AccountService {
         return accountRepository.findByNumber(numero).orElseThrow(null);
     }
 
+    public AgentAccount findAccountByMatricule(String matricule) {
+        return agentAccountRepository.findByMatricule(matricule).orElseThrow(null);
+    }
+
     @Transactional
     public void makeTransfert(TransfertEventConsumer transfert) {
         Account cible = findAccountByNumber(transfert.getNumero_cible());
@@ -73,10 +77,13 @@ public class AccountService {
     @Transactional
     public void makeRetrait( RetraitEventConsumer retrait) {
         Account cible = findAccountByNumber(retrait.getNumero_cible());
-        Account agent = findAccountByNumber(retrait.getNumero_agent());
+        Account agent = findAccountByMatricule(retrait.getMatricule_agent());
         Double agentGain = (retrait.getFrais() * 0.25 ) ;
         incrementSolde(agent, retrait.getMontant() + agentGain);
         decrementSolde(cible, retrait.getMontant() + retrait.getFrais());
+
+        rabbitTemplate.convertAndSend("transactionExchange", "retrait.done", retrait);
+        rabbitTemplate.convertAndSend("transactionExchange", "retrait.done.agence", retrait);
     }
     
     @Transactional
