@@ -72,11 +72,11 @@ public class Transaction{
         
         Solde sourceAccount;
         Account mail;
-        AccountAgent mail2;
+        Account mail2;
         try {
             sourceAccount = util.getsoldeClient(retrait.getNumero_cible());
             mail = util.getEmail(retrait.getNumero_cible());
-            mail2 = util.getEmailAgentnum(retrait.getNumero_agent());
+            mail2 = util.getEmail(retrait.getNumero_agent());
             String message = "Retrait d'agent reussi par " + retrait.getNumero_agent() + " " + mail.getNom() + " to " +  retrait.getNumero_agent() + " " + mail2.getNom() + ". Information detaillees: Montant de transaction " + retrait.getMontant() + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " + retrait.getMontant() + retrait.getFrais() + ", Nouveau solde : " + retrait.getMontant() + sourceAccount.getSolde() + " FCFA.";
             mailservice.sendMail(mail.getEmail(),"Retrait d'agent", message);
             System.out.println(message);
@@ -88,11 +88,11 @@ public class Transaction{
     public void retraitRecepteurAgent(RetraitEventProducer retrait) {
 
         Solde sourceAccount;
-        AccountAgent mail;
+        Account mail;
         Account mail2;
         try {
             sourceAccount = util.getSoldeAgent(retrait.getNumero_agent());
-            mail = util.getEmailAgentnum(retrait.getNumero_agent());
+            mail = util.getEmailAgent(retrait.getNumero_agent());
             mail2 = util.getEmail(retrait.getNumero_cible());
             String message = "Depot effectue par " + retrait.getNumero_cible() + " " + mail2.getNom() + " to " + retrait.getNumero_agent() + " " + mail.getNom() + ". Information detaillees: Montant de transaction " + retrait.getMontant() + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " + retrait.getMontant() + ", Nouveau solde : " + retrait.getMontant() + sourceAccount.getSolde() + " FCFA.";
             

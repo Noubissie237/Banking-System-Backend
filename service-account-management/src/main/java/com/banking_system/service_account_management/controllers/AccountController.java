@@ -11,6 +11,7 @@ import com.banking_system.service_account_management.services.AccountService;
 
 
 
+
 @RestController
 @RequestMapping("/api/account")
 public class AccountController {
@@ -25,6 +26,15 @@ public class AccountController {
     }
 
   
+    // @PostMapping("/accountmessage")
+    // public void Compte(@RequestBody Account account) {
+    //     accountService.createAccount(account);
+    // }
+    
+    // @PostMapping("/accountmessage")
+    // public void Compte(@RequestBody AgentAccount account) {
+    //     accountService.createAgentAccount(account);
+    // }
 
     
     
