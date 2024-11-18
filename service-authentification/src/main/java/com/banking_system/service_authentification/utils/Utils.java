@@ -24,6 +24,8 @@ public class Utils {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + 300000000);
 
+        
+
         JwtBuilder builder = Jwts.builder()
             .setSubject(user.getTel())
             .setIssuedAt(now)
@@ -31,6 +33,8 @@ public class Utils {
             .signWith(key)
             .claim("phone", user.getTel())
             .claim("password", user.getPassword())
+            .claim("name", user.getName())
+            .claim("solde", user.getSolde())
             .claim("role", user.getRole());
 
         return builder.compact();
