@@ -23,7 +23,7 @@ public class Transaction{
         private EmailSender mailservice;
 
 
-    @RabbitListener(queues = "transfertMoneyQueue")
+    @RabbitListener(queues = "transfertm")
     public void transfertEnvoyeur(TransfertEventEnvoyeur transfertEventEnvoyeur) {
         Solde sourceAccount;
         Account mail;
@@ -59,7 +59,7 @@ public class Transaction{
         }
     }
 
-    @RabbitListener(queues = "retraitMoneyQueueForTransactions")
+    @RabbitListener(queues = "retraitm")
     public void retraitClient(RetraitEventProducer retrait) {
         
         Solde sourceAccount;
@@ -71,14 +71,13 @@ public class Transaction{
             mail2 = util.getEmail(retrait.getNumero_agent());
             String message = "Retrait d'agent reussi par " + retrait.getNumero_agent() + " " + mail.getNom() + " to " +  retrait.getNumero_agent() + " " + mail2.getNom() + ". Information detaillees: Montant de transaction " + retrait.getMontant() + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " + retrait.getMontant() + retrait.getFrais() + ", Nouveau solde : " + retrait.getMontant() + sourceAccount.getSolde() + " FCFA.";
             mailservice.sendMail(mail.getEmail(),"Retrait d'agent", message);
-    
             System.out.println(message);
         } catch (Exception e) {
             throw new RuntimeException("Retrait Creation Error : ",e);
         }
     }
 
-    @RabbitListener(queues = "retraitAgenceQueue")
+    @RabbitListener(queues = "retraitm")
     public void retraitRecepteurAgent(RetraitProducer retrait) {
 
         Solde sourceAccount;
@@ -97,7 +96,7 @@ public class Transaction{
     }
 
     
-    @RabbitListener(queues = "depotMoneyQueueForEven")
+    @RabbitListener(queues = "depotMoney")
     public void depotEnvoyeur(TransfertEventEnvoyeur transfertEventEnvoyeur) {
         Solde sourceAccount;
         Account mail;
@@ -115,7 +114,7 @@ public class Transaction{
         }
     }
 
-    @RabbitListener(queues = "depotMoneyQueueForEven")
+    @RabbitListener(queues = "depotMoney")
     public void depotRecepteur(TransfertEventRecepteur transfertEventRecepteur) {
         Solde sourceAccount;
         Account mail;
@@ -133,17 +132,16 @@ public class Transaction{
         }
     }
 
-    @RabbitListener(queues = "rechargeByAgence")
+    @RabbitListener(queues = "rechargeByAgenceo")
     public void rechargeByAgence(RechargeEventConsumer rechargeEventConsumer) {
         Solde sourceAccount;
         Account mail;
         
         try {
-            sourceAccount = util.getsoldeClient(rechargeEventConsumer.getNumero());
+            sourceAccount = util.getSoldeAgent(rechargeEventConsumer.getNumero());
             mail = util.getEmail(rechargeEventConsumer.getNumero());
-            String message = "Depot effectue par " + rechargeEventConsumer.getAgence() + " " + mail.getNom() +  " to " + rechargeEventConsumer.getNumero() + mail.getNom() + ". Information detaillees: Montant de transaction " + rechargeEventConsumer.getMontant() + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " + rechargeEventConsumer.getNumero() + ", Nouveau solde : " + rechargeEventConsumer.getMontant() + sourceAccount.getSolde() +  " FCFA.";
+            String message = "Depot effectue par " + rechargeEventConsumer.getAgence() +  " to " + rechargeEventConsumer.getNumero() + mail.getNom() + ". Information detaillees: Montant de transaction " + rechargeEventConsumer.getMontant() + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " + rechargeEventConsumer.getMontant() + ", Nouveau solde : " + rechargeEventConsumer.getMontant() + sourceAccount.getSolde() +  " FCFA.";
             mailservice.sendMail(mail.getEmail(),"Depot d'agent", message);
-    
             System.out.println(message);
         } catch (Exception e) {
             throw new RuntimeException("Transfert Error : ",e);

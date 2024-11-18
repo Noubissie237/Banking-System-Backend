@@ -9,6 +9,8 @@ import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.Binding;
 
 @Configuration
 @EnableRabbit
@@ -64,11 +66,6 @@ public class RabbitConfig {
 
 
     @Bean
-    public Queue depotMoneyQueue() {
-        return new Queue("depotMoneyQueue", true, false, false);
-    }
-
-    @Bean
     public Queue retraitMoneyQueueForTransactions() {
         return new Queue("retraitMoneyQueueForTransactions", true, false, false);
     }
@@ -84,12 +81,27 @@ public class RabbitConfig {
     }
     @Bean
     public Queue rechargeByAgence() {
-        return new Queue("rechargeByAgence", true, false, false);
+        return new Queue("rechargeByAgenceo", true, false, false);
     }
 
     @Bean
     public Queue depotMoneyQueueForEven() {
         return new Queue("depotMoneyQueueForEven", true, false, false);
+    }
+    @Bean
+    public Queue depotMoney() {
+        return new Queue("depotMoney", true, false, false);
+    }
+    
+
+    @Bean
+    public Queue retraitm() {
+        return new Queue("retraitm", true, false, false);
+    }
+    
+    @Bean
+    public Queue transfertm() {
+        return new Queue("transfertm", true, false, false);
     }
     
     // @Bean
@@ -107,32 +119,32 @@ public class RabbitConfig {
         return new Queue("transfertmessageQueue", true, false, false);
     }
 
-    // @Bean
-    // public Binding binding3(TopicExchange transactionExchange, Queue transfertmessageQueue) {
-    //     return BindingBuilder.bind(transfertmessageQueue).to(transactionExchange).with("transfertenvoyeurmessage");
-    // }
+    @Bean
+    public Binding binding3(TopicExchange transactionExchange, Queue transfertmessageQueue) {
+        return BindingBuilder.bind(transfertmessageQueue).to(transactionExchange).with("transfertenvoyeurmessage");
+    }
 
-    // @Bean
-    // public Binding binding4(TopicExchange transactionExchange, Queue transfertmessageQueue) {
-    //     return BindingBuilder.bind(transfertmessageQueue).to(transactionExchange).with("transfertrecepteurmessage");
-    // }
+    @Bean
+    public Binding binding4(TopicExchange transactionExchange, Queue transfertmessageQueue) {
+        return BindingBuilder.bind(transfertmessageQueue).to(transactionExchange).with("transfertrecepteurmessage");
+    }
     
-    // @Bean
-    // public Binding binding5(TopicExchange transactionExchange, Queue depotmessageQueue) {
-    //     return BindingBuilder.bind(depotmessageQueue).to(transactionExchange).with("depotenvoyeurmessage");
-    // }
-    // @Bean
-    // public Binding binding6(TopicExchange transactionExchange, Queue depotmessageQueue) {
-    //     return BindingBuilder.bind(depotmessageQueue).to(transactionExchange).with("depotrecepteurmessage");
-    // }
+    @Bean
+    public Binding binding5(TopicExchange transactionExchange, Queue depotmessageQueue) {
+        return BindingBuilder.bind(depotmessageQueue).to(transactionExchange).with("depotenvoyeurmessage");
+    }
+    @Bean
+    public Binding binding6(TopicExchange transactionExchange, Queue depotmessageQueue) {
+        return BindingBuilder.bind(depotmessageQueue).to(transactionExchange).with("depotrecepteurmessage");
+    }
 
-    // @Bean
-    // public Binding binding7(TopicExchange transactionExchange, Queue retraitmessageQueue) {
-    //     return BindingBuilder.bind(retraitmessageQueue).to(transactionExchange).with("retraitclientmessage");
-    // }
-    // @Bean
-    // public Binding binding8(TopicExchange transactionExchange, Queue retraitmessageQueue) {
-    //     return BindingBuilder.bind(retraitmessageQueue).to(transactionExchange).with("retraitagentmessage");
-    // }
+    @Bean
+    public Binding binding7(TopicExchange transactionExchange, Queue retraitmessageQueue) {
+        return BindingBuilder.bind(retraitmessageQueue).to(transactionExchange).with("retraitclientmessage");
+    }
+    @Bean
+    public Binding binding8(TopicExchange transactionExchange, Queue retraitmessageQueue) {
+        return BindingBuilder.bind(retraitmessageQueue).to(transactionExchange).with("retraitagentmessage");
+    }
     
 }
