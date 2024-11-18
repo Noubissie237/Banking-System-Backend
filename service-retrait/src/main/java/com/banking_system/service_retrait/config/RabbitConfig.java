@@ -48,6 +48,10 @@ public class RabbitConfig {
     public Queue retraitMoneyQueueForTransactions() {
         return new Queue("retraitMoneyQueueForTransactions", true, false, false);
     }
+    @Bean
+    public Queue retraitm() {
+        return new Queue("retraitm", true, false, false);
+    }
 
 
     @Bean
@@ -62,6 +66,11 @@ public class RabbitConfig {
     @Bean
     public Binding bindingRetraitForTransactions(TopicExchange transactionExchange, Queue retraitMoneyQueueForTransactions) {
         return BindingBuilder.bind(retraitMoneyQueueForTransactions).to(transactionExchange).with("retrait.send");
+    }
+    @Bean
+    public Binding binding7(TopicExchange transactionExchange, Queue retraitm) {
+        return BindingBuilder.bind(retraitm).to(transactionExchange).with("retrait.m");
+
     }
 
 

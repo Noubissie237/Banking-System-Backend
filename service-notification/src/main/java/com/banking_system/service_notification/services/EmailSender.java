@@ -35,7 +35,7 @@ public class EmailSender {
         helper.setTo(toEmail);
         helper.setSubject(subject);
         helper.setText(htmlContent, true); 
-        helper.addInline("logoImage", new ClassPathResource("/img/b2.jpg"));
+        helper.addInline("logoImage", new ClassPathResource("/img/bs.jpg"));
 
         
         mail.send(message);

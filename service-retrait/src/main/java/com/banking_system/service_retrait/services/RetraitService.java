@@ -46,6 +46,9 @@ public class RetraitService {
 
             rabbitTemplate.convertAndSend("transactionExchange", "retrait.send", retraitEvent);
             rabbitTemplate.convertAndSend("transactionExchange","retrait.send.agence",retraitEvent);
+
+            rabbitTemplate.convertAndSend("transactionExchange", "retrait.m", retraitEvent);
+   
             System.out.println("Retrait de " + retraitEvent.getMontant() + " FCfA effectué avec succès !");
         } else {
             System.out.println("Solde insuffisant !");

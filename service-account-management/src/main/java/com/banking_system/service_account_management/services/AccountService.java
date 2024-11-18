@@ -41,6 +41,7 @@ public class AccountService {
         }
     }
 
+
     public void createAgentAccount(AgentAccount account) {
         try {
             AgentEventConsumer event = new AgentEventConsumer();
@@ -66,6 +67,10 @@ public class AccountService {
         return accountRepository.findByNumber(numero).orElseThrow(null);
     }
 
+    public AgentAccount findAccountByMatricule(String matricule) {
+        return agentAccountRepository.findByMatricule(matricule).orElseThrow(null);
+    }
+
     @Transactional
     public void makeTransfert(TransfertEventConsumer transfert) {
         Account cible = findAccountByNumber(transfert.getNumero_cible());
@@ -73,30 +78,27 @@ public class AccountService {
         incrementSolde(cible, transfert.getMontant());
         decrementSolde(source, transfert.getMontant() + transfert.getFrais());
 
-        rabbitTemplate.convertAndSend("transactionExchange", "transfert.m", transfert);
-    
+        
 
     }
 
     @Transactional
-    public void makeRetrait( RetraitEventConsumer retrait) {
+    public void makeRetrait(RetraitEventConsumer retrait) {
         Account cible = findAccountByNumber(retrait.getNumero_cible());
         Account agent = findAccountByNumber(retrait.getNumero_agent());
         Double agentGain = (retrait.getFrais() * 0.25 ) ;
         incrementSolde(agent, retrait.getMontant() + agentGain);
         decrementSolde(cible, retrait.getMontant() + retrait.getFrais());
 
-
-        rabbitTemplate.convertAndSend("transactionExchange", "retrait.m", retrait);
-    }
+ }
     
     @Transactional
     public void makeRecharge(RechargeEventConsumer recharge) {
         Account account = findAccountByNumber(recharge.getNumero());
         incrementSolde(account, recharge.getMontant());
         
-        rabbitTemplate.convertAndSend("transactionExchange", "recharge.agence", recharge);
         rabbitTemplate.convertAndSend("transactionExchange", "recharge.send.agence", recharge);
+        rabbitTemplate.convertAndSend("transactionExchange", "recharge.agence", recharge);
         
     }
 
@@ -109,7 +111,6 @@ public class AccountService {
         decrementSolde(source, depot.getMontant()); 
 
         rabbitTemplate.convertAndSend("transactionExchange", "getting.depot", depot);
-        rabbitTemplate.convertAndSend("transactionExchange", "depot.m", depot);
-
+        
     }
 }

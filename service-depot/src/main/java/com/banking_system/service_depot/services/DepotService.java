@@ -45,6 +45,8 @@ public class DepotService {
             transEvent.setMontant(event.getMontant());
             
             rabbitTemplate.convertAndSend("transactionExchange", "depot.send", transEvent);
+            rabbitTemplate.convertAndSend("transactionExchange", "depot.m", transEvent);
+
             System.out.println("Depot effectué avec succès !");
         } else {
             System.out.println("Solde insuffisant !");

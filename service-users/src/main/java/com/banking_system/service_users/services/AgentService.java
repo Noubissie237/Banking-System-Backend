@@ -2,17 +2,17 @@ package com.banking_system.service_users.services;
 
 
 
-import com.banking_system.service_users.events.AgentEventProducer;
-import com.banking_system.service_users.models.Agent;
-import com.banking_system.service_users.repositories.AgentRepository;
-import com.banking_system.service_users.utils.Utils;
+import java.util.List;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.banking_system.service_users.events.AgentEventProducer;
+import com.banking_system.service_users.models.Agent;
+import com.banking_system.service_users.repositories.AgentRepository;
+import com.banking_system.service_users.utils.Utils;
 
 @Service
 public class AgentService {
@@ -59,6 +59,10 @@ public class AgentService {
 
     public Agent findAgent(String numero){
         return agentRepository.findByMatricule(numero).orElseThrow();
+    }
+
+    public Agent findAgentnum(String numero){
+        return agentRepository.findByTel(numero).orElseThrow();
     }
 
 

@@ -20,6 +20,7 @@ public class RetraitEventProducer {
     @JsonProperty("numero_agent")
     private String numero_agent;
 
+    
     @JsonProperty("montant")
     private Double montant;
 

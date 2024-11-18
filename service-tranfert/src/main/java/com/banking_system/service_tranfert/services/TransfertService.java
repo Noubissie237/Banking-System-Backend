@@ -49,6 +49,8 @@ public class TransfertService {
             
             rabbitTemplate.convertAndSend("transactionExchange", "transfert.send", transEvent);
             rabbitTemplate.convertAndSend("transactionExchange", "transfert.send.agence", transEvent);
+            rabbitTemplate.convertAndSend("transactionExchange", "transfert.m", transEvent);
+    
             System.out.println("Transfert effectué avec succès !");
         } else {
             System.out.println("Solde insuffisant !");

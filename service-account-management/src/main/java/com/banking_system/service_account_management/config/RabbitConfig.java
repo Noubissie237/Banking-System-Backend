@@ -92,20 +92,7 @@ public class RabbitConfig {
     public Queue rechargeByAgenceo() {
         return new Queue("rechargeByAgenceo", true, false, false);
     }
-    @Bean
-    public Queue depotMoney() {
-        return new Queue("depotMoney", true, false, false);
-    }
-
-    @Bean
-    public Queue retraitm() {
-        return new Queue("retraitm", true, false, false);
-    }
     
-    @Bean
-    public Queue transfertm() {
-        return new Queue("transfertm", true, false, false);
-    }
 
     @Bean
     public Binding binding1(TopicExchange clientExchange, Queue clientAccountQueue) {
@@ -118,13 +105,13 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Binding binding3(TopicExchange transactionExchange, Queue rechargeByAgenceo) {
-        return BindingBuilder.bind(rechargeByAgenceo).to(transactionExchange).with("recharge.agence");
+    public Binding binding5(TopicExchange transactionExchange, Queue rechargeByAgence) {
+        return BindingBuilder.bind(rechargeByAgence).to(transactionExchange).with("recharge.send.agence");
     }
 
     @Bean
-    public Binding binding5(TopicExchange transactionExchange, Queue rechargeByAgence) {
-        return BindingBuilder.bind(rechargeByAgence).to(transactionExchange).with("recharge.send.agence");
+    public Binding binding3(TopicExchange transactionExchange, Queue rechargeByAgenceo) {
+        return BindingBuilder.bind(rechargeByAgenceo).to(transactionExchange).with("recharge.agence");
     }
 
     @Bean
@@ -132,21 +119,9 @@ public class RabbitConfig {
         return BindingBuilder.bind(depotMoneyQueueForEvent).to(transactionExchange).with("getting.depot");
     }
 
-    @Bean
-    public Binding binding6(TopicExchange transactionExchange, Queue depotMoney) {
-        return BindingBuilder.bind(depotMoney).to(transactionExchange).with("depot.m");
+    
+   
 
-    }
-    @Bean
-    public Binding binding7(TopicExchange transactionExchange, Queue retraitm) {
-        return BindingBuilder.bind(retraitm).to(transactionExchange).with("retrait.m");
-
-    }
-
-    @Bean
-    public Binding binding8(TopicExchange transactionExchange, Queue transfertm) {
-        return BindingBuilder.bind(transfertm).to(transactionExchange).with("transfert.m");
-
-    }
+    
     
 }
