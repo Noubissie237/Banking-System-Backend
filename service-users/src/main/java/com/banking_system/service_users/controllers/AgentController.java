@@ -26,7 +26,7 @@ public class AgentController {
         return agentService.deleteAgent(id);
     }
 
-    @GetMapping("/get-user/{matricule}")
+    @GetMapping("/get-agent/{matricule}")
     public Optional<Agent> getAgentController(@PathVariable("matricule") String matricule){
         return agentService.getAgentByMatricule(matricule);
     }
