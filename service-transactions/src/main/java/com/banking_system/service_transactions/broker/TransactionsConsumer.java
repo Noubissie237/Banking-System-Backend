@@ -17,7 +17,7 @@ public class TransactionsConsumer {
     @Autowired
     private TransactionService transactionService;
 
-    @RabbitListener(queues = "transfertMoneyQueue1")
+    @RabbitListener(queues = "transfertDoneQueue")
     public void receiveTransfertEvent(TransactionTemplate event) {
         TransactionEvent transac = new TransactionEvent();
 
@@ -43,7 +43,7 @@ public class TransactionsConsumer {
         transactionService.createTransactionEvent(transac);
     }
 
-    @RabbitListener(queues = "depotMoneyQueueForEvent")
+    @RabbitListener(queues = "depotDoneQueue")
     public void receiveDepotEvent(TransactionTemplate event) {
         TransactionEvent transac = new TransactionEvent();
 

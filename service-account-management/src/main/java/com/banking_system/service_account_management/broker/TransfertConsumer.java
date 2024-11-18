@@ -13,7 +13,7 @@ public class TransfertConsumer {
     @Autowired
     private AccountService accountService;
 
-    @RabbitListener(queues = "transfertMoneyQueue")
+    @RabbitListener(queues = "transfertSendQueue")
     public void receiveTransfertEvent(TransfertEventConsumer event) {
         accountService.makeTransfert(event);
     }

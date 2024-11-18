@@ -60,8 +60,8 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Queue transfertMoneyQueueAgence() {
-        return new Queue("transfertMoneyQueueAgence", true, false, false);
+    public Queue transfertDoneForAgenceQueue() {
+        return new Queue("transfertDoneForAgenceQueue", true, false, false);
     }
 
     @Bean

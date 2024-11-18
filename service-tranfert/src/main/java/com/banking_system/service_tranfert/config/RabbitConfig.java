@@ -36,33 +36,12 @@ public class RabbitConfig {
 
 
     @Bean
-    public Queue transfertMoneyQueue() {
-        return new Queue("transfertMoneyQueue", true, false, false);
+    public Queue transfertSendQueue() {
+        return new Queue("transfertSendQueue", true, false, false);
     }
 
     @Bean
-    public Queue transfertMoneyQueueAgence() {
-        return new Queue("transfertMoneyQueueAgence", true, false, false);
+    public Binding binding1(TopicExchange transactionExchange, Queue transfertSendQueue) {
+        return BindingBuilder.bind(transfertSendQueue).to(transactionExchange).with("transfert.send");
     }
-
-    @Bean
-    public Queue transfertMoneyQueue1() {
-        return new Queue("transfertMoneyQueue1", true, false, false);
-    }
-
-    @Bean
-    public Binding binding1(TopicExchange transactionExchange, Queue transfertMoneyQueue) {
-        return BindingBuilder.bind(transfertMoneyQueue).to(transactionExchange).with("transfert.send");
-    }
-
-    @Bean
-    public Binding binding2(TopicExchange transactionExchange, Queue transfertMoneyQueueAgence) {
-        return BindingBuilder.bind(transfertMoneyQueueAgence).to(transactionExchange).with("transfert.send.agence");
-    }
-
-    @Bean
-    public Binding binding3(TopicExchange transactionExchange, Queue transfertMoneyQueue1) {
-        return BindingBuilder.bind(transfertMoneyQueue1).to(transactionExchange).with("transfert.send");
-    }
-
 }

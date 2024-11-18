@@ -35,13 +35,13 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Queue depotMoneyQueueForEvent() {
-        return new Queue("depotMoneyQueueForEvent", true, false, false);
+    public Queue depotDoneQueue() {
+        return new Queue("depotDoneQueue", true, false, false);
     }
 
     @Bean
-    public Queue depotMoneyQueue1() {
-        return new Queue("depotMoneyQueue1", true, false, false);
+    public Queue transfertDoneQueue() {
+        return new Queue("transfertDoneQueue", true, false, false);
     }
     
     @Bean
@@ -50,7 +50,7 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Queue rechargeByAgence() {
-        return new Queue("rechargeByAgence", true, false, false);
+    public Queue rechargeByAgenceDone() {
+        return new Queue("rechargeByAgenceDone", true, false, false);
     }
 }

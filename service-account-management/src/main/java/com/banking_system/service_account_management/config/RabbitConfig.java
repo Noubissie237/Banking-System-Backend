@@ -61,24 +61,43 @@ public class RabbitConfig {
         return new Queue("agentCreateQueue", true, false, false);
     }
 
+    /* ------------- TRANSFERT -------------- */
+
     @Bean
-    public Queue transfertMoneyQueue() {
-        return new Queue("transfertMoneyQueue", true, false, false);
+    public Queue transfertSendQueue() {
+        return new Queue("transfertSendQueue", true, false, false);
     }
 
     @Bean
-    public Queue depotMoneyQueue() {
-        return new Queue("depotMoneyQueue", true, false, false);
+    public Queue transfertDoneQueue() {
+        return new Queue("transfertDoneQueue", true, false, false);
     }
 
     @Bean
-    public Queue depotMoneyQueueForEvent() {
-        return new Queue("depotMoneyQueueForEvent", true, false, false);
+    public Queue transfertDoneForAgenceQueue() {
+        return new Queue("transfertDoneForAgenceQueue", true, false, false);
+    }
+
+    /* --------------------------------------- */
+
+    /*---------------- DEPOT ------------------ */
+
+    @Bean
+    public Queue depotSendQueue() {
+        return new Queue("depotSendQueue", true, false, false);
     }
 
     @Bean
-    public Queue retraitMoneyQueue() {
-        return new Queue("retraitMoneyQueue", true, false, false);
+    public Queue depotDoneQueue() {
+        return new Queue("depotDoneQueue", true, false, false);
+    }
+
+    // ******************************************
+
+    /* ------------- RETRAIT -------------- */
+    @Bean
+    public Queue retraitSendQueue() {
+        return new Queue("retraitSendQueue", true, false, false);
     }
 
     @Bean
@@ -90,15 +109,18 @@ public class RabbitConfig {
     public Queue retraitDoneForAgenceQueue() {
         return new Queue("retraitDoneForAgenceQueue", true, false, false);
     }
+
+    /* ------------------------------------- */
     
-    @Bean
-    public Queue rechargeAccountQueue() {
-        return new Queue("transfertMoneyQueue", true, false, false);
-    }
 
     @Bean
     public Queue rechargeByAgence() {
         return new Queue("rechargeByAgence", true, false, false);
+    }
+
+    @Bean
+    public Queue rechargeByAgenceDone() {
+        return new Queue("rechargeByAgenceDone", true, false, false);
     }
 
     @Bean
@@ -112,13 +134,8 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Binding binding3(TopicExchange transactionExchange, Queue rechargeByAgence) {
-        return BindingBuilder.bind(rechargeByAgence).to(transactionExchange).with("recharge.send.agence");
-    }
-
-    @Bean
-    public Binding binding4(TopicExchange transactionExchange, Queue depotMoneyQueueForEvent) {
-        return BindingBuilder.bind(depotMoneyQueueForEvent).to(transactionExchange).with("getting.depot");
+    public Binding binding3(TopicExchange transactionExchange, Queue rechargeByAgenceDone) {
+        return BindingBuilder.bind(rechargeByAgenceDone).to(transactionExchange).with("recharge.done");
     }
 
     @Bean
@@ -129,6 +146,21 @@ public class RabbitConfig {
     @Bean
     public Binding binding6(TopicExchange transactionExchange, Queue retraitDoneForAgenceQueue) {
         return BindingBuilder.bind(retraitDoneForAgenceQueue).to(transactionExchange).with("retrait.done.agence");
+    }
+
+    @Bean
+    public Binding binding7(TopicExchange transactionExchange, Queue transfertDoneQueue) {
+        return BindingBuilder.bind(transfertDoneQueue).to(transactionExchange).with("transfert.done");
+    }
+
+    @Bean
+    public Binding binding8(TopicExchange transactionExchange, Queue transfertDoneForAgenceQueue) {
+        return BindingBuilder.bind(transfertDoneForAgenceQueue).to(transactionExchange).with("transfert.done.agence");
+    }
+
+    @Bean
+    public Binding binding9(TopicExchange transactionExchange, Queue depotDoneQueue) {
+        return BindingBuilder.bind(depotDoneQueue).to(transactionExchange).with("depot.done");
     }
     
 }

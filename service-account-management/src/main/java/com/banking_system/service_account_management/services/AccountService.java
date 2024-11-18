@@ -72,6 +72,9 @@ public class AccountService {
         Account source = findAccountByNumber(transfert.getNumero_source());
         incrementSolde(cible, transfert.getMontant());
         decrementSolde(source, transfert.getMontant() + transfert.getFrais());
+
+        rabbitTemplate.convertAndSend("transactionExchange", "transfert.done", transfert);
+        rabbitTemplate.convertAndSend("transactionExchange", "transfert.done.agence", transfert);
     }
 
     @Transactional
@@ -91,7 +94,7 @@ public class AccountService {
         Account account = findAccountByNumber(recharge.getNumero());
         incrementSolde(account, recharge.getMontant());
 
-        rabbitTemplate.convertAndSend("transactionExchange", "recharge.send.agence", recharge);
+        rabbitTemplate.convertAndSend("transactionExchange", "recharge.done", recharge);
     }
 
     @Transactional
@@ -102,7 +105,6 @@ public class AccountService {
         incrementSolde(cible, depot.getMontant());
         decrementSolde(source, depot.getMontant()); 
 
-        rabbitTemplate.convertAndSend("transactionExchange", "getting.depot", depot);
-
+        rabbitTemplate.convertAndSend("transactionExchange", "depot.done", depot);
     }
 }
