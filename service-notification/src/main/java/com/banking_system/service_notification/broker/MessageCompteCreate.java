@@ -66,6 +66,7 @@ public class MessageCompteCreate {
             sourceAccount = util.getEmailAgent(event.getMatricule());
             String message = "Compte Agent créé avec succès ! <br>Votre numero : " + sourceAccount.getTel() + ",<br> Matricule : " + event.getMatricule() + ". <br>Vous pouvez à présent profiter de nos services. <br><br> Cordialement, ";
             mailservice.sendMail(sourceAccount.getEmail(), "Confirmation de création de compte", message);
+           
             System.out.println(message);
 
         }
@@ -74,6 +75,7 @@ public class MessageCompteCreate {
         }
         
     }
+   
 
 
 

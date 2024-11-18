@@ -1,5 +1,7 @@
 package com.banking_system.service_notification.config;
 
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
@@ -8,9 +10,6 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.Binding;
 
 @Configuration
 @EnableRabbit
@@ -29,6 +28,7 @@ public class RabbitConfig {
         rabbitTemplate.setMessageConverter(jsonMessageConverter());
         return rabbitTemplate;
     }
+
 
     @Bean
     public TopicExchange clientExchange() {
@@ -104,10 +104,6 @@ public class RabbitConfig {
         return new Queue("transfertm", true, false, false);
     }
     
-    // @Bean
-    // public Queue depotmessageQueue() {
-    //     return new Queue("depotmessageQueue", true, false, false);
-    // }
    
     @Bean
     public Queue depotMoneyQueueForEvent() {
@@ -119,6 +115,18 @@ public class RabbitConfig {
         return new Queue("transfertmessageQueue", true, false, false);
     }
 
+
+    @Bean
+    public Queue depotmessageQueue() {
+        return new Queue("depotmessageQueue", true, false, false);
+    }
+    @Bean
+    public Queue retraitmessageQueue() {
+        return new Queue("retraitmessageQueue", true, false, false);
+    }
+
+
+    
     @Bean
     public Binding binding3(TopicExchange transactionExchange, Queue transfertmessageQueue) {
         return BindingBuilder.bind(transfertmessageQueue).to(transactionExchange).with("transfertenvoyeurmessage");

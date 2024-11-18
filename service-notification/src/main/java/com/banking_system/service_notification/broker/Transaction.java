@@ -24,6 +24,11 @@ public class Transaction{
 
 
     @RabbitListener(queues = "transfertm")
+    public void transfert(TransfertEventEnvoyeur transfertEventEnvoyeur) {
+        transfertEnvoyeur(transfertEventEnvoyeur);
+        transfertRecepteur(transfertEventEnvoyeur);
+    }
+
     public void transfertEnvoyeur(TransfertEventEnvoyeur transfertEventEnvoyeur) {
         Solde sourceAccount;
         Account mail;
@@ -41,8 +46,7 @@ public class Transaction{
         }
     }
 
-    @RabbitListener(queues = "transfertMoneyQueue")
-    public void transfertRecepteur(TransfertEventRecepteur transfertEventRecepteur) {
+    public void transfertRecepteur(TransfertEventEnvoyeur transfertEventRecepteur) {
         Solde sourceAccount;
         Account mail;
         Account mail2;
@@ -60,6 +64,11 @@ public class Transaction{
     }
 
     @RabbitListener(queues = "retraitm")
+    public void retrait(RetraitEventProducer retrait) {
+        retraitClient(retrait);
+        retraitRecepteurAgent(retrait);
+    }
+    
     public void retraitClient(RetraitEventProducer retrait) {
         
         Solde sourceAccount;
@@ -77,8 +86,7 @@ public class Transaction{
         }
     }
 
-    @RabbitListener(queues = "retraitm")
-    public void retraitRecepteurAgent(RetraitProducer retrait) {
+    public void retraitRecepteurAgent(RetraitEventProducer retrait) {
 
         Solde sourceAccount;
         Account mail;
@@ -97,6 +105,11 @@ public class Transaction{
 
     
     @RabbitListener(queues = "depotMoney")
+    public void depot(TransfertEventEnvoyeur transfertEventEnvoyeur) {
+        depotEnvoyeur(transfertEventEnvoyeur);
+        depotRecepteur(transfertEventEnvoyeur);
+    }
+
     public void depotEnvoyeur(TransfertEventEnvoyeur transfertEventEnvoyeur) {
         Solde sourceAccount;
         Account mail;
@@ -114,8 +127,7 @@ public class Transaction{
         }
     }
 
-    @RabbitListener(queues = "depotMoney")
-    public void depotRecepteur(TransfertEventRecepteur transfertEventRecepteur) {
+    public void depotRecepteur(TransfertEventEnvoyeur transfertEventRecepteur) {
         Solde sourceAccount;
         Account mail;
         Account mail2;
