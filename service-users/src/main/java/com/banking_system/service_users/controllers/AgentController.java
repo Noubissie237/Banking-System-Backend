@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -24,4 +25,10 @@ public class AgentController {
     public List<Agent> deleteAgentController(@PathVariable("id") int id) {
         return agentService.deleteAgent(id);
     }
+
+    @GetMapping("/get-user/{matricule}")
+    public Optional<Agent> getAgentController(@PathVariable("matricule") String matricule){
+        return agentService.getAgentByMatricule(matricule);
+    }
+
 }
