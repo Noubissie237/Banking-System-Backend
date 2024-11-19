@@ -94,7 +94,7 @@ public class Transaction{
             mail = util.getEmailAgentnum(retrait.getNumero_agent());
             mail2 = util.getEmail(retrait.getNumero_cible());
             String message = "Depot effectue par " + retrait.getNumero_cible() + " " + mail2.getNom() + " to " + retrait.getNumero_agent() + " " + mail.getNom() + ". Information detaillees: Montant de transaction " + retrait.getMontant() + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " + retrait.getMontant() + ", Nouveau solde : " + (retrait.getMontant() + sourceAccount.getSolde()) + " FCFA.";
-            mailservice.sendMail(mail2.getEmail(),"Retrait d'agent", message);
+            mailservice.sendMail(mail.getEmail(),"Retrait d'agent", message);
 
             System.out.println(message);
         } catch (Exception e) {
