@@ -16,5 +16,6 @@ public class TransfertConsumer {
     @RabbitListener(queues = "transfertMoneyQueue")
     public void receiveTransfertEvent(TransfertEventConsumer event) {
         accountService.makeTransfert(event);
+
     }
 }

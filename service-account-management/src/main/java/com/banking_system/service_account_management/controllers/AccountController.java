@@ -26,16 +26,6 @@ public class AccountController {
     }
 
   
-    // @PostMapping("/accountmessage")
-    // public void Compte(@RequestBody Account account) {
-    //     accountService.createAccount(account);
-    // }
-    
-    // @PostMapping("/accountmessage")
-    // public void Compte(@RequestBody AgentAccount account) {
-    //     accountService.createAgentAccount(account);
-    // }
-
     
     
 }

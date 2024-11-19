@@ -52,6 +52,7 @@ public class AgentService {
         return agentRepository.findById(id).orElse(null);
     }
 
+    
     public List<Agent> deleteAgent(int id) {
         agentRepository.deleteById(id);
         return agentRepository.findAll();

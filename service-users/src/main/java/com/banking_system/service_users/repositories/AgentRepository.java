@@ -11,5 +11,6 @@ import com.banking_system.service_users.models.Agent;
 @RepositoryRestResource
 public interface AgentRepository extends JpaRepository<Agent, Integer> {
     public Optional<Agent> findByMatricule(String matricule);
+
     public Optional<Agent> findByTel(String tel);
 }
