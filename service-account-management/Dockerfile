@@ -11,4 +11,6 @@ COPY --from=build /app/target/service-account-management-0.0.1-SNAPSHOT.jar serv
 ENV SPRING_APPLICATION_NAME=service-account-management
 ENV SPRING_CLOUD_CONFIG_SERVER_GIT_URI=https://github.com/Noubissie237/banking-system-cloud-conf
 
+EXPOSE 8084
+
 ENTRYPOINT ["java", "-jar", "/app/service-account-management.jar"]
