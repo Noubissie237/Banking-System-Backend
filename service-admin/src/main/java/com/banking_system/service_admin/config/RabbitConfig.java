@@ -7,11 +7,9 @@ import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-
-import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 
 @Configuration
 @EnableRabbit
@@ -75,6 +73,11 @@ public class RabbitConfig {
     }
 
     @Bean
+    public Queue rechargeByAgenceo() {
+        return new Queue("rechargeByAgenceo", true, false, false);
+    }
+
+    @Bean
     public Binding binding1(TopicExchange clientExchange, Queue acceptDemandeQueue) {
         return BindingBuilder.bind(acceptDemandeQueue).to(clientExchange).with("demande.accepted");
     }
@@ -94,4 +97,10 @@ public class RabbitConfig {
         return BindingBuilder.bind(rechargeByAgence).to(transactionExchange).with("recharge.send");
     }
 
+    @Bean
+    public Binding binding5(TopicExchange transactionExchange, Queue rechargeByAgenceo) {
+        return BindingBuilder.bind(rechargeByAgenceo).to(transactionExchange).with("recharge.sen");
+    }
+
+    
 }

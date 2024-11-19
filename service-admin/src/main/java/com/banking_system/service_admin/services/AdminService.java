@@ -55,8 +55,10 @@ public class AdminService {
                 deleteDemande(demandeUpdated.getId());
             }
             else if (statut == StatutDemande.REJETEE) {
-                String message = "Echec de création de votre compte 😣";
-                rabbitTemplate.convertAndSend("clientExchange", "demande.reject", message);
+                ClientEventProducer event = new ClientEventProducer();
+                event.setIdAgence(demandeUpdated.getAgence());
+                event.setNumeroClient(demandeUpdated.getClientTel());
+                rabbitTemplate.convertAndSend("clientExchange", "demande.reject", event);
             }
             return adminRepository.findAll();
         } else {
@@ -86,6 +88,7 @@ public class AdminService {
 
         rabbitTemplate.convertAndSend("transactionExchange", "recharge.send", event);
         
+        rabbitTemplate.convertAndSend("transactionExchange", "recharge.sen", event);
         agenceService.decrementCapital(idAgence, montant);
     }
 

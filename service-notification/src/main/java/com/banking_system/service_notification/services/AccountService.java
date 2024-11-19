@@ -16,7 +16,7 @@ public class AccountService {
     public void createAccount() {
         try {
             String message = "Compte créé avec succès ! Vous pouvez à présent profiter de nos services 😀 ";
-            rabbitTemplate.convertAndSend("clientExchange", "client-account.create", message);
+            rabbitTemplate.convertAndSend("clientExchange", "client-account-create", message);
         } catch (Exception e) {
             throw new RuntimeException("Account Creation Error : ",e);
         }
@@ -25,7 +25,16 @@ public class AccountService {
     public void createAgentAccount(AgentEvent event) {
         try {
             String message = "Compte Agent créé avec succès ! \n Votre numero est " +event.getNumero() + "\n Matricule " +event.getMatricule() + "\n Vous pouvez à présent profiter de nos services 😀 ";
-            rabbitTemplate.convertAndSend("clientExchange", "agent-account.create", message);
+            rabbitTemplate.convertAndSend("clientExchange", "agent-account-create", message);
+        } catch (Exception e) {
+            throw new RuntimeException("Account Creation Error : ",e);
+        }
+    }
+
+    public void createRejetAccount() {
+        try {
+            String message = "Echec de creation du Compte ! <br> Veillez vous rapporcher de l'agence.<br><br> Cordialement,";
+            rabbitTemplate.convertAndSend("clientExchange", "account.rejet", message);
         } catch (Exception e) {
             throw new RuntimeException("Account Creation Error : ",e);
         }
