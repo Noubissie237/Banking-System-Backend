@@ -15,7 +15,7 @@ public class RechargesConsumer {
     @Autowired
     private TransactionService transactionService;
 
-    @RabbitListener(queues = "rechargeByAgence")
+    @RabbitListener(queues = "rechargeByAgenceDone")
     public void receiveRechargeEvent(RechargeTemplate event) {
         TransactionEvent transac = new TransactionEvent();
 

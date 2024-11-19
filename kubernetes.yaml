@@ -1,0 +1,508 @@
+# Pod, pour la première couche : config - registry - proxy
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-registry-proxy
+  namespace: banking-system-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config-registry-proxy
+  template:
+    metadata:
+      labels:
+        app: config-registry-proxy
+        service-config: "true"
+        service-registry: "true"
+        service-proxy: "true"
+    spec:
+      containers:
+        - name: service-config
+          image: noubissie237/service-config:latest
+          ports:
+            - containerPort: 2370
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: "service-config"
+            - name: SPRING_CLOUD_CONFIG_SERVER_GIT_URI
+              value: "https://github.com/Noubissie237/banking-system-cloud-conf"
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 2370
+            initialDelaySeconds: 5
+            periodSeconds: 10
+
+        - name: service-registry
+          image: noubissie237/service-registry:latest
+          ports:
+            - containerPort: 8761
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: "service-registry"
+            - name: SPRING_CONFIG_IMPORT
+              value:  "configserver:http://localhost:2370"
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8761
+            initialDelaySeconds: 5
+            periodSeconds: 10
+
+        - name: service-proxy
+          image: noubissie237/service-proxy:latest
+          ports:
+            - containerPort: 8079
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: "service-proxy"
+            - name: SPRING_CONFIG_IMPORT
+              value:  "configserver:http://localhost:2370"
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8079
+            initialDelaySeconds: 5
+            periodSeconds: 10
+# ------------------------------- | DEPLOIEMENTS Pour les BD| -------------------------------#
+---
+# mysql Deployment
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+  namespace: banking-system-app
+spec:
+  serviceName: "mysql-service"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:latest
+          env:
+            - name: MYSQL_ALLOW_EMPTY_PASSWORD
+              value: "no"
+            - name: MYSQL_ROOT_PASSWORD
+              value: "myPass"
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - name: mysql-pv
+              mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+    - metadata:
+        name: mysql-pv
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 10Gi
+---
+# RabbitMQ Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq
+  namespace: banking-system-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rabbitmq
+  template:
+    metadata:
+      labels:
+        app: rabbitmq
+    spec:
+      containers:
+        - name: rabbitmq
+          image: rabbitmq:management
+          ports:
+            - containerPort: 5672 
+            - containerPort: 15672
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 15672
+            initialDelaySeconds: 20
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 15672
+            initialDelaySeconds: 10
+            periodSeconds: 10
+---
+# EventStoreDB StatefulSet
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: eventstoredb
+  namespace: banking-system-app
+spec:
+  serviceName: "eventstore-service"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eventstoredb
+  template:
+    metadata:
+      labels:
+        app: eventstoredb
+    spec:
+      containers:
+        - name: eventstore
+          image: docker.eventstore.com/eventstore-preview/eventstoredb-ee:24.10.0-preview1-x64-8.0-bookworm-slim
+          env:
+            - name: EVENTSTORE_CLUSTER_SIZE
+              value: "1"
+            - name: EVENTSTORE_RUN_PROJECTIONS
+              value: "All"
+            - name: EVENTSTORE_START_STANDARD_PROJECTIONS
+              value: "true"
+            - name: EVENTSTORE_NODE_PORT
+              value: "2113"
+            - name: EVENTSTORE_INSECURE
+              value: "true"
+            - name: EVENTSTORE_ENABLE_ATOM_PUB_OVER_HTTP
+              value: "true"
+          ports:
+            - containerPort: 2113
+          volumeMounts:
+            - name: eventstore-pv
+              mountPath: /var/lib/eventstore
+          readinessProbe:
+            httpGet:
+              path: /health/live
+              port: 2113
+            initialDelaySeconds: 15
+            periodSeconds: 10
+  volumeClaimTemplates:
+    - metadata:
+        name: eventstore-pv
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 20Gi
+# ------------------------------- | DEPLOIEMENTS pour tous mes autres services | -------------------------------#
+---
+# Déploiement pour Authentification
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-authentification
+  namespace: banking-system-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-authentification
+  template:
+    metadata:
+      labels:
+        app: service-authentification
+    spec:
+      containers:
+        - name: service-authentification
+          image: noubissie237/service-authentification:latest
+          ports:
+            - containerPort: 8081
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: "service-authentification"
+            - name: SPRING_CONFIG_IMPORT
+              value: "configserver:http://service-config:2370"
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8081
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8081
+            initialDelaySeconds: 10
+            periodSeconds: 20
+---
+# Déploiement pour Users
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-users
+  namespace: banking-system-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-users
+  template:
+    metadata:
+      labels:
+        app: service-users
+    spec:
+      containers:
+        - name: service-users
+          image: noubissie237/service-users:latest
+          ports:
+            - containerPort: 8082
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: "service-users"
+            - name: SPRING_CONFIG_IMPORT
+              value: "configserver:http://service-config:2370"
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8082
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8082
+            initialDelaySeconds: 10
+            periodSeconds: 20
+---
+# Déploiement pour Admin
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-admin
+  namespace: banking-system-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-admin
+  template:
+    metadata:
+      labels:
+        app: service-admin
+    spec:
+      containers:
+        - name: service-admin
+          image: noubissie237/service-admin:latest
+          ports:
+            - containerPort: 8083
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: "service-admin"
+            - name: SPRING_CONFIG_IMPORT
+              value: "configserver:http://service-config:2370"
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8083
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8083
+            initialDelaySeconds: 10
+            periodSeconds: 20
+---
+# Déploiement pour Account-management
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-account-management
+  namespace: banking-system-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-account-management
+  template:
+    metadata:
+      labels:
+        app: service-account-management
+    spec:
+      containers:
+        - name: service-account-management
+          image: noubissie237/service-account-management:latest
+          ports:
+            - containerPort: 8084
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: "service-account-management"
+            - name: SPRING_CONFIG_IMPORT
+              value: "configserver:http://service-config:2370"
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8084
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8084
+            initialDelaySeconds: 10
+            periodSeconds: 20
+---
+# Deploiement pour le service depot
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-depot
+  namespace: banking-system-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-depot
+  template:
+    metadata:
+      labels:
+        app: service-depot
+    spec:
+      containers:
+        - name: service-depot
+          image: noubissie237/service-depot:latest
+          ports:
+            - containerPort: 8085
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: "service-depot"
+            - name: SPRING_CONFIG_IMPORT
+              value: "configserver:http://service-config:2370"
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8085
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8085
+            initialDelaySeconds: 10
+            periodSeconds: 20
+---
+# Deploiement pour le service des retraits
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-retrait
+  namespace: banking-system-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-retrait
+  template:
+    metadata:
+      labels:
+        app: service-retrait
+    spec:
+      containers:
+        - name: service-retrait
+          image: noubissie237/service-retrait:latest
+          ports:
+            - containerPort: 8086
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: "service-retrait"
+            - name: SPRING_CONFIG_IMPORT
+              value: "configserver:http://service-config:2370"
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8086
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8086
+            initialDelaySeconds: 10
+            periodSeconds: 20
+---
+# Deploiement pour le service des transferts
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-tranfert
+  namespace: banking-system-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-tranfert
+  template:
+    metadata:
+      labels:
+        app: service-tranfert
+    spec:
+      containers:
+        - name: service-tranfert
+          image: noubissie237/service-tranfert:latest
+          ports:
+            - containerPort: 8087
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: "service-tranfert"
+            - name: SPRING_CONFIG_IMPORT
+              value: "configserver:http://service-config:2370"
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8087
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8087
+            initialDelaySeconds: 10
+            periodSeconds: 20
+---
+# Deploiement pour le servcie des transactions
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-transactions
+  namespace: banking-system-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-transactions
+  template:
+    metadata:
+      labels:
+        app: service-transactions
+    spec:
+      containers:
+        - name: service-transactions
+          image: noubissie237/service-transactions:latest
+          ports:
+            - containerPort: 8088
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: "service-transactions"
+            - name: SPRING_CONFIG_IMPORT
+              value: "configserver:http://service-config:2370"
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8088 
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8088
+            initialDelaySeconds: 10
+            periodSeconds: 20

@@ -78,28 +78,28 @@ public class AccountService {
         incrementSolde(cible, transfert.getMontant());
         decrementSolde(source, transfert.getMontant() + transfert.getFrais());
 
-        
-
+        rabbitTemplate.convertAndSend("transactionExchange", "transfert.done", transfert);
+        rabbitTemplate.convertAndSend("transactionExchange", "transfert.done.agence", transfert);
     }
 
     @Transactional
     public void makeRetrait(RetraitEventConsumer retrait) {
         Account cible = findAccountByNumber(retrait.getNumero_cible());
-        Account agent = findAccountByNumber(retrait.getNumero_agent());
+        Account agent = findAccountByMatricule(retrait.getMatricule_agent());
         Double agentGain = (retrait.getFrais() * 0.25 ) ;
         incrementSolde(agent, retrait.getMontant() + agentGain);
         decrementSolde(cible, retrait.getMontant() + retrait.getFrais());
 
- }
+        rabbitTemplate.convertAndSend("transactionExchange", "retrait.done", retrait);
+        rabbitTemplate.convertAndSend("transactionExchange", "retrait.done.agence", retrait);
+    }
     
     @Transactional
     public void makeRecharge(RechargeEventConsumer recharge) {
         Account account = findAccountByNumber(recharge.getNumero());
         incrementSolde(account, recharge.getMontant());
-        
-        rabbitTemplate.convertAndSend("transactionExchange", "recharge.send.agence", recharge);
-        rabbitTemplate.convertAndSend("transactionExchange", "recharge.agence", recharge);
-        
+
+        rabbitTemplate.convertAndSend("transactionExchange", "recharge.done", recharge);
     }
 
     @Transactional
@@ -110,7 +110,6 @@ public class AccountService {
         incrementSolde(cible, depot.getMontant());
         decrementSolde(source, depot.getMontant()); 
 
-        rabbitTemplate.convertAndSend("transactionExchange", "getting.depot", depot);
-        
+        rabbitTemplate.convertAndSend("transactionExchange", "depot.done", depot);
     }
 }

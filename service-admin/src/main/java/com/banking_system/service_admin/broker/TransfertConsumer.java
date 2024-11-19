@@ -13,7 +13,7 @@ public class TransfertConsumer {
     @Autowired
     private AgenceService agenceService;
 
-    @RabbitListener(queues = "transfertMoneyQueueAgence")
+    @RabbitListener(queues = "transfertDoneForAgenceQueue")
     public void receiveEventTransfert(TransfertEventConsumer event) {
         agenceService.incrementCapital(event.getAgence(), event.getFrais());
     }

@@ -46,6 +46,19 @@ public class AuthService {
         throw new RuntimeException("Utilisateur inconnu !");
     }
 
+    public boolean checkPassword(String phone, String password) {
+        Person[] users  = getUsers();
+        if (users != null) {
+            for (Person user : users) {
+                if(user.getTel().equals(phone) && passwordEncoder.matches(password, user.getPassword())) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        return false;
+    }
+
     private Person[] getUsers() {
         ResponseEntity<Person[]> response = restTemplate.getForEntity(allUsers, Person[].class);
         return response.getBody();

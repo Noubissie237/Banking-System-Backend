@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.banking_system.service_users.models.Agent;
 import com.banking_system.service_users.services.AgentService;
 
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -42,6 +44,10 @@ public class AgentController {
         return agentService.findAgent(number);
     }
     
-
     
+    @GetMapping("/get-agent/{matricule}")
+    public Optional<Agent> getAgentController(@PathVariable("matricule") String matricule){
+        return agentService.getAgentByMatricule(matricule);
+    }
+
 }

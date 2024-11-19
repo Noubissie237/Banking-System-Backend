@@ -13,7 +13,7 @@ public class DepotConsumer {
     @Autowired
     private AccountService accountService;
 
-    @RabbitListener(queues = "depotMoneyQueue")
+    @RabbitListener(queues = "depotSendQueue")
     public void receiveDepotEvent(DepotEventConsumer event) {
         accountService.makeDepot(event);
     }

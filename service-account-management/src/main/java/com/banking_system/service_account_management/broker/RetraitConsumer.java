@@ -13,7 +13,7 @@ public class RetraitConsumer {
     @Autowired
     private AccountService accountService;
 
-    @RabbitListener(queues = "retraitMoneyQueue")
+    @RabbitListener(queues = "retraitSendQueue")
     public void receiveRetraitEvent(RetraitEventConsumer event) {
         accountService.makeRetrait(event);
     }
