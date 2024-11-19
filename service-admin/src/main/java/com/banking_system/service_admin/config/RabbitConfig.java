@@ -102,5 +102,6 @@ public class RabbitConfig {
         return BindingBuilder.bind(rechargeByAgenceo).to(transactionExchange).with("recharge.sen");
     }
 
+
     
 }

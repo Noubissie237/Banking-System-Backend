@@ -75,10 +75,9 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Queue rechargeByAgence() {
+    public Queue rechargeByAgenceo() {
         return new Queue("rechargeByAgenceo", true, false, false);
     }
-
 
     @Bean
     public Queue depotMoney() {
