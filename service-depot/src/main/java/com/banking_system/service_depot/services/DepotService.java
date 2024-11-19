@@ -45,6 +45,7 @@ public class DepotService {
             transEvent.setMontant(event.getMontant());
             
             rabbitTemplate.convertAndSend("transactionExchange", "depot.send", transEvent);
+
         } else {
             throw new RuntimeException("Solde insuffisant !");
         }

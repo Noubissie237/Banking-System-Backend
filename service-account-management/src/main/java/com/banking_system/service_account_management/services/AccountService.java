@@ -4,10 +4,12 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.banking_system.service_account_management.event.AccountEventJson;
+import com.banking_system.service_account_management.event.AgentEventConsumer;
 import com.banking_system.service_account_management.event.DepotEventConsumer;
 import com.banking_system.service_account_management.event.RechargeEventConsumer;
-import com.banking_system.service_account_management.event.TransfertEventConsumer;
 import com.banking_system.service_account_management.event.RetraitEventConsumer;
+import com.banking_system.service_account_management.event.TransfertEventConsumer;
 import com.banking_system.service_account_management.models.Account;
 import com.banking_system.service_account_management.models.AgentAccount;
 import com.banking_system.service_account_management.repositories.AccountRepository;
@@ -28,26 +30,29 @@ public class AccountService {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    public void createAccount(Account account) {
+     public void createAccount(Account account) {
         try {
+            AccountEventJson event = new AccountEventJson();
+            event.setNumeroClient(account.getNumber());
             accountRepository.save(account);
-            String message = "Compte créé avec succès ! Vous pouvez à présent profiter de nos services 😀 ";
-            rabbitTemplate.convertAndSend("clientExchange", "client-account.create", message);
+            rabbitTemplate.convertAndSend("clientExchange", "client-account.create", event);
         } catch (Exception e) {
             throw new RuntimeException("Account Creation Error : ",e);
         }
     }
+
 
     public void createAgentAccount(AgentAccount account) {
         try {
+            AgentEventConsumer event = new AgentEventConsumer();
+            event.setMatricule(account.getMatricule());
             agentAccountRepository.save(account);
-            String message = "Compte Agent créé avec succès ! Vous pouvez à présent profiter de nos services 😀 ";
-            rabbitTemplate.convertAndSend("clientExchange", "agent-account.create", message);
+            rabbitTemplate.convertAndSend("clientExchange", "agent-account.create", event);
         } catch (Exception e) {
             throw new RuntimeException("Account Creation Error : ",e);
         }
     }
-
+    
     public void incrementSolde(Account account, Double montant) {
         if (account == null) return;
         account.setSolde(account.getSolde() + montant);
@@ -78,7 +83,7 @@ public class AccountService {
     }
 
     @Transactional
-    public void makeRetrait( RetraitEventConsumer retrait) {
+    public void makeRetrait(RetraitEventConsumer retrait) {
         Account cible = findAccountByNumber(retrait.getNumero_cible());
         Account agent = findAccountByMatricule(retrait.getMatricule_agent());
         Double agentGain = (retrait.getFrais() * 0.25 ) ;

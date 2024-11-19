@@ -17,4 +17,5 @@ public class ClientConsumer {
     public void accountNotCreated(ClientAccountCreated event) {
         System.out.println(event.getMessage());
     }
+
 }

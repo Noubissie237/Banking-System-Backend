@@ -1,18 +1,18 @@
 package com.banking_system.service_admin.services;
 
-import com.banking_system.service_admin.events.AgentEventProducer;
-import com.banking_system.service_admin.events.ClientEventProducer;
-import com.banking_system.service_admin.events.RechargeEventProducer;
-import com.banking_system.service_admin.models.Demande;
-import com.banking_system.service_admin.models.StatutDemande;
-import com.banking_system.service_admin.repositories.AdminRepository;
-
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.banking_system.service_admin.events.AgentEventProducer;
+import com.banking_system.service_admin.events.ClientEventProducer;
+import com.banking_system.service_admin.events.RechargeEventProducer;
+import com.banking_system.service_admin.models.Demande;
+import com.banking_system.service_admin.models.StatutDemande;
+import com.banking_system.service_admin.repositories.AdminRepository;
 
 @Service
 public class AdminService {
@@ -50,12 +50,15 @@ public class AdminService {
                 ClientEventProducer event = new ClientEventProducer();
                 event.setIdAgence(demandeUpdated.getAgence());
                 event.setNumeroClient(demandeUpdated.getClientTel());
+            
                 rabbitTemplate.convertAndSend("clientExchange", "demande.accepted", event);
                 deleteDemande(demandeUpdated.getId());
             }
             else if (statut == StatutDemande.REJETEE) {
-                String message = "Echec de création de votre compte 😣";
-                rabbitTemplate.convertAndSend("clientExchange", "demande.reject", message);
+                ClientEventProducer event = new ClientEventProducer();
+                event.setIdAgence(demandeUpdated.getAgence());
+                event.setNumeroClient(demandeUpdated.getClientTel());
+                rabbitTemplate.convertAndSend("clientExchange", "demande.reject", event);
             }
             return adminRepository.findAll();
         } else {
@@ -84,7 +87,7 @@ public class AdminService {
         event.setMontant(montant);
 
         rabbitTemplate.convertAndSend("transactionExchange", "recharge.send", event);
-        
+        rabbitTemplate.convertAndSend("transactionExchange", "recharge.sen", event);
         agenceService.decrementCapital(idAgence, montant);
     }
 

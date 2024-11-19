@@ -1,18 +1,15 @@
 package com.banking_system.service_account_management.config;
 
+import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-
-import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
-
-import org.springframework.amqp.core.Binding;
 
 
 @Configuration
@@ -43,7 +40,7 @@ public class RabbitConfig {
 
     @Bean
     public Queue acceptDemandeQueue() {
-        return new Queue("acceptDemandeQueue");
+        return new Queue("acceptDemandeQueue", true, false,false);
     }
 
     @Bean
@@ -118,6 +115,7 @@ public class RabbitConfig {
         return new Queue("rechargeByAgence", true, false, false);
     }
 
+
     @Bean
     public Queue rechargeByAgenceDone() {
         return new Queue("rechargeByAgenceDone", true, false, false);
@@ -132,8 +130,7 @@ public class RabbitConfig {
     public Binding binding2(TopicExchange clientExchange, Queue agentAccountQueue) {
         return BindingBuilder.bind(agentAccountQueue).to(clientExchange).with("agent-account.create");
     }
-
-    @Bean
+  
     public Binding binding3(TopicExchange transactionExchange, Queue rechargeByAgenceDone) {
         return BindingBuilder.bind(rechargeByAgenceDone).to(transactionExchange).with("recharge.done");
     }
@@ -158,9 +155,10 @@ public class RabbitConfig {
         return BindingBuilder.bind(transfertDoneForAgenceQueue).to(transactionExchange).with("transfert.done.agence");
     }
 
+
     @Bean
     public Binding binding9(TopicExchange transactionExchange, Queue depotDoneQueue) {
         return BindingBuilder.bind(depotDoneQueue).to(transactionExchange).with("depot.done");
     }
-    
+
 }

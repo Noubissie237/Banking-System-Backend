@@ -44,4 +44,5 @@ public class RabbitConfig {
     public Binding binding1(TopicExchange transactionExchange, Queue transfertSendQueue) {
         return BindingBuilder.bind(transfertSendQueue).to(transactionExchange).with("transfert.send");
     }
+
 }

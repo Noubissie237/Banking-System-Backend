@@ -48,6 +48,7 @@ public class TransfertService {
             transEvent.setFrais(frais);
             
             rabbitTemplate.convertAndSend("transactionExchange", "transfert.send", transEvent);
+
         } else {
             throw new RuntimeException("Solde insuffisant !");
         }

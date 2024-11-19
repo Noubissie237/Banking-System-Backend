@@ -1,5 +1,8 @@
 package com.banking_system.service_users.services;
 
+
+import java.util.List;
+
 import com.banking_system.service_users.dto.LoginRequest;
 import com.banking_system.service_users.events.ClientEvent;
 import com.banking_system.service_users.models.Client;
@@ -11,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.List;
 
 @Service
 public class ClientService {
@@ -83,4 +84,10 @@ public class ClientService {
             return "Echec : "+e.getMessage();  
         }
     }
+
+    public Client findClient(String numero){
+        return clientRepository.findByTel(numero).orElseThrow();
+    }
+
+
 }

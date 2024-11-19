@@ -43,6 +43,7 @@ public class RetraitService {
             retraitEvent.setFrais(frais);
 
             rabbitTemplate.convertAndSend("transactionExchange", "retrait.send", retraitEvent);
+
         } else {
             throw new RuntimeException("Solde insuffisant !");
         }

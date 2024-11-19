@@ -16,4 +16,6 @@ import lombok.Setter;
 public class ClientAccountCreated {
     @JsonProperty("message")
     private String message;
+    
+
 }

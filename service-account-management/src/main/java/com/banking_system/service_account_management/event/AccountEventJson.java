@@ -17,4 +17,5 @@ public class AccountEventJson {
     @JsonProperty("numero_client")
     private String numeroClient;
 
+
 }
