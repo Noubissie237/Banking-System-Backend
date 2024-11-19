@@ -90,6 +90,34 @@ L'application utilise les technologies suivantes :
 
 
 
-# FONCTIONNEMENT
+# FONCTIONNEMENT, AVEC KUBERNETES ET HPA
 
-Explication à suivre...
+Installation du serveur de metriques
+```sh
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+```
+
+Verification : Nous devons voir une ligne avec v1beta1.metrics.k8s.io marquée comme True.
+```sh
+kubectl get apiservices
+```
+
+Définition du Namespace
+```sh
+kubectl apply -f namespace.yaml
+```
+
+Lancement du déploiement
+```sh
+kubectl apply -f kubernetes.yaml
+```
+
+Lancement des services
+```sh
+kubectl apply -f services.yaml
+```
+
+Activation de la scalabilité
+```sh
+kubectl apply -f hpa.yaml
+```

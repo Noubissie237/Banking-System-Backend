@@ -1,15 +1,15 @@
 services:
   # Service de configuration
-  # service-config:
-  #   image: noubissie237/service-config:latest
-  #   # build: ./service-config/
-  #   ports:
-  #     - "2370:2370"
-  #   environment:
-  #     - SPRING_APPLICATION_NAME=service-config
-  #     - SPRING_CLOUD_CONFIG_SERVER_GIT_URI=https://github.com/Noubissie237/banking-system-cloud-conf
-  #   networks:
-  #     - banking-system-network
+  service-config:
+    image: noubissie237/service-config:latest
+    # build: ./service-config/
+    ports:
+      - "2370:2370"
+    environment:
+      - SPRING_APPLICATION_NAME=service-config
+      - SPRING_CLOUD_CONFIG_SERVER_GIT_URI=https://github.com/Noubissie237/banking-system-cloud-conf
+    networks:
+      - banking-system-network
 
   # Service d'enrégistrement
   service-registry:
