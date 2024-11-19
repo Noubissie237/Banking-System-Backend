@@ -36,7 +36,7 @@ public class Transaction{
             sourceAccount = util.getsoldeClient(transfertEventEnvoyeur.getNumero_source());
             mail = util.getEmail(transfertEventEnvoyeur.getNumero_source());
             mail2 = util.getEmail(transfertEventEnvoyeur.getNumero_cible());
-            String message = "Transfert de " + transfertEventEnvoyeur.getNumero_source() + " " + mail.getNom().toUpperCase() + " vers " + transfertEventEnvoyeur.getNumero_cible() + " " + mail2.getNom().toUpperCase() + " Reussi. Information detaillees: Montant de transaction " + transfertEventEnvoyeur.getMontant() + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " + (transfertEventEnvoyeur.getNumero_cible() + transfertEventEnvoyeur.getFrais()) + ", Nouveau solde : " + (transfertEventEnvoyeur.getMontant() + sourceAccount.getSolde()) + " FCFA.";
+            String message = "Transfert de " + transfertEventEnvoyeur.getNumero_source() + " " + mail.getNom().toUpperCase() + " vers " + transfertEventEnvoyeur.getNumero_cible() + " " + mail2.getNom().toUpperCase() + " Reussi. Information detaillees: Montant de transaction " + transfertEventEnvoyeur.getMontant() + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " + (transfertEventEnvoyeur.getNumero_cible() + transfertEventEnvoyeur.getFrais()) + "FCFA, Nouveau solde : " + (transfertEventEnvoyeur.getMontant() + sourceAccount.getSolde()) + " FCFA.";
             mailservice.sendMail(mail.getEmail(),"Transfert d'argent", message);
     
             System.out.println(message);
@@ -53,7 +53,7 @@ public class Transaction{
             sourceAccount = util.getsoldeClient(transfertEventRecepteur.getNumero_cible());
             mail = util.getEmail(transfertEventRecepteur.getNumero_cible());
             mail2 = util.getEmail(transfertEventRecepteur.getNumero_source());
-            String message = "Depot effectue par " + transfertEventRecepteur.getNumero_source() + " " + mail2.getNom().toUpperCase() +  " to " + transfertEventRecepteur.getNumero_cible() + mail.getNom().toUpperCase() + ". Information detaillees: Montant de transaction " + transfertEventRecepteur.getMontant() + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " + transfertEventRecepteur.getNumero_cible() + ", Nouveau solde : " + (transfertEventRecepteur.getMontant() + sourceAccount.getSolde()) +  " FCFA.";
+            String message = "Depot effectue par " + transfertEventRecepteur.getNumero_source() + " " + mail2.getNom().toUpperCase() +  " to " + transfertEventRecepteur.getNumero_cible() + mail.getNom().toUpperCase() + ". Information detaillees: Montant de transaction " + transfertEventRecepteur.getMontant() + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " + transfertEventRecepteur.getNumero_cible() + "FCFA, Nouveau solde : " + (transfertEventRecepteur.getMontant() + sourceAccount.getSolde()) +  " FCFA.";
             mailservice.sendMail(mail.getEmail(),"Depot d'agent", message);
     
             System.out.println(message);
@@ -77,7 +77,7 @@ public class Transaction{
             sourceAccount = util.getsoldeClient(retrait.getNumero_cible());
             mail = util.getEmail(retrait.getNumero_cible());
             mail2 = util.getEmailAgentnum(retrait.getNumero_agent());
-            String message = "Retrait d'agent reussi par " + retrait.getNumero_agent() + " " + mail.getNom().toUpperCase() + " to " +  retrait.getNumero_agent() + " " + mail2.getNom().toUpperCase() + ". Information detaillees: Montant de transaction " + retrait.getMontant() + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " + (retrait.getMontant() + retrait.getFrais()) + ", Nouveau solde : " + (retrait.getMontant() + sourceAccount.getSolde()) + " FCFA.";
+            String message = "Retrait d'agent reussi par " + retrait.getNumero_agent() + " " + mail.getNom().toUpperCase() + " to " +  retrait.getNumero_agent() + " " + mail2.getNom().toUpperCase() + ". Information detaillees: Montant de transaction " + retrait.getMontant() + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " + (retrait.getMontant() + retrait.getFrais()) + "FCFA, Nouveau solde : " + (retrait.getMontant() + sourceAccount.getSolde()) + " FCFA.";
             mailservice.sendMail(mail.getEmail(),"Retrait d'agent", message);
             System.out.println(message);
         } catch (Exception e) {
@@ -94,7 +94,7 @@ public class Transaction{
             sourceAccount = util.getSoldeAgent(retrait.getNumero_agent());
             mail = util.getEmailAgentnum(retrait.getNumero_agent());
             mail2 = util.getEmail(retrait.getNumero_cible());
-            String message = "Depot effectue par " + retrait.getNumero_cible() + " " + mail2.getNom().toUpperCase() + " to " + retrait.getNumero_agent() + " " + mail.getNom().toUpperCase() + ". Information detaillees: Montant de transaction " + retrait.getMontant() + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " + retrait.getMontant() + ", Nouveau solde : " + (retrait.getMontant() + sourceAccount.getSolde()) + " FCFA.";
+            String message = "Depot effectue par " + retrait.getNumero_cible() + " " + mail2.getNom().toUpperCase() + " to " + retrait.getNumero_agent() + " " + mail.getNom().toUpperCase() + ". Information detaillees: Montant de transaction " + retrait.getMontant() + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " + retrait.getMontant() + "FCFA, Nouveau solde : " + (retrait.getMontant() + sourceAccount.getSolde()) + " FCFA.";
             mailservice.sendMail(mail.getEmail(),"Depot d'argent", message);
 
             System.out.println(message);
@@ -118,7 +118,7 @@ public class Transaction{
             sourceAccount = util.getsoldeClient(transfertEventEnvoyeur.getNumero_source());
             mail = util.getEmailAgentnum(transfertEventEnvoyeur.getNumero_source());
             mail2 = util.getEmail(transfertEventEnvoyeur.getNumero_cible());
-            String message = "Transfert de " + transfertEventEnvoyeur.getNumero_source() + " " + mail.getNom().toUpperCase() + " vers " + transfertEventEnvoyeur.getNumero_cible() + " " + mail2.getNom().toUpperCase() + " Reussi. Information detaillees: Montant de transaction " + transfertEventEnvoyeur.getMontant() + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " + transfertEventEnvoyeur.getMontant() + ", Nouveau solde : " + (transfertEventEnvoyeur.getMontant() + sourceAccount.getSolde()) + " FCFA.";
+            String message = "Transfert de " + transfertEventEnvoyeur.getNumero_source() + " " + mail.getNom().toUpperCase() + " vers " + transfertEventEnvoyeur.getNumero_cible() + " " + mail2.getNom().toUpperCase() + " Reussi. Information detaillees: Montant de transaction " + transfertEventEnvoyeur.getMontant() + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " + transfertEventEnvoyeur.getMontant() + "FCFA, Nouveau solde : " + (transfertEventEnvoyeur.getMontant() + sourceAccount.getSolde()) + " FCFA.";
             mailservice.sendMail(mail.getEmail(),"Transfert d'argent", message);
     
             System.out.println(message);
@@ -135,7 +135,7 @@ public class Transaction{
             sourceAccount = util.getsoldeClient(transfertEventRecepteur.getNumero_cible());
             mail = util.getEmail(transfertEventRecepteur.getNumero_cible());
             mail2 = util.getEmailAgentnum(transfertEventRecepteur.getNumero_source());
-            String message = "Depot effectue par " + transfertEventRecepteur.getNumero_source() + " " + mail2.getNom().toUpperCase() +  " to " + transfertEventRecepteur.getNumero_cible() + mail.getNom().toUpperCase() + ". Information detaillees: Montant de transaction " + transfertEventRecepteur.getMontant() + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " + transfertEventRecepteur.getMontant() + ", Nouveau solde : " + (transfertEventRecepteur.getMontant() + sourceAccount.getSolde()) +  " FCFA.";
+            String message = "Depot effectue par " + transfertEventRecepteur.getNumero_source() + " " + mail2.getNom().toUpperCase() +  " to " + transfertEventRecepteur.getNumero_cible() +" "+ mail.getNom().toUpperCase() + ". Information detaillees: Montant de transaction " + transfertEventRecepteur.getMontant() + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " + transfertEventRecepteur.getMontant() + "FCFA, Nouveau solde : " + (transfertEventRecepteur.getMontant() + sourceAccount.getSolde()) +  " FCFA.";
             mailservice.sendMail(mail.getEmail(),"Depot d'agent", message);
     
             System.out.println(message);
@@ -152,7 +152,7 @@ public class Transaction{
         try {
             sourceAccount = util.getSoldeAgent(rechargeEventConsumer.getNumero());
             mail = util.getEmail(rechargeEventConsumer.getNumero());
-            String message = "Depot effectue par " + rechargeEventConsumer.getAgence() +  " to " + rechargeEventConsumer.getNumero() + mail.getNom().toUpperCase() + ". Information detaillees: Montant de transaction " + rechargeEventConsumer.getMontant() + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " + rechargeEventConsumer.getMontant() + ", Nouveau solde : " + (rechargeEventConsumer.getMontant() + sourceAccount.getSolde()) +  " FCFA.";
+            String message = "Depot effectue par " + rechargeEventConsumer.getAgence() +  " to " + rechargeEventConsumer.getNumero() + mail.getNom().toUpperCase() + ". Information detaillees: Montant de transaction " + rechargeEventConsumer.getMontant() + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " + rechargeEventConsumer.getMontant() + "FCFA, Nouveau solde : " + (rechargeEventConsumer.getMontant() + sourceAccount.getSolde()) +  " FCFA.";
             mailservice.sendMail(mail.getEmail(),"Depot d'agent", message);
             System.out.println(message);
         } catch (Exception e) {
