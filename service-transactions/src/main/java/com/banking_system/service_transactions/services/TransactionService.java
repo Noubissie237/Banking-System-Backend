@@ -56,7 +56,7 @@ public class TransactionService {
 
     public List<TransactionEvent> getTransactionByNumber(String numero) {
 
-        String link = "http://192.168.104.2:8079/SERVICE-USERS/api/get-user/" + numero;
+        String link = "http://localhost:8079/SERVICE-USERS/api/get-user/" + numero;
 
         User user = restTemplate.getForObject(link, User.class);
 

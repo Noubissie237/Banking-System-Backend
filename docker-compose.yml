@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-version: "3.8"
-services:
-  service-config:
-    build: ./service-config
-    ports:
-      - "8080:8080"
-=======
 services:
   # Service de configuration
   service-config:
@@ -13,68 +5,10 @@ services:
     # build: ./service-config/
     ports:
       - "2370:2370"
->>>>>>> fd0a6e4972a24b6ff3ae230fd0fe6dfc1776bc0e
     environment:
       - SPRING_APPLICATION_NAME=service-config
       - SPRING_CLOUD_CONFIG_SERVER_GIT_URI=https://github.com/Noubissie237/banking-system-cloud-conf
     networks:
-<<<<<<< HEAD
-      - microservices-network
-        #8081 c'est la port pour acceder au service depuis l'exterieur or 8761 interne c' le port ou l'app va tourner
-
-  service-registry:
-    build: ./service-registry
-    depends_on:
-      - service-config
-    environment:
-      - SPRING_APPLICATION_NAME=service-registry
-      - SPRING_CLOUD_CONFIG_URI=http://service-config:8080
-      - SPRING_CONFIG_IMPORT=configserver:http://service-config:8080
-    ports:
-      - "8081:8761"
-    networks:
-      - microservices-network
-
-  service-users:
-    build: ./service-users
-    depends_on:
-      - service-config
-      - service-registry
-    environment:
-      - SPRING_APPLICATION_NAME=service-users
-      - SPRING_CLOUD_CONFIG_URI=http://service-config:8080
-      - SPRING_CONFIG_IMPORT=configserver:http://service-config:8080
-    ports:
-      - "8083" #port interne car docker se charge d'allouer un port dynamquement aux instances lanc
-    networks:
-      - microservices-network
-
-  service-proxy:
-    build: ./service-proxy
-    depends_on:
-      - service-config
-      - service-registry
-    environment:
-      - SPRING_APPLICATION_NAME=service-proxy
-      - SPRING_CLOUD_CONFIG_URI=http://service-config:8080
-      - SPRING_CONFIG_IMPORT=configserver:http://service-config:8080
-    ports:
-      - "8082:8079"
-    networks:
-      - microservices-network
-  
-  rabbitmq:
-    image: rabbitmq:management
-    ports:
-      - "5672:5672"  #port pour rabbitmq envoy les requet
-      - "15672:15672" #port pour l'interface de gestion user
-    networks:
-      - microservices-network
-
-networks:
-  microservices-network:
-    driver: bridge  
-=======
       - banking-system-network
 
   # Service d'enrégistrement
@@ -85,8 +19,8 @@ networks:
       - "8761:8761"
     environment:
       - SPRING_APPLICATION_NAME=service-registry
-      - SPRING_CLOUD_CONFIG_URI=http://localhost:2370
-      - SPRING_CONFIG_IMPORT=configserver:http://localhost:2370
+      - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
+      - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
     networks:
       - banking-system-network
     # depends_on:
@@ -100,8 +34,8 @@ networks:
       - "8079:8079"
     environment:
       - SPRING_APPLICATION_NAME=service-proxy
-      - SPRING_CLOUD_CONFIG_URI=http://localhost:2370
-      - SPRING_CONFIG_IMPORT=configserver:http://localhost:2370
+      - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
+      - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
     networks:
       - banking-system-network
     depends_on:
@@ -116,8 +50,8 @@ networks:
       - "8084:8084"
     environment:
       - SPRING_APPLICATION_NAME=service-account-management
-      - SPRING_CLOUD_CONFIG_URI=http://localhost:2370
-      - SPRING_CONFIG_IMPORT=configserver:http://localhost:2370
+      - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
+      - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
     networks:
       - banking-system-network
     depends_on:
@@ -131,8 +65,8 @@ networks:
       - "8083:8083"
     environment:
       - SPRING_APPLICATION_NAME=service-admin
-      - SPRING_CLOUD_CONFIG_URI=http://localhost:2370
-      - SPRING_CONFIG_IMPORT=configserver:http://localhost:2370
+      - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
+      - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
     networks:
       - banking-system-network
     depends_on:
@@ -146,8 +80,8 @@ networks:
       - "8081:8081"
     environment:
       - SPRING_APPLICATION_NAME=service-authentification
-      - SPRING_CLOUD_CONFIG_URI=http://localhost:2370
-      - SPRING_CONFIG_IMPORT=configserver:http://localhost:2370
+      - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
+      - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
     networks:
       - banking-system-network
     depends_on:
@@ -161,8 +95,8 @@ networks:
       - "8086:8086"
     environment:
       - SPRING_APPLICATION_NAME=service-retrait
-      - SPRING_CLOUD_CONFIG_URI=http://localhost:2370
-      - SPRING_CONFIG_IMPORT=configserver:http://localhost:2370
+      - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
+      - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
     networks:
       - banking-system-network
     depends_on:
@@ -176,8 +110,8 @@ networks:
       - "8087:8087"
     environment:
       - SPRING_APPLICATION_NAME=service-tranfert
-      - SPRING_CLOUD_CONFIG_URI=http://localhost:2370
-      - SPRING_CONFIG_IMPORT=configserver:http://localhost:2370
+      - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
+      - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
     networks:
       - banking-system-network
     depends_on:
@@ -191,8 +125,8 @@ networks:
       - "8085:8085"
     environment:
       - SPRING_APPLICATION_NAME=service-depot
-      - SPRING_CLOUD_CONFIG_URI=http://localhost:2370
-      - SPRING_CONFIG_IMPORT=configserver:http://localhost:2370
+      - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
+      - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
     networks:
       - banking-system-network
     depends_on:
@@ -206,8 +140,8 @@ networks:
       - "8088:8088"
     environment:
       - SPRING_APPLICATION_NAME=service-transactions
-      - SPRING_CLOUD_CONFIG_URI=http://localhost:2370
-      - SPRING_CONFIG_IMPORT=configserver:http://localhost:2370
+      - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
+      - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
     networks:
       - banking-system-network
     depends_on:
@@ -221,8 +155,8 @@ networks:
       - "8082:8082"
     environment:
       - SPRING_APPLICATION_NAME=service-users
-      - SPRING_CLOUD_CONFIG_URI=http://localhost:2370
-      - SPRING_CONFIG_IMPORT=configserver:http://localhost:2370
+      - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
+      - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
       - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
       - EUREKA_INSTANCE_IP_ADDRESS=38.242.155.134
     networks:
@@ -283,5 +217,4 @@ networks:
   banking-system-network:
     driver: bridge
 
->>>>>>> fd0a6e4972a24b6ff3ae230fd0fe6dfc1776bc0e
   

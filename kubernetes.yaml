@@ -42,7 +42,7 @@ spec:
             - name: SPRING_APPLICATION_NAME
               value: "service-registry"
             - name: SPRING_CONFIG_IMPORT
-              value:  "configserver:http://localhost:2370"
+              value:  "configserver:http://185.218.126.7:2370"
           readinessProbe:
             httpGet:
               path: /actuator/health
@@ -58,7 +58,7 @@ spec:
             - name: SPRING_APPLICATION_NAME
               value: "service-proxy"
             - name: SPRING_CONFIG_IMPORT
-              value:  "configserver:http://localhost:2370"
+              value:  "configserver:http://185.218.126.7:2370"
           readinessProbe:
             httpGet:
               path: /actuator/health
