@@ -14,7 +14,6 @@ import com.banking_system.service_users.models.Agent;
 import com.banking_system.service_users.repositories.AgentRepository;
 import com.banking_system.service_users.utils.Utils;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -67,7 +66,8 @@ public class AgentService {
 
     public Agent findAgentnum(String numero){
         return agentRepository.findByTel(numero).orElseThrow();
-
+    }
+    
     public Optional<Agent> getAgentByMatricule(String matricule) {
         return agentRepository.findByMatricule(matricule);
     }
