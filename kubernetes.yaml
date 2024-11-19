@@ -1,0 +1,437 @@
+# Définition du NameSpace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: banking-system-app
+
+# ------------------------------- | DEPLOIEMENTS | -------------------------------#
+
+---
+# Premier Pod, pour la première couche : config - registry - proxy
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-registry-proxy
+  namespace: banking-system-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config-registry-proxy
+  template:
+    metadata:
+      labels:
+        app: config-registry-proxy
+    spec:
+      containers:
+        - name: service-config
+          image: noubissie237/service-config:latest
+          ports:
+            - containerPort: 2370
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: "service-config"
+            - name: SPRING_CLOUD_CONFIG_SERVER_GIT_URI
+              value: "https://github.com/Noubissie237/banking-system-cloud-conf"
+        - name: service-registry
+          image: noubissie237/service-registry:latest
+          ports:
+            - containerPort: 8761
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: "service-registry"
+            - name: SPRING_CLOUD_CONFIG_URI
+              value: "http://service-config:2370"
+            - name: SPRING_CONFIG_IMPORT
+              value:  "configserver:http://service-config:2370"
+        - name: service-proxy
+          image: noubissie237/service-proxy:latest
+          ports:
+            - containerPort: 8079
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: "service-proxy"
+            - name: SPRING_CLOUD_CONFIG_URI
+              value: "http://service-config:2370"
+            - name: SPRING_CONFIG_IMPORT
+              value:  "configserver:http://service-config:2370"
+
+---
+# Deuxième Pod, pour les BD
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: eventstore-rabbit-db
+  namespace: banking-system-app
+spec:
+  serviceName: "eventstore-rabbit-db"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eventstore-rabbit-db
+  template:
+    metadata:
+      labels:
+        app: eventstore-rabbit-db
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:latest
+          env:
+            - name:  MYSQL_ALLOW_EMPTY_PASSWORD
+              value:  "yes"
+            - name: MYSQL_ROOT_PASSWORD
+              value: ""
+          ports:
+            - containerPort: 3306
+        - name: rabbitmq
+          image: rabbitmq:management
+          ports:
+            - containerPort: 5672
+            - containerPort: 15672
+        - name: eventstore
+          image: docker.eventstore.com/eventstore-preview/eventstoredb-ee:24.10.0-preview1-x64-8.0-bookworm-slim
+          env:
+            - name: EVENTSTORE_CLUSTER_SIZE
+              value: "1"
+            - name: EVENTSTORE_RUN_PROJECTIONS
+              value: "All"
+            - name: EVENTSTORE_START_STANDARD_PROJECTIONS
+              value: true
+            - name: EVENTSTORE_NODE_PORT
+              value: "2113"
+            - name: EVENTSTORE_INSECURE
+              value: true
+            - name: EVENTSTORE_ENABLE_ATOM_PUB_OVER_HTTP
+              value: true
+          ports:
+            - containerPort: 2113
+
+---
+# Pod pour mes services proprement dit
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mes-services
+  namespace: banking-system-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mes-services
+  template:
+    metadata:
+      labels:
+        app: mes-services
+    spec:
+      containers:
+        - name: service-authentification
+          image: noubissie237/service-authentification:latest
+          ports:
+            -  containerPort: 8081
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: "service-authentification"
+            - name: SPRING_CLOUD_CONFIG_URI
+              value: "http://service-config:2370"
+            - name: SPRING_CONFIG_IMPORT
+              value: "configserver:http://service-config:2370"
+        - name: service-users
+          image: noubissie237/service-users:latest
+          ports:
+            -  containerPort: 8082
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: "service-users"
+            - name: SPRING_CLOUD_CONFIG_URI
+              value: "http://service-config:2370"
+            - name: SPRING_CONFIG_IMPORT
+              value: "configserver:http://service-config:2370"
+        - name: service-admin
+          image: noubissie237/service-admin:latest
+          ports:
+            -  containerPort: 8083
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: "service-admin"
+            - name: SPRING_CLOUD_CONFIG_URI
+              value: "http://service-config:2370"
+            - name: SPRING_CONFIG_IMPORT
+              value: "configserver:http://service-config:2370"
+        - name: service-account-management
+          image: noubissie237/service-account-management:latest
+          ports:
+            -  containerPort: 8084
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: "service-account-management"
+            - name: SPRING_CLOUD_CONFIG_URI
+              value: "http://service-config:2370"
+            - name: SPRING_CONFIG_IMPORT
+              value: "configserver:http://service-config:2370"
+        - name: service-depot
+          image: noubissie237/service-depot:latest
+          ports:
+            -  containerPort: 8085
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: "service-depot"
+            - name: SPRING_CLOUD_CONFIG_URI
+              value: "http://service-config:2370"
+            - name: SPRING_CONFIG_IMPORT
+              value: "configserver:http://service-config:2370"
+        - name: service-retrait
+          image: noubissie237/service-retrait:latest
+          ports:
+            -  containerPort: 8086
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: "service-retrait"
+            - name: SPRING_CLOUD_CONFIG_URI
+              value: "http://service-config:2370"
+            - name: SPRING_CONFIG_IMPORT
+              value: "configserver:http://service-config:2370"
+        - name: service-tranfert
+          image: noubissie237/service-tranfert:latest
+          ports:
+            -  containerPort: 8087
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: "service-tranfert"
+            - name: SPRING_CLOUD_CONFIG_URI
+              value: "http://service-config:2370"
+            - name: SPRING_CONFIG_IMPORT
+              value: "configserver:http://service-config:2370"
+        - name: service-transactions
+          image: noubissie237/service-transactions:latest
+          ports:
+            -  containerPort: 8088
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: "service-transactions"
+            - name: SPRING_CLOUD_CONFIG_URI
+              value: "http://service-config:2370"
+            - name: SPRING_CONFIG_IMPORT
+              value: "configserver:http://service-config:2370"
+
+
+# ------------------------------- | SERVICES | -------------------------------#
+# Services pour le pod de la première couche : config - registry - proxy
+---
+# service-config
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-config
+  namespace: banking-system-app
+spec:
+  selector:
+    app:  config-registry-proxy
+  type: LoadBalancer
+  ports:
+    - port: 2370
+      targetPort : 2370
+
+---
+# service-registry
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-registry
+  namespace: banking-system-app
+spec:
+  selector:
+    app:  config-registry-proxy
+  type: LoadBalancer
+  ports:
+    - port: 8761
+      targetPort : 8761
+
+---
+# service-proxy
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-proxy
+  namespace: banking-system-app
+spec:
+  selector:
+    app:  config-registry-proxy
+  type: LoadBalancer
+  ports:
+    - port: 8079
+      targetPort : 8079
+
+
+# Services pour le pod des bd
+---
+# service-mysql
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  namespace: banking-system-app
+spec:
+  selector:
+    app: eventstore-rabbit-db
+  type: LoadBalancer
+  ports:
+    - port: 3306
+      targetPort: 3306
+
+---
+# service-rabbitmq
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq
+  namespace: banking-system-app
+spec:
+  selector:
+    app: eventstore-rabbit-db
+  type: LoadBalancer
+  ports:
+    - name: rabbitmq
+      port: 5672
+      targetPort: 5672
+    - name: rabbitmq-management
+      port: 15672
+      targetPort: 15672
+
+---
+# service-eventstore
+apiVersion: v1
+kind: Service
+metadata:
+  name: eventstore
+  namespace: banking-system-app
+spec:
+  selector:
+    app: eventstore-rabbit-db
+  type: LoadBalancer
+  ports:
+    - port: 2113
+      targetPort: 2113
+
+
+# Service pour mes services propement dit
+---
+# service-authentification
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-authentification
+  namespace: banking-system-app
+spec:
+  selector:
+    app: mes-services
+  type: LoadBalancer
+  port :
+    - port: 8081
+      targetPort: 8081
+
+---
+# service-users
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-users
+  namespace: banking-system-app
+spec:
+  selector:
+    app: mes-services
+  type: LoadBalancer
+  port :
+    - port: 8082
+      targetPort: 8082
+
+---
+# service-admin
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-admin
+  namespace: banking-system-app
+spec:
+  selector:
+    app: mes-services
+  type: LoadBalancer
+  port :
+    - port: 8083
+      targetPort: 8083
+
+---
+# service-account-management
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-account-management
+  namespace: banking-system-app
+spec:
+  selector:
+    app: mes-services
+  type: LoadBalancer
+  port :
+    - port: 8084
+      targetPort: 8084
+
+---
+# service-depot
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-depot
+  namespace: banking-system-app
+spec:
+  selector:
+    app: mes-services
+  type: LoadBalancer
+  port :
+    - port: 8085
+      targetPort: 8085
+
+---
+# service-retrait
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-retrait
+  namespace: banking-system-app
+spec:
+  selector:
+    app: mes-services
+  type: LoadBalancer
+  port :
+    - port: 8086
+      targetPort: 8086
+
+---
+# service-tranfert
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-tranfert
+  namespace: banking-system-app
+spec:
+  selector:
+    app: mes-services
+  type: LoadBalancer
+  port :
+    - port: 8087
+      targetPort: 8087
+
+---
+# service-transactions
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-transactions
+  namespace: banking-system-app
+spec:
+  selector:
+    app: mes-services
+  type: LoadBalancer
+  port :
+    - port: 8088
+      targetPort: 8088
+
