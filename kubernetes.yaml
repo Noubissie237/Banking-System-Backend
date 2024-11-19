@@ -22,6 +22,9 @@ spec:
     metadata:
       labels:
         app: config-registry-proxy
+        service: service-config
+        service: service-registry
+        service: service-proxy
     spec:
       containers:
         - name: service-config
@@ -33,6 +36,8 @@ spec:
               value: "service-config"
             - name: SPRING_CLOUD_CONFIG_SERVER_GIT_URI
               value: "https://github.com/Noubissie237/banking-system-cloud-conf"
+          labels:
+            service: service-config
         - name: service-registry
           image: noubissie237/service-registry:latest
           ports:
@@ -40,10 +45,10 @@ spec:
           env:
             - name: SPRING_APPLICATION_NAME
               value: "service-registry"
-            - name: SPRING_CLOUD_CONFIG_URI
-              value: "http://service-config:2370"
             - name: SPRING_CONFIG_IMPORT
               value:  "configserver:http://service-config:2370"
+          labels:
+            service: service-registry
         - name: service-proxy
           image: noubissie237/service-proxy:latest
           ports:
@@ -51,10 +56,10 @@ spec:
           env:
             - name: SPRING_APPLICATION_NAME
               value: "service-proxy"
-            - name: SPRING_CLOUD_CONFIG_URI
-              value: "http://service-config:2370"
             - name: SPRING_CONFIG_IMPORT
               value:  "configserver:http://service-config:2370"
+          labels:
+            service: service-proxy
 
 ---
 # Deuxième Pod, pour les BD
@@ -73,6 +78,9 @@ spec:
     metadata:
       labels:
         app: eventstore-rabbit-db
+        service: mysql
+        service: rabbitmq
+        service: eventstore
     spec:
       containers:
         - name: mysql
@@ -84,11 +92,15 @@ spec:
               value: ""
           ports:
             - containerPort: 3306
+          labels:
+            service: mysql
         - name: rabbitmq
           image: rabbitmq:management
           ports:
             - containerPort: 5672
             - containerPort: 15672
+          labels:
+            service: rabbitmq
         - name: eventstore
           image: docker.eventstore.com/eventstore-preview/eventstoredb-ee:24.10.0-preview1-x64-8.0-bookworm-slim
           env:
@@ -106,6 +118,8 @@ spec:
               value: true
           ports:
             - containerPort: 2113
+          labels:
+            service: eventstore
 
 ---
 # Pod pour mes services proprement dit
@@ -123,6 +137,14 @@ spec:
     metadata:
       labels:
         app: mes-services
+        service: service-authentification
+        service: service-users
+        service: service-admin
+        service: service-account-management
+        service: service-depot
+        service: service-retrait
+        service: service-tranfert
+        service: service-transactions
     spec:
       containers:
         - name: service-authentification
@@ -132,10 +154,10 @@ spec:
           env:
             - name: SPRING_APPLICATION_NAME
               value: "service-authentification"
-            - name: SPRING_CLOUD_CONFIG_URI
-              value: "http://service-config:2370"
             - name: SPRING_CONFIG_IMPORT
               value: "configserver:http://service-config:2370"
+          labels:
+            service: service-authentification
         - name: service-users
           image: noubissie237/service-users:latest
           ports:
@@ -143,10 +165,10 @@ spec:
           env:
             - name: SPRING_APPLICATION_NAME
               value: "service-users"
-            - name: SPRING_CLOUD_CONFIG_URI
-              value: "http://service-config:2370"
             - name: SPRING_CONFIG_IMPORT
               value: "configserver:http://service-config:2370"
+          labels:
+            service: service-users
         - name: service-admin
           image: noubissie237/service-admin:latest
           ports:
@@ -154,10 +176,10 @@ spec:
           env:
             - name: SPRING_APPLICATION_NAME
               value: "service-admin"
-            - name: SPRING_CLOUD_CONFIG_URI
-              value: "http://service-config:2370"
             - name: SPRING_CONFIG_IMPORT
               value: "configserver:http://service-config:2370"
+          labels:
+            service: service-admin
         - name: service-account-management
           image: noubissie237/service-account-management:latest
           ports:
@@ -165,10 +187,10 @@ spec:
           env:
             - name: SPRING_APPLICATION_NAME
               value: "service-account-management"
-            - name: SPRING_CLOUD_CONFIG_URI
-              value: "http://service-config:2370"
             - name: SPRING_CONFIG_IMPORT
               value: "configserver:http://service-config:2370"
+          labels:
+            service: service-account-management
         - name: service-depot
           image: noubissie237/service-depot:latest
           ports:
@@ -176,10 +198,10 @@ spec:
           env:
             - name: SPRING_APPLICATION_NAME
               value: "service-depot"
-            - name: SPRING_CLOUD_CONFIG_URI
-              value: "http://service-config:2370"
             - name: SPRING_CONFIG_IMPORT
               value: "configserver:http://service-config:2370"
+          labels:
+            service: service-depot
         - name: service-retrait
           image: noubissie237/service-retrait:latest
           ports:
@@ -187,10 +209,10 @@ spec:
           env:
             - name: SPRING_APPLICATION_NAME
               value: "service-retrait"
-            - name: SPRING_CLOUD_CONFIG_URI
-              value: "http://service-config:2370"
             - name: SPRING_CONFIG_IMPORT
               value: "configserver:http://service-config:2370"
+          labels:
+            service: service-retrait
         - name: service-tranfert
           image: noubissie237/service-tranfert:latest
           ports:
@@ -198,10 +220,10 @@ spec:
           env:
             - name: SPRING_APPLICATION_NAME
               value: "service-tranfert"
-            - name: SPRING_CLOUD_CONFIG_URI
-              value: "http://service-config:2370"
             - name: SPRING_CONFIG_IMPORT
               value: "configserver:http://service-config:2370"
+          labels:
+            service: service-tranfert
         - name: service-transactions
           image: noubissie237/service-transactions:latest
           ports:
@@ -209,10 +231,10 @@ spec:
           env:
             - name: SPRING_APPLICATION_NAME
               value: "service-transactions"
-            - name: SPRING_CLOUD_CONFIG_URI
-              value: "http://service-config:2370"
             - name: SPRING_CONFIG_IMPORT
               value: "configserver:http://service-config:2370"
+          labels:
+            service: service-transactions
 
 
 # ------------------------------- | SERVICES | -------------------------------#
@@ -230,7 +252,7 @@ spec:
   type: LoadBalancer
   ports:
     - port: 2370
-      targetPort : 2370
+      targetPorts: 2370
 
 ---
 # service-registry
@@ -245,7 +267,7 @@ spec:
   type: LoadBalancer
   ports:
     - port: 8761
-      targetPort : 8761
+      targetPorts: 8761
 
 ---
 # service-proxy
@@ -260,7 +282,7 @@ spec:
   type: LoadBalancer
   ports:
     - port: 8079
-      targetPort : 8079
+      targetPorts: 8079
 
 
 # Services pour le pod des bd
@@ -326,7 +348,7 @@ spec:
   selector:
     app: mes-services
   type: LoadBalancer
-  port :
+  ports:
     - port: 8081
       targetPort: 8081
 
@@ -341,7 +363,7 @@ spec:
   selector:
     app: mes-services
   type: LoadBalancer
-  port :
+  ports:
     - port: 8082
       targetPort: 8082
 
@@ -356,7 +378,7 @@ spec:
   selector:
     app: mes-services
   type: LoadBalancer
-  port :
+  ports:
     - port: 8083
       targetPort: 8083
 
@@ -371,7 +393,7 @@ spec:
   selector:
     app: mes-services
   type: LoadBalancer
-  port :
+  ports:
     - port: 8084
       targetPort: 8084
 
@@ -386,7 +408,7 @@ spec:
   selector:
     app: mes-services
   type: LoadBalancer
-  port :
+  ports:
     - port: 8085
       targetPort: 8085
 
@@ -401,7 +423,7 @@ spec:
   selector:
     app: mes-services
   type: LoadBalancer
-  port :
+  ports:
     - port: 8086
       targetPort: 8086
 
@@ -416,7 +438,7 @@ spec:
   selector:
     app: mes-services
   type: LoadBalancer
-  port :
+  ports:
     - port: 8087
       targetPort: 8087
 
@@ -431,7 +453,7 @@ spec:
   selector:
     app: mes-services
   type: LoadBalancer
-  port :
+  ports:
     - port: 8088
       targetPort: 8088
 
