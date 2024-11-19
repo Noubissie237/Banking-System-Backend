@@ -10,4 +10,5 @@ import com.banking_system.service_account_management.models.AgentAccount;
 @Repository
 public interface AgentAccountRepository extends JpaRepository<AgentAccount, Integer> {
     Optional<AgentAccount> findByMatricule(String matricule);
+   
 }

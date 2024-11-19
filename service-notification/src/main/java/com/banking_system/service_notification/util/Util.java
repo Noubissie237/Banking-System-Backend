@@ -8,7 +8,6 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import com.banking_system.service_notification.events.Account;
-import com.banking_system.service_notification.events.AccountAgent;
 import com.banking_system.service_notification.events.Solde;
 @Component
 public class Util {
@@ -47,11 +46,11 @@ public class Util {
         }
     }
 
-    public AccountAgent getEmailAgentnum(String number) throws IOException {
+    public Account getEmailAgentnum(String number) throws IOException {
         String url = "http://localhost:8079/SERVICE-USERS/api/agent/get-num/" + number;
 
         try {
-            AccountAgent account = restTemplate.getForObject(url, AccountAgent.class);
+            Account account = restTemplate.getForObject(url, Account.class);
             if (account == null) {
                 throw new IllegalArgumentException("Aucun compte trouvé avec le numéro : " + number);
             }
