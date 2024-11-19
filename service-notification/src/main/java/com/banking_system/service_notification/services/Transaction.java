@@ -3,6 +3,7 @@ package com.banking_system.service_notification.services;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.banking_system.service_notification.events.DepotEventConsumer;
 import com.banking_system.service_notification.events.RetraitEventProducer;
 import com.banking_system.service_notification.events.RetraitProducer;
 import com.banking_system.service_notification.events.Solde;
@@ -64,16 +65,16 @@ public class Transaction {
         }
     }
 
-    public void depotEnvoyeur(TransfertEventEnvoyeur transfertEventEnvoyeur) {
+    public void depotEnvoyeur(DepotEventConsumer transfertEventEnvoyeur) {
         try {
-            String message = "Depot de " + transfertEventEnvoyeur.getMontant() +  " Frais " + transfertEventEnvoyeur.getFrais() + " a " + transfertEventEnvoyeur.getNumero_cible() + " effectué avec succès !";
+            String message = "Depot de " + transfertEventEnvoyeur.getMontant() +  " Frais 0.0 FCFA"  + " a " + transfertEventEnvoyeur.getNumero_cible() + " effectué avec succès !";
             rabbitTemplate.convertAndSend("clientExchange", "depotenvoyeurmessage", message);
         } catch (Exception e) {
             throw new RuntimeException("Depot Error : ",e);
         }
     }
 // ajout du solde
-    public void depotRecepteur(TransfertEventRecepteur transfertEventRecepteur) {
+    public void depotRecepteur(DepotEventConsumer transfertEventRecepteur) {
         try {
             String message = "Transfert de " + transfertEventRecepteur.getMontant() + " Solde ";
             rabbitTemplate.convertAndSend("clientExchange", "depotrecepteurmessage", message);

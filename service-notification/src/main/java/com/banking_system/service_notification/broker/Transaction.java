@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.banking_system.service_notification.events.Account;
+import com.banking_system.service_notification.events.DepotEventConsumer;
 import com.banking_system.service_notification.events.RechargeEventConsumer;
 import com.banking_system.service_notification.events.RetraitEventProducer;
 import com.banking_system.service_notification.events.Solde;
@@ -104,12 +105,12 @@ public class Transaction{
 
     
     @RabbitListener(queues = "depotMoney")
-    public void depot(TransfertEventEnvoyeur transfertEventEnvoyeur) {
+    public void depot(DepotEventConsumer transfertEventEnvoyeur) {
         depotEnvoyeur(transfertEventEnvoyeur);
         depotRecepteur(transfertEventEnvoyeur);
     }
 
-    public void depotEnvoyeur(TransfertEventEnvoyeur transfertEventEnvoyeur) {
+    public void depotEnvoyeur(DepotEventConsumer transfertEventEnvoyeur) {
         Solde sourceAccount;
         Account mail;
         Account mail2;
@@ -117,7 +118,7 @@ public class Transaction{
             sourceAccount = util.getsoldeClient(transfertEventEnvoyeur.getNumero_source());
             mail = util.getEmailAgentnum(transfertEventEnvoyeur.getNumero_source());
             mail2 = util.getEmail(transfertEventEnvoyeur.getNumero_cible());
-            String message = "Transfert de " + transfertEventEnvoyeur.getNumero_source() + " " + mail.getNom().toUpperCase() + " vers " + transfertEventEnvoyeur.getNumero_cible() + " " + mail2.getNom().toUpperCase() + " Reussi. Information detaillees: Montant de transaction " + transfertEventEnvoyeur.getMontant() + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " + (transfertEventEnvoyeur.getNumero_cible() + transfertEventEnvoyeur.getFrais()) + ", Nouveau solde : " + (transfertEventEnvoyeur.getMontant() + sourceAccount.getSolde()) + " FCFA.";
+            String message = "Transfert de " + transfertEventEnvoyeur.getNumero_source() + " " + mail.getNom().toUpperCase() + " vers " + transfertEventEnvoyeur.getNumero_cible() + " " + mail2.getNom().toUpperCase() + " Reussi. Information detaillees: Montant de transaction " + transfertEventEnvoyeur.getMontant() + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " + transfertEventEnvoyeur.getMontant() + ", Nouveau solde : " + (transfertEventEnvoyeur.getMontant() + sourceAccount.getSolde()) + " FCFA.";
             mailservice.sendMail(mail.getEmail(),"Transfert d'argent", message);
     
             System.out.println(message);
@@ -126,7 +127,7 @@ public class Transaction{
         }
     }
 
-    public void depotRecepteur(TransfertEventEnvoyeur transfertEventRecepteur) {
+    public void depotRecepteur(DepotEventConsumer transfertEventRecepteur) {
         Solde sourceAccount;
         Account mail;
         Account mail2;
