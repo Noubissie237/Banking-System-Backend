@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.banking_system.service_authentification.dto.Person;
+import com.banking_system.service_authentification.exceptions.ApplicationException;
+import com.banking_system.service_authentification.exceptions.InvalidCredentialsException;
+import com.banking_system.service_authentification.exceptions.UserNotFoundException;
 import com.banking_system.service_authentification.utils.Utils;
 
 @Service
@@ -33,18 +36,27 @@ public class AuthService {
     }
 
     public String login(String phone, String password) {
-        Person[] users = getUsers();
-        if (users != null) {
-            for(Person user : users) {
-                if(user.getTel().equals(phone) && passwordEncoder.matches(password, user.getPassword())) {
-                    token = utils.generateToken(user);
-                    return token;
+        try {
+            Person[] users = getUsers();
+    
+            if (users == null || users.length == 0) {
+                throw new UserNotFoundException("Aucun utilisateur n'a été trouvé.");
+            }
+    
+            for (Person user : users) {
+                if (user.getTel().equals(phone) && passwordEncoder.matches(password, user.getPassword())) {
+                    return utils.generateToken(user);
                 }
             }
+    
+            throw new InvalidCredentialsException("Numéro de téléphone ou mot de passe incorrect.");
+        } catch (UserNotFoundException | InvalidCredentialsException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw new ApplicationException("Une erreur inattendue s'est produite lors de la tentative de connexion.", ex);
         }
-
-        throw new RuntimeException("Utilisateur inconnu !");
     }
+    
 
     public boolean checkPassword(String phone, String password) {
         Person[] users  = getUsers();
