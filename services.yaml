@@ -6,11 +6,11 @@ metadata:
   namespace: banking-system-app
 spec:
   selector:
-    app:  config-registry-proxy
+    app: config-registry-proxy
   type: LoadBalancer
   ports:
     - port: 2370
-      targetPorts: 2370
+      targetPort: 2370
 ---
 # service-registry
 apiVersion: v1
@@ -20,11 +20,11 @@ metadata:
   namespace: banking-system-app
 spec:
   selector:
-    app:  config-registry-proxy
+    app: config-registry-proxy
   type: LoadBalancer
   ports:
     - port: 8761
-      targetPorts: 8761
+      targetPort: 8761
 ---
 # service-proxy
 apiVersion: v1
@@ -34,11 +34,11 @@ metadata:
   namespace: banking-system-app
 spec:
   selector:
-    app:  config-registry-proxy
+    app: config-registry-proxy
   type: LoadBalancer
   ports:
     - port: 8079
-      targetPorts: 8079
+      targetPort: 8079
 ---
 # service-mysql
 apiVersion: v1
@@ -65,10 +65,12 @@ spec:
   selector:
     app: rabbitmq
   ports:
-    - protocol: TCP
+    - name: amqp
+      protocol: TCP
       port: 5672
       targetPort: 5672
-    - protocol: TCP
+    - name: management
+      protocol: TCP
       port: 15672
       targetPort: 15672
   type: LoadBalancer
