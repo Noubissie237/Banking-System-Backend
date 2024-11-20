@@ -1,171 +1,171 @@
 services:
   # Service de configuration
-  service-config:
-    image: noubissie237/service-config:latest
-    # build: ./service-config/
-    ports:
-      - "2370:2370"
-    environment:
-      - SPRING_APPLICATION_NAME=service-config
-      - SPRING_CLOUD_CONFIG_SERVER_GIT_URI=https://github.com/Noubissie237/banking-system-cloud-conf
-    networks:
-      - banking-system-network
+  # service-config:
+  #   image: noubissie237/service-config:latest
+  #   # build: ./service-config/
+  #   ports:
+  #     - "2370:2370"
+  #   environment:
+  #     - SPRING_APPLICATION_NAME=service-config
+  #     - SPRING_CLOUD_CONFIG_SERVER_GIT_URI=https://github.com/Noubissie237/banking-system-cloud-conf
+  #   networks:
+  #     - banking-system-network
 
-  # Service d'enrégistrement
-  service-registry:
-    image: noubissie237/service-registry:latest
-    # build: ./service-registry/
-    ports:
-      - "8761:8761"
-    environment:
-      - SPRING_APPLICATION_NAME=service-registry
-      - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
-    networks:
-      - banking-system-network
-    # depends_on:
-    #   - service-config
+  # # Service d'enrégistrement
+  # service-registry:
+  #   image: noubissie237/service-registry:latest
+  #   # build: ./service-registry/
+  #   ports:
+  #     - "8761:8761"
+  #   environment:
+  #     - SPRING_APPLICATION_NAME=service-registry
+  #     - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
+  #   networks:
+  #     - banking-system-network
+  #   # depends_on:
+  #   #   - service-config
 
-  # Service proxy
-  service-proxy:
-    image: noubissie237/service-proxy:latest
-    # build: ./service-proxy/
-    ports:
-      - "8079:8079"
-    environment:
-      - SPRING_APPLICATION_NAME=service-proxy
-      - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
-    networks:
-      - banking-system-network
-    depends_on:
-      # - service-config
-      - service-registry
+  # # Service proxy
+  # service-proxy:
+  #   image: noubissie237/service-proxy:latest
+  #   # build: ./service-proxy/
+  #   ports:
+  #     - "8079:8079"
+  #   environment:
+  #     - SPRING_APPLICATION_NAME=service-proxy
+  #     - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
+  #   networks:
+  #     - banking-system-network
+  #   depends_on:
+  #     # - service-config
+  #     - service-registry
 
 
-  # Service account-management
-  service-account-management:
-    image: noubissie237/service-account-management:latest
-    ports:
-      - "8084:8084"
-    environment:
-      - SPRING_APPLICATION_NAME=service-account-management
-      - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
-    networks:
-      - banking-system-network
-    depends_on:
-    #   # - service-config
-      - service-registry
+  # # Service account-management
+  # service-account-management:
+  #   image: noubissie237/service-account-management:latest
+  #   ports:
+  #     - "8084:8084"
+  #   environment:
+  #     - SPRING_APPLICATION_NAME=service-account-management
+  #     - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
+  #   networks:
+  #     - banking-system-network
+  #   depends_on:
+  #   #   # - service-config
+  #     - service-registry
 
-  # Service admin
-  service-admin:
-    image: noubissie237/service-admin:latest
-    ports:
-      - "8083:8083"
-    environment:
-      - SPRING_APPLICATION_NAME=service-admin
-      - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
-    networks:
-      - banking-system-network
-    depends_on:
-    #   # - service-config
-      - service-registry
+  # # Service admin
+  # service-admin:
+  #   image: noubissie237/service-admin:latest
+  #   ports:
+  #     - "8083:8083"
+  #   environment:
+  #     - SPRING_APPLICATION_NAME=service-admin
+  #     - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
+  #   networks:
+  #     - banking-system-network
+  #   depends_on:
+  #   #   # - service-config
+  #     - service-registry
 
-  # Service authentification
-  service-authentification:
-    image: noubissie237/service-authentification:latest
-    ports:
-      - "8081:8081"
-    environment:
-      - SPRING_APPLICATION_NAME=service-authentification
-      - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
-    networks:
-      - banking-system-network
-    depends_on:
-    #   # - service-config
-      - service-registry
+  # # Service authentification
+  # service-authentification:
+  #   image: noubissie237/service-authentification:latest
+  #   ports:
+  #     - "8081:8081"
+  #   environment:
+  #     - SPRING_APPLICATION_NAME=service-authentification
+  #     - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
+  #   networks:
+  #     - banking-system-network
+  #   depends_on:
+  #   #   # - service-config
+  #     - service-registry
 
-  # Service retrait
-  service-retrait:
-    image: noubissie237/service-retrait:latest
-    ports:
-      - "8086:8086"
-    environment:
-      - SPRING_APPLICATION_NAME=service-retrait
-      - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
-    networks:
-      - banking-system-network
-    depends_on:
-    #   # - service-config
-      - service-registry
+  # # Service retrait
+  # service-retrait:
+  #   image: noubissie237/service-retrait:latest
+  #   ports:
+  #     - "8086:8086"
+  #   environment:
+  #     - SPRING_APPLICATION_NAME=service-retrait
+  #     - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
+  #   networks:
+  #     - banking-system-network
+  #   depends_on:
+  #   #   # - service-config
+  #     - service-registry
 
-  # Service tranfert
-  service-tranfert:
-    image: noubissie237/service-tranfert:latest
-    ports:
-      - "8087:8087"
-    environment:
-      - SPRING_APPLICATION_NAME=service-tranfert
-      - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
-    networks:
-      - banking-system-network
-    depends_on:
-    #   # - service-config
-      - service-registry
+  # # Service tranfert
+  # service-tranfert:
+  #   image: noubissie237/service-tranfert:latest
+  #   ports:
+  #     - "8087:8087"
+  #   environment:
+  #     - SPRING_APPLICATION_NAME=service-tranfert
+  #     - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
+  #   networks:
+  #     - banking-system-network
+  #   depends_on:
+  #   #   # - service-config
+  #     - service-registry
 
-  # Service depot
-  service-depot:
-    image: noubissie237/service-depot:latest
-    ports:
-      - "8085:8085"
-    environment:
-      - SPRING_APPLICATION_NAME=service-depot
-      - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
-    networks:
-      - banking-system-network
-    depends_on:
-    #   # - service-config
-      - service-registry
+  # # Service depot
+  # service-depot:
+  #   image: noubissie237/service-depot:latest
+  #   ports:
+  #     - "8085:8085"
+  #   environment:
+  #     - SPRING_APPLICATION_NAME=service-depot
+  #     - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
+  #   networks:
+  #     - banking-system-network
+  #   depends_on:
+  #   #   # - service-config
+  #     - service-registry
 
-  # Service transactions
-  service-transactions:
-    image: noubissie237/service-transactions:latest
-    ports:
-      - "8088:8088"
-    environment:
-      - SPRING_APPLICATION_NAME=service-transactions
-      - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
-    networks:
-      - banking-system-network
-    depends_on:
-    #   # - service-config
-      - service-registry
+  # # Service transactions
+  # service-transactions:
+  #   image: noubissie237/service-transactions:latest
+  #   ports:
+  #     - "8088:8088"
+  #   environment:
+  #     - SPRING_APPLICATION_NAME=service-transactions
+  #     - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
+  #   networks:
+  #     - banking-system-network
+  #   depends_on:
+  #   #   # - service-config
+  #     - service-registry
 
-  # Service users
-  service-users:
-    image: noubissie237/service-users:latest
-    ports:
-      - "8082:8082"
-    environment:
-      - SPRING_APPLICATION_NAME=service-users
-      - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
-    networks:
-      - banking-system-network
-    depends_on:
-    #   # - service-config
-      - service-registry
+  # # Service users
+  # service-users:
+  #   image: noubissie237/service-users:latest
+  #   ports:
+  #     - "8082:8082"
+  #   environment:
+  #     - SPRING_APPLICATION_NAME=service-users
+  #     - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
+  #   networks:
+  #     - banking-system-network
+  #   depends_on:
+  #   #   # - service-config
+  #     - service-registry
 
-  # Service notification
-  service-notification:
-    image: noubissie237/service-notification:latest
-    ports:
-      - "8089:8089"
-    environment:
-      - SPRING_APPLICATION_NAME=service-notification
-      - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
-    networks:
-      - banking-system-network
-    depends_on:
-    #   # - service-config
-      - service-registry
+  # # Service notification
+  # service-notification:
+  #   image: noubissie237/service-notification:latest
+  #   ports:
+  #     - "8089:8089"
+  #   environment:
+  #     - SPRING_APPLICATION_NAME=service-notification
+  #     - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
+  #   networks:
+  #     - banking-system-network
+  #   depends_on:
+  #   #   # - service-config
+  #     - service-registry
 
   # Service MySQL
   mysql:
