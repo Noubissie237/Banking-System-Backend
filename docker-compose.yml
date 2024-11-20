@@ -19,7 +19,6 @@ services:
       - "8761:8761"
     environment:
       - SPRING_APPLICATION_NAME=service-registry
-      - SPRING_CLOUD_CONFIG_URI=https://config.quick-send.site
       - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
     networks:
       - banking-system-network
@@ -34,7 +33,6 @@ services:
       - "8079:8079"
     environment:
       - SPRING_APPLICATION_NAME=service-proxy
-      - SPRING_CLOUD_CONFIG_URI=https://config.quick-send.site
       - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
     networks:
       - banking-system-network
@@ -50,7 +48,6 @@ services:
       - "8084:8084"
     environment:
       - SPRING_APPLICATION_NAME=service-account-management
-      - SPRING_CLOUD_CONFIG_URI=https://config.quick-send.site
       - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
     networks:
       - banking-system-network
@@ -65,7 +62,6 @@ services:
       - "8083:8083"
     environment:
       - SPRING_APPLICATION_NAME=service-admin
-      - SPRING_CLOUD_CONFIG_URI=https://config.quick-send.site
       - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
     networks:
       - banking-system-network
@@ -80,7 +76,6 @@ services:
       - "8081:8081"
     environment:
       - SPRING_APPLICATION_NAME=service-authentification
-      - SPRING_CLOUD_CONFIG_URI=https://config.quick-send.site
       - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
     networks:
       - banking-system-network
@@ -95,7 +90,6 @@ services:
       - "8086:8086"
     environment:
       - SPRING_APPLICATION_NAME=service-retrait
-      - SPRING_CLOUD_CONFIG_URI=https://config.quick-send.site
       - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
     networks:
       - banking-system-network
@@ -110,7 +104,6 @@ services:
       - "8087:8087"
     environment:
       - SPRING_APPLICATION_NAME=service-tranfert
-      - SPRING_CLOUD_CONFIG_URI=https://config.quick-send.site
       - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
     networks:
       - banking-system-network
@@ -125,7 +118,6 @@ services:
       - "8085:8085"
     environment:
       - SPRING_APPLICATION_NAME=service-depot
-      - SPRING_CLOUD_CONFIG_URI=https://config.quick-send.site
       - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
     networks:
       - banking-system-network
@@ -140,7 +132,6 @@ services:
       - "8088:8088"
     environment:
       - SPRING_APPLICATION_NAME=service-transactions
-      - SPRING_CLOUD_CONFIG_URI=https://config.quick-send.site
       - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
     networks:
       - banking-system-network
@@ -155,7 +146,6 @@ services:
       - "8082:8082"
     environment:
       - SPRING_APPLICATION_NAME=service-users
-      - SPRING_CLOUD_CONFIG_URI=https://config.quick-send.site
       - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
     networks:
       - banking-system-network
