@@ -12,6 +12,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class Account {
+    @JsonProperty("id")
+    private int id;
     @JsonProperty("nom")
     private String nom;
     @JsonProperty("prenom")
@@ -28,4 +30,6 @@ public class Account {
     private String verso_cni;
     @JsonProperty("password")
     private String password;
+    @JsonProperty("role")
+    private String role;
 }

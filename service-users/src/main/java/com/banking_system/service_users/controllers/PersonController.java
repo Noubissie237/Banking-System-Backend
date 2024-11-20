@@ -78,4 +78,5 @@ public class PersonController {
     public Person putMethodPassword(@PathVariable("id") int id, @PathVariable("password") String password) {
         return userService.updatePasswordPerson(id, password);
     }
+
 }

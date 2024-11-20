@@ -46,8 +46,8 @@ public class Util {
         }
     }
 
-    public Account getEmailAgentnum(String number) throws IOException {
-        String url = "http://localhost:8079/SERVICE-USERS/api/agent/get-num/" + number;
+    public Account getUserEmailByNum(String number) throws IOException {
+        String url = "http://localhost:8079/SERVICE-USERS/api/get-user/" + number;
 
         try {
             Account account = restTemplate.getForObject(url, Account.class);

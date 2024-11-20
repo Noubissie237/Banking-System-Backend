@@ -89,7 +89,7 @@ public class Transaction {
         try {
             sourceAccount = util.getsoldeClient(retrait.getNumero_cible());
             mail = util.getEmail(retrait.getNumero_cible());
-            mail2 = util.getEmailAgentnum(retrait.getNumero_agent());
+            mail2 = util.getUserEmailByNum(retrait.getNumero_agent());
             String message = "Retrait d'agent reussi par " + retrait.getNumero_agent() + " "
                     + mail.getNom().toUpperCase() + " to " + retrait.getNumero_agent() + " "
                     + mail2.getNom().toUpperCase() + ". Information detaillees: Montant de transaction "
@@ -110,7 +110,7 @@ public class Transaction {
         Account mail2;
         try {
             sourceAccount = util.getSoldeAgent(retrait.getNumero_agent());
-            mail = util.getEmailAgentnum(retrait.getNumero_agent());
+            mail = util.getUserEmailByNum(retrait.getNumero_agent());
             mail2 = util.getEmail(retrait.getNumero_cible());
             String message = "Depot effectue par " + retrait.getNumero_cible() + " " + mail2.getNom().toUpperCase()
                     + " to " + retrait.getNumero_agent() + " " + mail.getNom().toUpperCase()
@@ -130,7 +130,7 @@ public class Transaction {
         Account mail;
         Account mail2;
         try {
-            mail = util.getEmailAgentnum(retrait.getNumero_agent());
+            mail = util.getUserEmailByNum(retrait.getNumero_agent());
             mail2 = util.getEmail(retrait.getNumero_cible());
             String message = "Vous souhaitez faire un retrait par " + retrait.getNumero_agent() + " "
                     + mail.getNom().toUpperCase() + ". Montant de transaction " + retrait.getMontant()
@@ -155,7 +155,7 @@ public class Transaction {
         Account mail2;
         try {
             sourceAccount = util.getsoldeClient(transfertEventEnvoyeur.getNumero_source());
-            mail = util.getEmailAgentnum(transfertEventEnvoyeur.getNumero_source());
+            mail = util.getUserEmailByNum(transfertEventEnvoyeur.getNumero_source());
             mail2 = util.getEmail(transfertEventEnvoyeur.getNumero_cible());
             String message = "Transfert de " + transfertEventEnvoyeur.getNumero_source() + " "
                     + mail.getNom().toUpperCase() + " vers " + transfertEventEnvoyeur.getNumero_cible() + " "
@@ -179,7 +179,7 @@ public class Transaction {
         try {
             sourceAccount = util.getsoldeClient(transfertEventRecepteur.getNumero_cible());
             mail = util.getEmail(transfertEventRecepteur.getNumero_cible());
-            mail2 = util.getEmailAgentnum(transfertEventRecepteur.getNumero_source());
+            mail2 = util.getUserEmailByNum(transfertEventRecepteur.getNumero_source());
             String message = "Depot effectue par " + transfertEventRecepteur.getNumero_source() + " "
                     + mail2.getNom().toUpperCase() + " to " + transfertEventRecepteur.getNumero_cible() + " "
                     + mail.getNom().toUpperCase() + ". Information detaillees: Montant de transaction "
@@ -202,13 +202,15 @@ public class Transaction {
 
         try {
             sourceAccount = util.getSoldeAgent(rechargeEventConsumer.getNumero());
-            mail = util.getEmailAgentnum(rechargeEventConsumer.getNumero());
-            String message = "Depot effectue par " + rechargeEventConsumer.getAgence() + " to "
+            mail = util.getUserEmailByNum(rechargeEventConsumer.getNumero());
+            String agence = rechargeEventConsumer.getAgence() == 1 ? "MTN Mobile Money" : "Orange Money OM";
+            String message = "Recharge effectuée par " + agence + " à"
                     + rechargeEventConsumer.getNumero() + " " + mail.getNom().toUpperCase()
                     + ". Information detaillees: Montant de transaction " + rechargeEventConsumer.getMontant()
-                    + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : "
+                    + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " 
                     + rechargeEventConsumer.getMontant() + " FCFA, Nouveau solde : "
                     + (rechargeEventConsumer.getMontant() + sourceAccount.getSolde()) + " FCFA.";
+            
             mailservice.sendMail(mail.getEmail(), "Recharge d'agent", message);
             System.out.println(message);
         } catch (Exception e) {

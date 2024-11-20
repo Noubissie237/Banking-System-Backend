@@ -39,7 +39,7 @@ public class Transaction {
     public void retraitConfim(RetraitEventProducer retrait) {
         Account mail;
         try {
-            mail = util.getEmailAgentnum(retrait.getNumero_agent());
+            mail = util.getUserEmailByNum(retrait.getNumero_agent());
             String message = "Vous souhaitez faire un retrait par " + retrait.getNumero_agent() + " " + mail.getNom().toUpperCase() + ". Montant de transaction " + retrait.getMontant() + " via Quick Send. Veuillez confirmer en entrant votre code secret.";
             rabbitTemplate.convertAndSend("clientExchange", "retraitconfimessage", message);
         } catch (Exception e) {

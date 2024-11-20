@@ -33,11 +33,6 @@ public class AgentController {
         return agentService.deleteAgent(id);
     }
 
-    @GetMapping("/agent/get-num/{number}")
-    public Agent getAgentnum(@PathVariable String number) {
-        return agentService.findAgentnum(number);
-    }
-
     @GetMapping("/agent/get/{number}")
     public Agent getAgent(@PathVariable String number) {
         return agentService.findAgent(number);
