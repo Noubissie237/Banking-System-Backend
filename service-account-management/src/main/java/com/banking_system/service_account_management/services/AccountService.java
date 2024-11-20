@@ -36,6 +36,7 @@ public class AccountService {
             event.setNumeroClient(account.getNumber());
             accountRepository.save(account);
             rabbitTemplate.convertAndSend("clientExchange", "client-account.create", event);
+            rabbitTemplate.convertAndSend("clientExchange", "client-account.create.message", event);
         } catch (Exception e) {
             throw new RuntimeException("Account Creation Error : ",e);
         }
