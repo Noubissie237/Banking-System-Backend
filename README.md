@@ -121,3 +121,8 @@ Activation de la scalabilité
 ```sh
 kubectl apply -f hpa.yaml
 ```
+
+Voici le scénario
+1. Effectue un push sur github depuis son editeur vscode
+2. Une fois le push sur github, github-workflows  build les images docker de la nouvelle version push ces images sur docker hub
+3. Jenkins quand à lui écoute également le projet github et lorsqu'il voit ce nouveau commit, il demarre kubernetes

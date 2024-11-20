@@ -157,61 +157,59 @@ services:
       - SPRING_APPLICATION_NAME=service-users
       - SPRING_CLOUD_CONFIG_URI=http://185.218.126.7:2370
       - SPRING_CONFIG_IMPORT=configserver:http://185.218.126.7:2370
-      - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
-      - EUREKA_INSTANCE_IP_ADDRESS=38.242.155.134
     networks:
       - banking-system-network
     depends_on:
     #   # - service-config
       - service-registry
 
-#   # Service MySQL
-#   mysql:
-#     image: mysql:latest
-#     environment:
-#       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
-#       - MYSQL_ROOT_PASSWORD=
-#       - MYSQL_DATABASE=agence_bank
-#     ports:
-#       - "3307:3306"
-#     networks:
-#       - banking-system-network
-#     volumes:
-#       - mysql-data:/var/lib/mysql
+  # Service MySQL
+  mysql:
+    image: mysql:latest
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_DATABASE=agence_bank
+    ports:
+      - "3307:3306"
+    networks:
+      - banking-system-network
+    volumes:
+      - mysql-data:/var/lib/mysql
 
 
-#   rabbitmq:
-#     image: rabbitmq:management
-#     ports:
-#       - "5672:5672"
-#       - "15672:15672"
-#     networks:
-#       - banking-system-network
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - banking-system-network
 
 
-#   eventstore.db:
-#     image: docker.eventstore.com/eventstore-preview/eventstoredb-ee:24.10.0-preview1-x64-8.0-bookworm-slim
-#     environment:
-#       - EVENTSTORE_CLUSTER_SIZE=1
-#       - EVENTSTORE_RUN_PROJECTIONS=All
-#       - EVENTSTORE_START_STANDARD_PROJECTIONS=true
-#       - EVENTSTORE_NODE_PORT=2113
-#       - EVENTSTORE_INSECURE=true
-#       - EVENTSTORE_ENABLE_ATOM_PUB_OVER_HTTP=true
-#     ports:
-#       - "2113:2113"
-#     volumes:
-#       - type: volume
-#         source: eventstore-volume-data
-#         target: /var/lib/eventstore
-#       - type: volume
-#         source: eventstore-volume-logs
-#         target: /var/log/eventstore
+  eventstore.db:
+    image: docker.eventstore.com/eventstore-preview/eventstoredb-ee:24.10.0-preview1-x64-8.0-bookworm-slim
+    environment:
+      - EVENTSTORE_CLUSTER_SIZE=1
+      - EVENTSTORE_RUN_PROJECTIONS=All
+      - EVENTSTORE_START_STANDARD_PROJECTIONS=true
+      - EVENTSTORE_NODE_PORT=2113
+      - EVENTSTORE_INSECURE=true
+      - EVENTSTORE_ENABLE_ATOM_PUB_OVER_HTTP=true
+    ports:
+      - "2113:2113"
+    volumes:
+      - type: volume
+        source: eventstore-volume-data
+        target: /var/lib/eventstore
+      - type: volume
+        source: eventstore-volume-logs
+        target: /var/log/eventstore
 
-# volumes:
-#   eventstore-volume-data:
-#   eventstore-volume-logs:
-#   mysql-data:
+volumes:
+  eventstore-volume-data:
+  eventstore-volume-logs:
+  mysql-data:
 
 networks:
   banking-system-network:
