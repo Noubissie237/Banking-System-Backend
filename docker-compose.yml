@@ -157,7 +157,7 @@ services:
   service-notification:
     image: noubissie237/service-notification:latest
     ports:
-      - "8082:8082"
+      - "8089:8089"
     environment:
       - SPRING_APPLICATION_NAME=service-notification
       - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
