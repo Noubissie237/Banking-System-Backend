@@ -153,6 +153,20 @@ services:
     #   # - service-config
       - service-registry
 
+  # Service notification
+  service-notification:
+    image: noubissie237/service-notification:latest
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_APPLICATION_NAME=service-notification
+      - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
+    networks:
+      - banking-system-network
+    depends_on:
+    #   # - service-config
+      - service-registry
+
   # Service MySQL
   mysql:
     image: mysql:latest
