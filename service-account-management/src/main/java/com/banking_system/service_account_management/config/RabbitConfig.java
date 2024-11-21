@@ -75,6 +75,11 @@ public class RabbitConfig {
         return new Queue("transfertDoneForAgenceQueue", true, false, false);
     }
 
+    @Bean
+    public Queue transfertm() {
+        return new Queue("transfertm", true, false, false);
+    }
+
     /* --------------------------------------- */
 
     /*---------------- DEPOT ------------------ */
@@ -169,6 +174,11 @@ public class RabbitConfig {
     @Bean
     public Binding binding9(TopicExchange transactionExchange, Queue depotDoneQueue) {
         return BindingBuilder.bind(depotDoneQueue).to(transactionExchange).with("depot.done");
+    }
+
+    @Bean
+    public Binding binding10(TopicExchange transactionExchange, Queue transfertm) {
+        return BindingBuilder.bind(transfertm).to(transactionExchange).with("transfert.done.message");
     }
 
 }

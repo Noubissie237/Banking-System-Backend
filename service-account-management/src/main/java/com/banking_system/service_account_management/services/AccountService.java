@@ -81,6 +81,7 @@ public class AccountService {
 
         rabbitTemplate.convertAndSend("transactionExchange", "transfert.done", transfert);
         rabbitTemplate.convertAndSend("transactionExchange", "transfert.done.agence", transfert);
+        rabbitTemplate.convertAndSend("transactionExchange", "transfert.done.message", transfert);
     }
 
     @Transactional

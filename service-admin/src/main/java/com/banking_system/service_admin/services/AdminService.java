@@ -75,7 +75,7 @@ public class AdminService {
         eventAgent.setNumero_cni(agent.getNumero_cni());
         eventAgent.setRecto_cni(agent.getRecto_cni());
         eventAgent.setVerso_cni(agent.getVerso_cni());
-        eventAgent.setPassword("12345678");
+        eventAgent.setPassword(eventAgent.getTel());
         rabbitTemplate.convertAndSend("clientExchange", "agent.demande");
         return eventAgent;
     }
