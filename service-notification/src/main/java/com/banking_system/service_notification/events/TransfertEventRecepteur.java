@@ -22,4 +22,6 @@ public class TransfertEventRecepteur {
     private Double montant;
     @JsonProperty("agence")
     private int agence;
+    @JsonProperty("frais")
+    private Double frais;
 }

@@ -35,11 +35,11 @@ public class Transaction {
             sourceAccount = util.getsoldeClient(transfertEventEnvoyeur.getNumero_source());
             mail = util.getEmail(transfertEventEnvoyeur.getNumero_source());
             mail2 = util.getEmail(transfertEventEnvoyeur.getNumero_cible());
-            String message = "Transfert de " + transfertEventEnvoyeur.getNumero_source() + " "
-                    + mail.getNom().toUpperCase() + " vers " + transfertEventEnvoyeur.getNumero_cible() + " "
-                    + mail2.getNom().toUpperCase() + " Reussi. Information detaillees: Montant de transaction "
+            String message = "Transfert de vous"
+                    + " vers " + transfertEventEnvoyeur.getNumero_cible() + " "
+                    + mail2.getNom().toUpperCase() + " "+ mail2.getPrenom().toUpperCase()+" Reussi. Information detaillees: Montant de transaction "
                     + transfertEventEnvoyeur.getMontant()
-                    + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : "
+                    + " FCFA, Frais "+ transfertEventEnvoyeur.getFrais()+" FCFA, Commmission : 0 FCFA, Montant net du credit : "
                     + (transfertEventEnvoyeur.getMontant() + transfertEventEnvoyeur.getFrais())
                     + " FCFA, Nouveau solde : " + (transfertEventEnvoyeur.getMontant() + sourceAccount.getSolde())
                     + " FCFA.";
@@ -60,10 +60,10 @@ public class Transaction {
             mail = util.getEmail(transfertEventRecepteur.getNumero_cible());
             mail2 = util.getEmail(transfertEventRecepteur.getNumero_source());
             String message = "Transfert effectué par " + transfertEventRecepteur.getNumero_source() + " "
-                    + mail2.getNom().toUpperCase() + " to " + transfertEventRecepteur.getNumero_cible() + " "
+                    + mail2.getNom().toUpperCase() + " vers vous "
                     + mail.getNom().toUpperCase() + ". Information detaillees: Montant de transaction "
                     + transfertEventRecepteur.getMontant()
-                    + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : "
+                    + " FCFA, Frais "+ transfertEventRecepteur.getFrais()+" FCFA, Commmission : 0 FCFA, Montant net du credit : "
                     + transfertEventRecepteur.getMontant() + " FCFA, Nouveau solde : "
                     + (transfertEventRecepteur.getMontant() + sourceAccount.getSolde()) + " FCFA.";
             mailservice.sendMail(mail.getEmail(), "Transfert d'agent", message);
