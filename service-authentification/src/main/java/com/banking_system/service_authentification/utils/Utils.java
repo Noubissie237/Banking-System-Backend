@@ -22,7 +22,7 @@ public class Utils {
         SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes());
 
         Date now = new Date();
-        Date expiryDate = new Date(now.getTime() + 600000);
+        Date expiryDate = new Date(now.getTime() + 86400000);
 
         
 
