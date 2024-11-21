@@ -204,9 +204,9 @@ public class Transaction {
             sourceAccount = util.getSoldeAgent(rechargeEventConsumer.getNumero());
             mail = util.getUserEmailByNum(rechargeEventConsumer.getNumero());
             String agence = rechargeEventConsumer.getAgence() == 1 ? "MTN Mobile Money" : "Orange Money OM";
-            String message = "Recharge effectuée par " + agence + " à"
+            String message = "Recharge effectuée par " + agence + " à "
                     + rechargeEventConsumer.getNumero() + " " + mail.getNom().toUpperCase()
-                    + ". Information detaillees: Montant de transaction " + rechargeEventConsumer.getMontant()
+                    + " " + mail.getPrenom().toUpperCase() +". Information detaillees: Montant de transaction " + rechargeEventConsumer.getMontant()
                     + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : " 
                     + rechargeEventConsumer.getMontant() + " FCFA, Nouveau solde : "
                     + (rechargeEventConsumer.getMontant() + sourceAccount.getSolde()) + " FCFA.";

@@ -50,7 +50,9 @@ public class MessageCompteCreate {
             String message = String.format(
                     "Bienvenue M./Mme %s, <br><br>Votre compte a été créé avec succès !<br>" +
                             "Vous pouvez dès à présent accéder à nos services.<br><br>" +
-                            "Cordialement,<br>L'équipe de support.",
+                            "Cordialement,<br>L'équipe de support.<br><br>"+
+                            "Consultez notre site <a href ='https://quick-send.site'>ici</a><br><br>"+
+                            "<a href ='https://wa.me/+237690232120'>Contact administrateur</a>",
                     user.getNom().toUpperCase());
 
             mailservice.sendMail(
