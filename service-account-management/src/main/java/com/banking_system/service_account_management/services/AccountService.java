@@ -94,6 +94,7 @@ public class AccountService {
 
         rabbitTemplate.convertAndSend("transactionExchange", "retrait.done", retrait);
         rabbitTemplate.convertAndSend("transactionExchange", "retrait.done.agence", retrait);
+        rabbitTemplate.convertAndSend("transactionExchange", "retrait.done.message", retrait);
     }
     
     @Transactional
@@ -113,5 +114,6 @@ public class AccountService {
         decrementSolde(source, depot.getMontant()); 
 
         rabbitTemplate.convertAndSend("transactionExchange", "depot.done", depot);
+        rabbitTemplate.convertAndSend("transactionExchange", "depot.done.message", depot);
     }
 }

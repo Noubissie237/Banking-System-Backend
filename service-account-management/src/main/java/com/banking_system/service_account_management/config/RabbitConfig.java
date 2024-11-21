@@ -94,6 +94,11 @@ public class RabbitConfig {
         return new Queue("depotDoneQueue", true, false, false);
     }
 
+    @Bean
+    public Queue depotm() {
+        return new Queue("depotm", true, false, false);
+    }
+
     // ******************************************
 
     /* ------------- RETRAIT -------------- */
@@ -110,6 +115,11 @@ public class RabbitConfig {
     @Bean
     public Queue retraitDoneForAgenceQueue() {
         return new Queue("retraitDoneForAgenceQueue", true, false, false);
+    }
+
+    @Bean
+    public Queue retraitm() {
+        return new Queue("retraitm", true, false, false);
     }
 
     /* ------------------------------------- */
@@ -179,6 +189,16 @@ public class RabbitConfig {
     @Bean
     public Binding binding10(TopicExchange transactionExchange, Queue transfertm) {
         return BindingBuilder.bind(transfertm).to(transactionExchange).with("transfert.done.message");
+    }
+
+    @Bean
+    public Binding binding11(TopicExchange transactionExchange, Queue retraitm) {
+        return BindingBuilder.bind(retraitm).to(transactionExchange).with("retrait.done.message");
+    }
+
+    @Bean
+    public Binding binding12(TopicExchange transactionExchange, Queue depotm) {
+        return BindingBuilder.bind(depotm).to(transactionExchange).with("depot.done.message");
     }
 
 }

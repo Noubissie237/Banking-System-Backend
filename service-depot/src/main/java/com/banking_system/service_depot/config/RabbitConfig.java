@@ -38,20 +38,10 @@ public class RabbitConfig {
     public Queue depotSendQueue() {
         return new Queue("depotSendQueue", true, false, false);
     }
-    @Bean
-    public Queue depotMoney() {
-        return new Queue("depotMoney", true, false, false);
-    }
-
 
     @Bean
     public Binding binding1(TopicExchange transactionExchange, Queue depotSendQueue) {
         return BindingBuilder.bind(depotSendQueue).to(transactionExchange).with("depot.send");
-    }
-    @Bean
-    public Binding binding6(TopicExchange transactionExchange, Queue depotMoney) {
-        return BindingBuilder.bind(depotMoney).to(transactionExchange).with("depot.m");
-
     }
 
 }

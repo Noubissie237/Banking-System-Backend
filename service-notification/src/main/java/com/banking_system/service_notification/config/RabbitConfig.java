@@ -80,10 +80,9 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Queue depotMoney() {
-        return new Queue("depotMoney", true, false, false);
+    public Queue depotm() {
+        return new Queue("depotm", true, false, false);
     }
-    
 
     @Bean
     public Queue retraitm() {
