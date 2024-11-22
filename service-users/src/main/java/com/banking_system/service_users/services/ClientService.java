@@ -72,7 +72,7 @@ public class ClientService {
     }
 
     public String login(String phone, String password) {
-        String url = "http://localhost:8079/SERVICE-AUTHENTIFICATION/auth/login";
+        String url = "https://proxy.quick-send.site/SERVICE-AUTHENTIFICATION/auth/login";
         LoginRequest loginRequest = new LoginRequest();
 
         loginRequest.setPhone(phone);
