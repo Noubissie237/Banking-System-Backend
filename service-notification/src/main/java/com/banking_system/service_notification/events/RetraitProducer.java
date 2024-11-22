@@ -8,19 +8,20 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-
 @Data
-@ToString
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class RetraitProducer {
     @JsonProperty("numero_cible")
     private String numero_cible;
-    @JsonProperty("numero_agent")
-    private String numero_agent;
+    @JsonProperty("matricule_agent")
+    private String matricule_agent;
     @JsonProperty("montant")
     private Double montant;
     @JsonProperty("agence")
     private int agence;
+    @JsonProperty("pass")
+    private String pass;
 }
