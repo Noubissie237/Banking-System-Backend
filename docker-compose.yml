@@ -1,216 +1,216 @@
 services:
   # Service de configuration
-  service-config:
-    image: noubissie237/service-config:latest
-    ports:
-      - "2370:2370"
-    environment:
-      - SPRING_APPLICATION_NAME=service-config
-      - SPRING_CLOUD_CONFIG_SERVER_GIT_URI=https://github.com/Noubissie237/banking-system-cloud-conf
-    networks:
-      - banking-system-network
+  # service-config:
+  #   image: noubissie237/service-config:latest
+  #   ports:
+  #     - "2370:2370"
+  #   environment:
+  #     - SPRING_APPLICATION_NAME=service-config
+  #     - SPRING_CLOUD_CONFIG_SERVER_GIT_URI=https://github.com/Noubissie237/banking-system-cloud-conf
+  #   networks:
+  #     - banking-system-network
 
-  # Service d'enrégistrement
-  service-registry:
-    image: noubissie237/service-registry:latest
+  # # Service d'enrégistrement
+  # service-registry:
+  #   image: noubissie237/service-registry:latest
+  #   ports:
+  #     - "8761:8761"
+  #   environment:
+  #     - SPRING_APPLICATION_NAME=service-registry
+  #     - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
+  #   networks:
+  #     - banking-system-network
+  #   depends_on:
+  #     - service-config
+
+  # Service proxy
+  service-proxy:
+    image: noubissie237/service-proxy:latest
     ports:
-      - "8761:8761"
+      - "8079:8079"
     environment:
-      - SPRING_APPLICATION_NAME=service-registry
+      - SPRING_APPLICATION_NAME=service-proxy
       - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
     networks:
       - banking-system-network
     depends_on:
       - service-config
-
-  # Service proxy
-  # service-proxy:
-  #   image: noubissie237/service-proxy:latest
-  #   ports:
-  #     - "8079:8079"
-  #   environment:
-  #     - SPRING_APPLICATION_NAME=service-proxy
-  #     - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
-  #   networks:
-  #     - banking-system-network
-  #   depends_on:
-  #     - service-config
-  #     - service-registry
+      - service-registry
 
 
-  # # Service account-management
-  # service-account-management:
-  #   image: noubissie237/service-account-management:latest
-  #   ports:
-  #     - "8084:8084"
-  #   environment:
-  #     - SPRING_APPLICATION_NAME=service-account-management
-  #     - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
-  #   networks:
-  #     - banking-system-network
-  #   depends_on:
-  #     - service-config
-  #     - service-registry
-
-  # # Service admin
-  # service-admin:
-  #   image: noubissie237/service-admin:latest
-  #   ports:
-  #     - "8083:8083"
-  #   environment:
-  #     - SPRING_APPLICATION_NAME=service-admin
-  #     - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
-  #   networks:
-  #     - banking-system-network
-  #   depends_on:
-  #     - service-config
-  #     - service-registry
-
-  # # Service authentification
-  # service-authentification:
-  #   image: noubissie237/service-authentification:latest
-  #   ports:
-  #     - "8081:8081"
-  #   environment:
-  #     - SPRING_APPLICATION_NAME=service-authentification
-  #     - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
-  #   networks:
-  #     - banking-system-network
-  #   depends_on:
-  #     - service-config
-  #     - service-registry
-
-  # # Service retrait
-  # service-retrait:
-  #   image: noubissie237/service-retrait:latest
-  #   ports:
-  #     - "8086:8086"
-  #   environment:
-  #     - SPRING_APPLICATION_NAME=service-retrait
-  #     - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
-  #   networks:
-  #     - banking-system-network
-  #   depends_on:
-  #     - service-config
-  #     - service-registry
-
-  # # Service tranfert
-  # service-tranfert:
-  #   image: noubissie237/service-tranfert:latest
-  #   ports:
-  #     - "8087:8087"
-  #   environment:
-  #     - SPRING_APPLICATION_NAME=service-tranfert
-  #     - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
-  #   networks:
-  #     - banking-system-network
-  #   depends_on:
-  #     - service-config
-  #     - service-registry
-
-  # # Service depot
-  # service-depot:
-  #   image: noubissie237/service-depot:latest
-  #   ports:
-  #     - "8085:8085"
-  #   environment:
-  #     - SPRING_APPLICATION_NAME=service-depot
-  #     - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
-  #   networks:
-  #     - banking-system-network
-  #   depends_on:
-  #     - service-config
-  #     - service-registry
-
-  # # Service transactions
-  # service-transactions:
-  #   image: noubissie237/service-transactions:latest
-  #   ports:
-  #     - "8088:8088"
-  #   environment:
-  #     - SPRING_APPLICATION_NAME=service-transactions
-  #     - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
-  #   networks:
-  #     - banking-system-network
-  #   depends_on:
-  #     - service-config
-  #     - service-registry
-
-  # # Service users
-  # service-users:
-  #   image: noubissie237/service-users:latest
-  #   ports:
-  #     - "8082:8082"
-  #   environment:
-  #     - SPRING_APPLICATION_NAME=service-users
-  #     - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
-  #   networks:
-  #     - banking-system-network
-  #   depends_on:
-  #     - service-config
-  #     - service-registry
-
-  # # Service notification
-  # service-notification:
-  #   image: noubissie237/service-notification:latest
-  #   ports:
-  #     - "8089:8089"
-  #   environment:
-  #     - SPRING_APPLICATION_NAME=service-notification
-  #     - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
-  #   networks:
-  #     - banking-system-network
-  #   depends_on:
-  #     - service-config
-  #     - service-registry
-
-#   # Service MySQL
-#   mysql:
-#     image: mysql:latest
-#     environment:
-#       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
-#       - MYSQL_ROOT_PASSWORD=
-#       - MYSQL_DATABASE=agence_bank
-#     ports:
-#       - "3307:3306"
-#     networks:
-#       - banking-system-network
-#     volumes:
-#       - mysql-data:/var/lib/mysql
-
-
-  rabbitmq:
-    image: rabbitmq:management
+  # Service account-management
+  service-account-management:
+    image: noubissie237/service-account-management:latest
     ports:
-      - "5672:5672"
-      - "15672:15672"
+      - "8084:8084"
+    environment:
+      - SPRING_APPLICATION_NAME=service-account-management
+      - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
     networks:
       - banking-system-network
+    depends_on:
+      - service-config
+      - service-registry
 
-
-  eventstore.db:
-    image: docker.eventstore.com/eventstore-preview/eventstoredb-ee:24.10.0-preview1-x64-8.0-bookworm-slim
-    environment:
-      - EVENTSTORE_CLUSTER_SIZE=1
-      - EVENTSTORE_RUN_PROJECTIONS=All
-      - EVENTSTORE_START_STANDARD_PROJECTIONS=true
-      - EVENTSTORE_NODE_PORT=2113
-      - EVENTSTORE_INSECURE=true
-      - EVENTSTORE_ENABLE_ATOM_PUB_OVER_HTTP=true
+  # Service admin
+  service-admin:
+    image: noubissie237/service-admin:latest
     ports:
-      - "2113:2113"
+      - "8083:8083"
+    environment:
+      - SPRING_APPLICATION_NAME=service-admin
+      - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
+    networks:
+      - banking-system-network
+    depends_on:
+      - service-config
+      - service-registry
+
+  # Service authentification
+  service-authentification:
+    image: noubissie237/service-authentification:latest
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_APPLICATION_NAME=service-authentification
+      - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
+    networks:
+      - banking-system-network
+    depends_on:
+      - service-config
+      - service-registry
+
+  # Service retrait
+  service-retrait:
+    image: noubissie237/service-retrait:latest
+    ports:
+      - "8086:8086"
+    environment:
+      - SPRING_APPLICATION_NAME=service-retrait
+      - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
+    networks:
+      - banking-system-network
+    depends_on:
+      - service-config
+      - service-registry
+
+  # Service tranfert
+  service-tranfert:
+    image: noubissie237/service-tranfert:latest
+    ports:
+      - "8087:8087"
+    environment:
+      - SPRING_APPLICATION_NAME=service-tranfert
+      - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
+    networks:
+      - banking-system-network
+    depends_on:
+      - service-config
+      - service-registry
+
+  # Service depot
+  service-depot:
+    image: noubissie237/service-depot:latest
+    ports:
+      - "8085:8085"
+    environment:
+      - SPRING_APPLICATION_NAME=service-depot
+      - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
+    networks:
+      - banking-system-network
+    depends_on:
+      - service-config
+      - service-registry
+
+  # Service transactions
+  service-transactions:
+    image: noubissie237/service-transactions:latest
+    ports:
+      - "8088:8088"
+    environment:
+      - SPRING_APPLICATION_NAME=service-transactions
+      - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
+    networks:
+      - banking-system-network
+    depends_on:
+      - service-config
+      - service-registry
+
+  # Service users
+  service-users:
+    image: noubissie237/service-users:latest
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_APPLICATION_NAME=service-users
+      - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
+    networks:
+      - banking-system-network
+    depends_on:
+      - service-config
+      - service-registry
+
+  # Service notification
+  service-notification:
+    image: noubissie237/service-notification:latest
+    ports:
+      - "8089:8089"
+    environment:
+      - SPRING_APPLICATION_NAME=service-notification
+      - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
+    networks:
+      - banking-system-network
+    depends_on:
+      - service-config
+      - service-registry
+
+  # Service MySQL
+  mysql:
+    image: mysql:latest
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_DATABASE=agence_bank
+    ports:
+      - "3307:3306"
+    networks:
+      - banking-system-network
     volumes:
-      - type: volume
-        source: eventstore-volume-data
-        target: /var/lib/eventstore
-      - type: volume
-        source: eventstore-volume-logs
-        target: /var/log/eventstore
+      - mysql-data:/var/lib/mysql
+
+
+  # rabbitmq:
+  #   image: rabbitmq:management
+  #   ports:
+  #     - "5672:5672"
+  #     - "15672:15672"
+  #   networks:
+  #     - banking-system-network
+
+
+  # eventstore.db:
+  #   image: docker.eventstore.com/eventstore-preview/eventstoredb-ee:24.10.0-preview1-x64-8.0-bookworm-slim
+  #   environment:
+  #     - EVENTSTORE_CLUSTER_SIZE=1
+  #     - EVENTSTORE_RUN_PROJECTIONS=All
+  #     - EVENTSTORE_START_STANDARD_PROJECTIONS=true
+  #     - EVENTSTORE_NODE_PORT=2113
+  #     - EVENTSTORE_INSECURE=true
+  #     - EVENTSTORE_ENABLE_ATOM_PUB_OVER_HTTP=true
+  #   ports:
+  #     - "2113:2113"
+  #   volumes:
+  #     - type: volume
+  #       source: eventstore-volume-data
+  #       target: /var/lib/eventstore
+  #     - type: volume
+  #       source: eventstore-volume-logs
+  #       target: /var/log/eventstore
 
 volumes:
-  eventstore-volume-data:
-  eventstore-volume-logs:
-  # mysql-data:
+  # eventstore-volume-data:
+  # eventstore-volume-logs:
+  mysql-data:
 
 networks:
   banking-system-network:
