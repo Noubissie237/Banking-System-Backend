@@ -33,9 +33,9 @@ services:
       - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
     networks:
       - banking-system-network
-    depends_on:
-      - service-config
-      - service-registry
+    # depends_on:
+    #   - service-config
+    #   - service-registry
 
 
   # Service account-management
@@ -49,8 +49,9 @@ services:
     networks:
       - banking-system-network
     depends_on:
-      - service-config
-      - service-registry
+      - mysql
+    #   - service-config
+    #   - service-registry
 
   # Service admin
   service-admin:
@@ -63,8 +64,9 @@ services:
     networks:
       - banking-system-network
     depends_on:
-      - service-config
-      - service-registry
+      - mysql
+    #   - service-config
+    #   - service-registry
 
   # Service authentification
   service-authentification:
@@ -76,9 +78,9 @@ services:
       - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
     networks:
       - banking-system-network
-    depends_on:
-      - service-config
-      - service-registry
+    # depends_on:
+    #   - service-config
+    #   - service-registry
 
   # Service retrait
   service-retrait:
@@ -90,9 +92,9 @@ services:
       - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
     networks:
       - banking-system-network
-    depends_on:
-      - service-config
-      - service-registry
+    # depends_on:
+    #   - service-config
+    #   - service-registry
 
   # Service tranfert
   service-tranfert:
@@ -104,9 +106,9 @@ services:
       - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
     networks:
       - banking-system-network
-    depends_on:
-      - service-config
-      - service-registry
+    # depends_on:
+    #   - service-config
+    #   - service-registry
 
   # Service depot
   service-depot:
@@ -118,9 +120,9 @@ services:
       - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
     networks:
       - banking-system-network
-    depends_on:
-      - service-config
-      - service-registry
+    # depends_on:
+    #   - service-config
+    #   - service-registry
 
   # Service transactions
   service-transactions:
@@ -132,9 +134,9 @@ services:
       - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
     networks:
       - banking-system-network
-    depends_on:
-      - service-config
-      - service-registry
+    # depends_on:
+    #   - service-config
+    #   - service-registry
 
   # Service users
   service-users:
@@ -147,8 +149,9 @@ services:
     networks:
       - banking-system-network
     depends_on:
-      - service-config
-      - service-registry
+      - mysql
+      # - service-config
+    #   - service-registry
 
   # Service notification
   service-notification:
@@ -160,9 +163,9 @@ services:
       - SPRING_CONFIG_IMPORT=configserver:https://config.quick-send.site
     networks:
       - banking-system-network
-    depends_on:
-      - service-config
-      - service-registry
+    # depends_on:
+    #   - service-config
+    #   - service-registry
 
   # Service MySQL
   mysql:
