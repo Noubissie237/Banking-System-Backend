@@ -65,11 +65,6 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Queue agentAccountQueue() {
-        return new Queue("agentAccountQueue", true, false, false);
-    }
-
-    @Bean
     public Queue transfertMoneyQueue() {
         return new Queue("transfertMoneyQueue", true, false, false);
     }
