@@ -19,14 +19,6 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.MY_DOCKER_HUB_TOKEN }}
 
-      # Service transactions
-      - name: Build Docker image for service-transactions
-        run: docker build -t noubissie237/service-transactions:latest ./service-transactions/.
-
-      - name: Push Docker image to Docker Hub
-        run: docker push noubissie237/service-transactions:latest
-
-
       # Service config
       - name: Build Docker image for service-config
         run: docker build -t noubissie237/service-config:latest ./service-config/.
@@ -111,3 +103,11 @@ jobs:
 
       - name: Push Docker image to Docker Hub
         run: docker push noubissie237/service-notification:latest
+
+
+      # Service transactions
+      - name: Build Docker image for service-transactions
+        run: docker build -t noubissie237/service-transactions:latest ./service-transactions/.
+
+      - name: Push Docker image to Docker Hub
+        run: docker push noubissie237/service-transactions:latest
