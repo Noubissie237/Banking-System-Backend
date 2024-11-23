@@ -16,7 +16,7 @@ public class Util {
     private final RestTemplate restTemplate = new RestTemplate();
 
     public Account getEmail(String number) throws IOException {
-        String url = "http://localhost:8079/SERVICE-USERS/api/client/get/" + number;
+        String url = "http://localhost:8079/SERVICE-USERS/api/get-user/" + number;
 
         try {
             Account account = restTemplate.getForObject(url, Account.class);
