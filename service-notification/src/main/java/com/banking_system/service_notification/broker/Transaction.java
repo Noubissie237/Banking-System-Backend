@@ -83,20 +83,20 @@ public class Transaction {
         retraitClient(retrait);
     }
 
-    public void retraitAgent(RetraitEventProducer retrait) {
+    public void retraitClient(RetraitEventProducer retrait) {
         Solde sourceAccount;
         Account client;
         AccountAgent agent;
         try {
             client = util.getEmail(retrait.getNumero_cible());
-            agent = util.getAgentEmailByNum(retrait.getNumero_agent());
-            sourceAccount = util.getSoldeAgent(agent.getTel());
-            String message = "Retrait effectué de vous"
+            agent = util.getAgentEmailByMat(retrait.getMatricule_agent());
+            sourceAccount = util.getSoldeAgent(client.getTel());
+            String message = "Retrait effectué de vous "
                     + client.getNom().toUpperCase() + " à l'agent " +agent.getMatricule()+ " "
                     + agent.getNom().toUpperCase() + ". Information detaillees: Montant de transaction "
                     + retrait.getMontant() + " FCFA, Frais "+ util.getFrais(retrait.getMontant(), retrait.getAgence()) +" FCFA, Commmission : 0 FCFA, Montant net du credit : "
                     + (retrait.getMontant() + retrait.getFrais()) + " FCFA, Nouveau solde : "
-                    + (retrait.getMontant() + sourceAccount.getSolde()) + " FCFA.";
+                    + (sourceAccount.getSolde()) + " FCFA.";
             mailservice.sendMail(client.getEmail(), "Retrait d'agent", message);
             System.out.println(message);
         } catch (Exception e) {
@@ -104,21 +104,21 @@ public class Transaction {
         }
     }
 
-    public void retraitClient(RetraitEventProducer retrait) {
+    public void retraitAgent(RetraitEventProducer retrait) {
         Solde sourceAccount;
         Account client;
         AccountAgent agent;
         try {
             client = util.getEmail(retrait.getNumero_cible());
-            agent = util.getAgentEmailByNum(retrait.getNumero_agent());
-            sourceAccount = util.getsoldeClient(client.getTel());
-            String message = "Retrait effectué de l'agent " + agent.getMatricule() + " "
+            agent = util.getAgentEmailByMat(retrait.getMatricule_agent());
+            sourceAccount = util.getsoldeClient(agent.getTel());
+            String message = "Retrait effectué du client " + client.getTel() + " "
                     + client.getNom().toUpperCase() + " à vous "
                     + agent.getNom().toUpperCase() + ". Information detaillees: Montant de transaction "
-                    + retrait.getMontant() + " FCFA, Frais "+ util.getFrais(retrait.getMontant(), retrait.getAgence()) +" FCFA, Commmission : 0 FCFA, Montant net du credit : "
+                    + retrait.getMontant() + " FCFA, Frais "+ util.getFrais(retrait.getMontant(), retrait.getAgence()) +" FCFA, Commmission : "+ ((util.getFrais(retrait.getMontant(), retrait.getAgence())) * 0.25) +" FCFA, Montant net du credit : "
                     + (retrait.getMontant() + retrait.getFrais()) + " FCFA, Nouveau solde : "
-                    + (sourceAccount.getSolde() - retrait.getMontant()) + " FCFA.";
-            mailservice.sendMail(client.getEmail(), "Retrait d'agent", message);
+                    + (sourceAccount.getSolde()) + " FCFA.";
+            mailservice.sendMail(agent.getEmail(), "Retrait d'agent", message);
             System.out.println(message);
         } catch (Exception e) {
             throw new RuntimeException("Retrait Creation Error : ", e);
@@ -197,7 +197,7 @@ public class Transaction {
             mailservice.sendMail(mail.getEmail(), "Recharge d'agent", message);
             System.out.println(message);
         } catch (Exception e) {
-            throw new RuntimeException("Transfert Error : ", e);
+            throw new RuntimeException("Recharge Error : ", e);
         }
     }
 

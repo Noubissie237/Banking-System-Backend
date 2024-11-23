@@ -79,6 +79,22 @@ public class Util {
         }
     }
 
+    public AccountAgent getAgentEmailByMat(String matricule) throws IOException {
+        String url = "http://localhost:8079/SERVICE-USERS/api/get-agent/" + matricule;
+
+        try {
+            AccountAgent account = restTemplate.getForObject(url, AccountAgent.class);
+            if (account == null) {
+                throw new IllegalArgumentException("Aucun compte trouvé avec le matricule : " + matricule);
+            }
+            return account;
+        } catch (HttpClientErrorException.NotFound e) {
+            throw new IllegalArgumentException("Aucun compte trouvé avec le matricule : " + matricule);
+        } catch (RestClientException e) {
+            throw new IOException("Erreur de connexion au service distant", e);
+        }
+    }
+
     public Solde getSoldeAgent(String number) throws IOException {
             String url = "http://localhost:8079/SERVICE-ACCOUNT-MANAGEMENT/api/account/get/" + number;
 
