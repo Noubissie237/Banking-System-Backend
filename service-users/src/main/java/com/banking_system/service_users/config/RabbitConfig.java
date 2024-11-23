@@ -49,10 +49,6 @@ public class RabbitConfig {
         return new Queue("clientAccountQueue", true, false, false);
     }
 
-    @Bean
-    public Queue rejectDemandeQueue() {
-        return new Queue("rejectDemandeQueue", true, false, false);
-    }
 
     @Bean
     public Queue agentQueue() {

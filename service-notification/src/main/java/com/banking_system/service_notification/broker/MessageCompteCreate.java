@@ -79,13 +79,13 @@ public class MessageCompteCreate {
         try {
             sourceAccount = util.getEmail(event.getNumeroClient());
 
-            String message = "Echec de creation du Compte ! <br> Veuillez vous rapporcher de l'agence.<br><br> Cordialement,";
+            String message = "Echec de creation du Compte ! <br> Veuillez vous rapporcher de l'agence pour plus d'informations.<br><br> Cordialement, l'équipe support";
 
             mailservice.sendMail(sourceAccount.getEmail(), "Echec de creation de compte", message);
         }
 
         catch (MessagingException e) {
-            // Gère l'exception
+            System.out.println("Message non envoyé!");
         }
     }
 
