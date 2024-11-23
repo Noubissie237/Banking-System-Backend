@@ -192,7 +192,7 @@ public class Transaction {
                     + rechargeEventConsumer.getMontant()
                     + " FCFA, Frais 0 FCFA, Commmission : 0 FCFA, Montant net du credit : "
                     + rechargeEventConsumer.getMontant() + " FCFA, Nouveau solde : "
-                    + (rechargeEventConsumer.getMontant() + sourceAccount.getSolde()) + " FCFA.";
+                    + (sourceAccount.getSolde()) + " FCFA.";
 
             mailservice.sendMail(mail.getEmail(), "Recharge d'agent", message);
             System.out.println(message);

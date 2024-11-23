@@ -20,14 +20,6 @@ jobs:
           password: ${{ secrets.MY_DOCKER_HUB_TOKEN }}
 
 
-      # Service notification
-      - name: Build Docker image for service-notification
-        run: docker build -t noubissie237/service-notification:latest ./service-notification/.
-
-      - name: Push Docker image to Docker Hub
-        run: docker push noubissie237/service-notification:latest
-
-
       # Service config
       - name: Build Docker image for service-config
         run: docker build -t noubissie237/service-config:latest ./service-config/.
@@ -112,3 +104,12 @@ jobs:
 
       - name: Push Docker image to Docker Hub
         run: docker push noubissie237/service-transactions:latest
+
+        
+      # Service notification
+      - name: Build Docker image for service-notification
+        run: docker build -t noubissie237/service-notification:latest ./service-notification/.
+
+      - name: Push Docker image to Docker Hub
+        run: docker push noubissie237/service-notification:latest
+
