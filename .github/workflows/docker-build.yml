@@ -19,58 +19,58 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.MY_DOCKER_HUB_TOKEN }}
 
-      # Service config
-      - name: Build Docker image for service-config
-        run: docker build -t noubissie237/service-config:latest ./service-config/.
+      # # Service config
+      # - name: Build Docker image for service-config
+      #   run: docker build -t noubissie237/service-config:latest ./service-config/.
 
-      - name: Push Docker image to Docker Hub
-        run: docker push noubissie237/service-config:latest
+      # - name: Push Docker image to Docker Hub
+      #   run: docker push noubissie237/service-config:latest
 
-      # Service registry
-      - name: Build Docker image for service-registry
-        run: docker build -t noubissie237/service-registry:latest ./service-registry/.
+      # # Service registry
+      # - name: Build Docker image for service-registry
+      #   run: docker build -t noubissie237/service-registry:latest ./service-registry/.
 
-      - name: Push Docker image to Docker Hub
-        run: docker push noubissie237/service-registry:latest
-
-
-      # Service proxy
-      - name: Build Docker image for service-proxy
-        run: docker build -t noubissie237/service-proxy:latest ./service-proxy/.
-
-      - name: Push Docker image to Docker Hub
-        run: docker push noubissie237/service-proxy:latest
+      # - name: Push Docker image to Docker Hub
+      #   run: docker push noubissie237/service-registry:latest
 
 
-      # Service users
-      - name: Build Docker image for service-users
-        run: docker build -t noubissie237/service-users:latest ./service-users/.
+      # # Service proxy
+      # - name: Build Docker image for service-proxy
+      #   run: docker build -t noubissie237/service-proxy:latest ./service-proxy/.
 
-      - name: Push Docker image to Docker Hub
-        run: docker push noubissie237/service-users:latest
-
-
-      # Service tranfert
-      - name: Build Docker image for service-tranfert
-        run: docker build -t noubissie237/service-tranfert:latest ./service-tranfert/.
-
-      - name: Push Docker image to Docker Hub
-        run: docker push noubissie237/service-tranfert:latest
-
-      # Service depot
-      - name: Build Docker image for service-depot
-        run: docker build -t noubissie237/service-depot:latest ./service-depot/.
-
-      - name: Push Docker image to Docker Hub
-        run: docker push noubissie237/service-depot:latest
+      # - name: Push Docker image to Docker Hub
+      #   run: docker push noubissie237/service-proxy:latest
 
 
-      # Service retrait
-      - name: Build Docker image for service-retrait
-        run: docker build -t noubissie237/service-retrait:latest ./service-retrait/.
+      # # Service users
+      # - name: Build Docker image for service-users
+      #   run: docker build -t noubissie237/service-users:latest ./service-users/.
 
-      - name: Push Docker image to Docker Hub
-        run: docker push noubissie237/service-retrait:latest
+      # - name: Push Docker image to Docker Hub
+      #   run: docker push noubissie237/service-users:latest
+
+
+      # # Service tranfert
+      # - name: Build Docker image for service-tranfert
+      #   run: docker build -t noubissie237/service-tranfert:latest ./service-tranfert/.
+
+      # - name: Push Docker image to Docker Hub
+      #   run: docker push noubissie237/service-tranfert:latest
+
+      # # Service depot
+      # - name: Build Docker image for service-depot
+      #   run: docker build -t noubissie237/service-depot:latest ./service-depot/.
+
+      # - name: Push Docker image to Docker Hub
+      #   run: docker push noubissie237/service-depot:latest
+
+
+      # # Service retrait
+      # - name: Build Docker image for service-retrait
+      #   run: docker build -t noubissie237/service-retrait:latest ./service-retrait/.
+
+      # - name: Push Docker image to Docker Hub
+      #   run: docker push noubissie237/service-retrait:latest
 
 
       # Service authentification
@@ -81,33 +81,33 @@ jobs:
         run: docker push noubissie237/service-authentification:latest
 
 
-      # Service admin
-      - name: Build Docker image for service-admin
-        run: docker build -t noubissie237/service-admin:latest ./service-admin/.
+      # # Service admin
+      # - name: Build Docker image for service-admin
+      #   run: docker build -t noubissie237/service-admin:latest ./service-admin/.
 
-      - name: Push Docker image to Docker Hub
-        run: docker push noubissie237/service-admin:latest
-
-
-      # Service account-management
-      - name: Build Docker image for service-account-management
-        run: docker build -t noubissie237/service-account-management:latest ./service-account-management/.
-
-      - name: Push Docker image to Docker Hub
-        run: docker push noubissie237/service-account-management:latest
+      # - name: Push Docker image to Docker Hub
+      #   run: docker push noubissie237/service-admin:latest
 
 
-      # Service notification
-      - name: Build Docker image for service-notification
-        run: docker build -t noubissie237/service-notification:latest ./service-notification/.
+      # # Service account-management
+      # - name: Build Docker image for service-account-management
+      #   run: docker build -t noubissie237/service-account-management:latest ./service-account-management/.
 
-      - name: Push Docker image to Docker Hub
-        run: docker push noubissie237/service-notification:latest
+      # - name: Push Docker image to Docker Hub
+      #   run: docker push noubissie237/service-account-management:latest
 
 
-      # Service transactions
-      - name: Build Docker image for service-transactions
-        run: docker build -t noubissie237/service-transactions:latest ./service-transactions/.
+      # # Service notification
+      # - name: Build Docker image for service-notification
+      #   run: docker build -t noubissie237/service-notification:latest ./service-notification/.
 
-      - name: Push Docker image to Docker Hub
-        run: docker push noubissie237/service-transactions:latest
+      # - name: Push Docker image to Docker Hub
+      #   run: docker push noubissie237/service-notification:latest
+
+
+      # # Service transactions
+      # - name: Build Docker image for service-transactions
+      #   run: docker build -t noubissie237/service-transactions:latest ./service-transactions/.
+
+      # - name: Push Docker image to Docker Hub
+      #   run: docker push noubissie237/service-transactions:latest

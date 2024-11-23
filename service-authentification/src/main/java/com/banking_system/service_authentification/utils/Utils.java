@@ -24,29 +24,13 @@ public class Utils {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + 86400000);
 
-        /* MODIFICATION */
-        // if (user.getRole().toString() == "0") {
-        //     user.setRole("CLIENT");
-        // } else if (user.getRole().toString() == "1") {
-        //     user.setRole("AGENT");
-        // }
-
-        // if (Double.parseDouble(user.getRole()) == 0) {
-        //     user.setRole("CLIENT");
-        // } else if (Double.parseDouble(user.getRole()) == 1) {
-        //     user.setRole("AGENT");
-        // }
-        /* FIN MODIFICATION */
-
         JwtBuilder builder = Jwts.builder()
                 .setSubject(user.getTel())
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
                 .signWith(key)
                 .claim("phone", user.getTel())
-                // .claim("password", user.getPassword())
-                .claim("name", user.getName())
-                // .claim("solde", user.getSolde())
+                .claim("name", user.getNom())
                 .claim("role", user.getRole());
 
         return builder.compact();

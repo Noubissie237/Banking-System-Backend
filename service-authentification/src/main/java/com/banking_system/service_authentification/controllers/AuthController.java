@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.banking_system.service_authentification.dto.LoginRequest;
 import com.banking_system.service_authentification.services.AuthService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -13,14 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/auth")
 public class AuthController {
     
-    private final AuthService authService;
-
-    public AuthController(AuthService authService) {
-        this.authService = authService;
-    }
+    @Autowired
+    AuthService authService;
 
     @PostMapping("/login")
     public String login(@RequestBody LoginRequest loginRequest) {
+        System.out.println("-----------Demande de login : "+ loginRequest.getPhone()+" "+loginRequest.getPassword());
         return authService.login(loginRequest.getPhone(), loginRequest.getPassword());
     }
 
