@@ -19,7 +19,7 @@ import com.banking_system.service_authentification.utils.Utils;
 
 @Service
 public class AuthService {
-    
+
     private final RestTemplate restTemplate;
     private final String allUsers = "http://localhost:8079/SERVICE-USERS/api/get-persons";
     private String token;
@@ -36,33 +36,37 @@ public class AuthService {
     }
 
     public String login(String phone, String password) {
+        System.out.println("NUMERO : " + phone);
+        System.out.println("PASS : " + password);
         try {
             Person[] users = getUsers();
-    
+
             if (users == null || users.length == 0) {
                 throw new UserNotFoundException("Aucun utilisateur n'a été trouvé.");
             }
-    
+
             for (Person user : users) {
-                if (user.getTel().equals(phone) && passwordEncoder.matches(password, user.getPassword())) {
-                    return utils.generateToken(user);
+                if (user.getTel().equals(phone)) {
+                    if (passwordEncoder.matches(password, user.getPassword())) {
+                        return utils.generateToken(user);
+                    }
                 }
             }
-    
+
             throw new InvalidCredentialsException("Numéro de téléphone ou mot de passe incorrect.");
         } catch (UserNotFoundException | InvalidCredentialsException ex) {
             throw ex;
         } catch (Exception ex) {
-            throw new ApplicationException("Une erreur inattendue s'est produite lors de la tentative de connexion.", ex);
+            throw new ApplicationException("Une erreur inattendue s'est produite lors de la tentative de connexion.",
+                    ex);
         }
     }
-    
 
     public boolean checkPassword(String phone, String password) {
-        Person[] users  = getUsers();
+        Person[] users = getUsers();
         if (users != null) {
             for (Person user : users) {
-                if(user.getTel().equals(phone) && passwordEncoder.matches(password, user.getPassword())) {
+                if (user.getTel().equals(phone) && passwordEncoder.matches(password, user.getPassword())) {
                     return true;
                 }
             }
@@ -76,7 +80,7 @@ public class AuthService {
         return response.getBody();
     }
 
-        private void addAuthorizationHeaderInterceptor(RestTemplate restTemplate) {
+    private void addAuthorizationHeaderInterceptor(RestTemplate restTemplate) {
         List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>(restTemplate.getInterceptors());
         interceptors.add((request, body, execution) -> {
             if (token != null) {
