@@ -36,5 +36,10 @@ public class AgenceService {
         return agenceRepository.findAll();
     }
 
+    public double getSolde(int idAgence) {
+        Agence agence = agenceRepository.findById(idAgence).orElseThrow(() -> new IllegalArgumentException("Agence non trouvée !"));
+        return agence.getCapital();
+    }
+
 
 }

@@ -15,6 +15,7 @@ import com.banking_system.service_users.services.ClientService;
 
 
 
+
 @RestController
 @RequestMapping("/api")
 public class ClientController {
@@ -43,6 +44,10 @@ public class ClientController {
         return clientService.getAllClients();
     }
     
+    @GetMapping("/get-clients-agence/{idAgence}")
+    public List<Client> getClientByAgence(@PathVariable("idAgence") int idAgence) {
+        return clientService.getClientByAgence(idAgence);
+    }
     
 
 }

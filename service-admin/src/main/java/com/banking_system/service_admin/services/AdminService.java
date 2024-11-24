@@ -1,5 +1,6 @@
 package com.banking_system.service_admin.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +14,7 @@ import com.banking_system.service_admin.events.RechargeEventProducer;
 import com.banking_system.service_admin.models.Demande;
 import com.banking_system.service_admin.models.StatutDemande;
 import com.banking_system.service_admin.repositories.AdminRepository;
+import com.banking_system.service_admin.utils.Util;
 
 @Service
 public class AdminService {
@@ -24,6 +26,9 @@ public class AdminService {
     AgenceService agenceService;
 
     @Autowired
+    Util util;
+
+    @Autowired
     private RabbitTemplate rabbitTemplate;
 
     public Demande createDemande(Demande demande) {
@@ -32,6 +37,19 @@ public class AdminService {
 
     public List<Demande> getAllDemandes() {
         return adminRepository.findAll();
+    }
+
+    public List<Demande> getAgenceDemande(int idAgence) {
+        List<Demande> demandes = adminRepository.findAll();
+        List<Demande> result = new ArrayList<>(demandes);
+
+        for(Demande demande : demandes) {
+            if ((idAgence == 1 && util.isAnOrangeNumber(demande.getClientTel())) ||
+                (idAgence != 1 && util.isAnMtnNumber(demande.getClientTel()))) {
+                    result.remove(demande);
+                }
+        }
+        return result;
     }
 
     public void deleteDemande(int id) {

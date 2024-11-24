@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.banking_system.service_admin.models.Agence;
 import com.banking_system.service_admin.services.AgenceService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 
 @RestController
@@ -31,5 +32,9 @@ public class AgenceController {
         return agenceService.getAllAgences();
     }
     
+    @GetMapping("/get-solde-agence/{id}")
+    public Double getSoldeAgence(@PathVariable int id) {
+        return agenceService.getSolde(id);
+    }
 
 }

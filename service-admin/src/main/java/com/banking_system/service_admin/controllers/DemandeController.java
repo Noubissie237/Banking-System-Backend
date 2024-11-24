@@ -30,6 +30,11 @@ public class DemandeController {
         return adminService.getAllDemandes();
     }
 
+    @GetMapping("/get-all-by-agence/{id}")
+    public List<Demande> getDemandesAgence(@PathVariable int id) {
+        return adminService.getAgenceDemande(id);
+    }
+
     @PutMapping("/update-statut/{id}")
     public List<Demande> updateDemandeStatut(@PathVariable int id, @RequestParam StatutDemande statut) {
         return adminService.updateDemandeStatut(id, statut);

@@ -1,6 +1,6 @@
 package com.banking_system.service_users.services;
 
-
+import java.util.ArrayList;
 import java.util.List;
 
 import com.banking_system.service_users.dto.LoginRequest;
@@ -40,7 +40,10 @@ public class ClientService {
             client.setPassword(encodedPassword);
             ClientEvent event = new ClientEvent();
             event.setAgence(utils.getAgenceId(client.getTel()));
-            String message = "Bienvenu M./Mme "+(client.getPrenom().substring(0, 1).toUpperCase()+client.getPrenom().substring(1).toLowerCase())+" "+client.getNom().toUpperCase()+" \nMerci de vous être enregistré. Votre compte est en cours de création. Cela peut prendre quelques instants.";
+            String message = "Bienvenu M./Mme "
+                    + (client.getPrenom().substring(0, 1).toUpperCase() + client.getPrenom().substring(1).toLowerCase())
+                    + " " + client.getNom().toUpperCase()
+                    + " \nMerci de vous être enregistré. Votre compte est en cours de création. Cela peut prendre quelques instants.";
             System.out.println(message);
             event.setNom(client.getNom());
             event.setPrenom(client.getPrenom());
@@ -77,17 +80,30 @@ public class ClientService {
 
         loginRequest.setPhone(phone);
         loginRequest.setPassword(password);
-        
+
         try {
             return restTemplate.postForObject(url, loginRequest, String.class);
         } catch (Exception e) {
-            return "Echec : "+e.getMessage();  
+            return "Echec : " + e.getMessage();
         }
     }
 
-    public Client findClient(String numero){
+    public Client findClient(String numero) {
         return clientRepository.findByTel(numero).orElseThrow();
     }
 
+public List<Client> getClientByAgence(int idAgence) {
+    List<Client> clients = clientRepository.findAll();
+    List<Client> result = new ArrayList<>(clients); 
+
+    for (Client client : clients) {
+        if ((idAgence == 1 && utils.isAnOrangeNumber(client.getTel())) ||
+            (idAgence != 1 && utils.isAnMtnNumber(client.getTel()))) {
+            result.remove(client);
+        }
+    }
+
+    return result;
+}
 
 }

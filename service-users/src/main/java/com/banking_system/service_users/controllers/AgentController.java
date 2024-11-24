@@ -49,5 +49,9 @@ public class AgentController {
         return agentService.getAllAgents();
     }
     
+    @GetMapping("/get-agents-agence/{idAgence}")
+    public List<Agent> getAgentByAgence(@PathVariable("idAgence") int idAgence) {
+        return agentService.getAgentByAgence(idAgence);
+    }
 
 }
