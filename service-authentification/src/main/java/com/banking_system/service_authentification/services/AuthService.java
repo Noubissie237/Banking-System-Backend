@@ -2,6 +2,7 @@ package com.banking_system.service_authentification.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,11 +12,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.banking_system.service_authentification.dto.Agence;
 import com.banking_system.service_authentification.dto.Person;
 import com.banking_system.service_authentification.exceptions.ApplicationException;
 import com.banking_system.service_authentification.exceptions.InvalidCredentialsException;
 import com.banking_system.service_authentification.exceptions.UserNotFoundException;
+import com.banking_system.service_authentification.utils.JwtTokenUtil;
 import com.banking_system.service_authentification.utils.Utils;
+
 
 @Service
 public class AuthService {
@@ -25,6 +29,9 @@ public class AuthService {
 
     @Autowired
     Utils utils;
+
+    @Autowired
+    JwtTokenUtil jwtTokenUtil;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -61,6 +68,27 @@ public class AuthService {
         }
     }
 
+// Dans votre méthode de contrôle
+public ResponseEntity<?> loginAdmin(String login, String password) {
+    try {
+        Agence[] agences = getAgence();
+        if (agences == null || agences.length == 0) {
+            return ResponseEntity.status(404).body("Aucune agence trouvée");
+        }
+
+        for (Agence agence : agences) {
+            if (agence.getLogin().equals(login) && agence.getPassword().equals(password)) {
+                String token = jwtTokenUtil.generateToken(agence);
+                return ResponseEntity.ok().body(Map.of("token", token));
+            }
+        }
+        return ResponseEntity.status(401).body("Login ou mot de passe incorrect");
+    } catch (Exception e) {
+        return ResponseEntity.status(500).body("Une erreur est survenue : " + e.getMessage());
+    }
+}
+
+
     public boolean checkPassword(String phone, String password) {
         Person[] users = getUsers();
         if (users != null) {
@@ -75,8 +103,14 @@ public class AuthService {
     }
 
     private Person[] getUsers() {
-        String allUsers = "https://proxy.quick-send.site/SERVICE-USERS/api/get-persons";
+        String allUsers = "http://localhost:8079/SERVICE-USERS/api/get-persons";
         ResponseEntity<Person[]> response = restTemplate.getForEntity(allUsers, Person[].class);
+        return response.getBody();
+    }
+
+    private Agence[] getAgence() {
+        String allAgences = "http://localhost:8079/SERVICE-ADMIN/api/agence/get-agences";
+        ResponseEntity<Agence[]> response = restTemplate.getForEntity(allAgences, Agence[].class);
         return response.getBody();
     }
 

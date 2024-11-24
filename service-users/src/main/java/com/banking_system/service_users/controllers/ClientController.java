@@ -14,6 +14,7 @@ import com.banking_system.service_users.models.Client;
 import com.banking_system.service_users.services.ClientService;
 
 
+
 @RestController
 @RequestMapping("/api")
 public class ClientController {
@@ -36,6 +37,12 @@ public class ClientController {
     public Client getClient(@PathVariable String number) {
         return clientService.findClient(number);
     }
+
+    @GetMapping("/get-clients")
+    public List<Client> getMethodName() {
+        return clientService.getAllClients();
+    }
+    
     
 
 }

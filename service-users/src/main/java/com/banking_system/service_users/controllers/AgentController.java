@@ -44,4 +44,10 @@ public class AgentController {
         return agentService.getAgentByMatricule(matricule);
     }
 
+    @GetMapping("/get-agents")
+    public List<Agent> getMethodName() {
+        return agentService.getAllAgents();
+    }
+    
+
 }

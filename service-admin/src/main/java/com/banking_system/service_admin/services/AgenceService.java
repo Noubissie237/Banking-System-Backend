@@ -1,5 +1,7 @@
 package com.banking_system.service_admin.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +30,10 @@ public class AgenceService {
         agence = agenceRepository.findById(idAgence).orElseThrow(() -> new IllegalArgumentException("Agence non trouvée !"));
         agence.setCapital((agence.getCapital() - montant));
         agenceRepository.save(agence);
+    }
+
+    public List<Agence> getAllAgences() {
+        return agenceRepository.findAll();
     }
 
 
