@@ -128,18 +128,6 @@ spec:
           ports:
             - containerPort: 5672 
             - containerPort: 15672
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 15672
-            initialDelaySeconds: 20
-            periodSeconds: 10
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 15672
-            initialDelaySeconds: 10
-            periodSeconds: 10
 ---
 # EventStoreDB StatefulSet
 apiVersion: apps/v1

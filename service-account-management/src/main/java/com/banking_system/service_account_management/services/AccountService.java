@@ -1,5 +1,8 @@
 package com.banking_system.service_account_management.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,20 +20,20 @@ import com.banking_system.service_account_management.repositories.AgentAccountRe
 
 import jakarta.transaction.Transactional;
 
-
 @Service
 public class AccountService {
-    
+
     @Autowired
     private AccountRepository accountRepository;
 
     @Autowired
     private AgentAccountRepository agentAccountRepository;
 
+
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-     public void createAccount(Account account) {
+    public void createAccount(Account account) {
         try {
             AccountEventJson event = new AccountEventJson();
             event.setNumeroClient(account.getNumber());
@@ -38,10 +41,9 @@ public class AccountService {
             rabbitTemplate.convertAndSend("clientExchange", "client-account.create", event);
             rabbitTemplate.convertAndSend("clientExchange", "client-account.create.message", event);
         } catch (Exception e) {
-            throw new RuntimeException("Account Creation Error : ",e);
+            throw new RuntimeException("Account Creation Error : ", e);
         }
     }
-
 
     public void createAgentAccount(AgentAccount account) {
         try {
@@ -50,17 +52,19 @@ public class AccountService {
             agentAccountRepository.save(account);
             rabbitTemplate.convertAndSend("clientExchange", "agent-account.create", event);
         } catch (Exception e) {
-            throw new RuntimeException("Account Creation Error : ",e);
+            throw new RuntimeException("Account Creation Error : ", e);
         }
     }
-    
+
     public void incrementSolde(Account account, Double montant) {
-        if (account == null) return;
+        if (account == null)
+            return;
         account.setSolde(account.getSolde() + montant);
     }
-    
+
     public void decrementSolde(Account account, Double montant) {
-        if (account == null) return;
+        if (account == null)
+            return;
         account.setSolde(account.getSolde() - montant);
     }
 
@@ -70,6 +74,32 @@ public class AccountService {
 
     public AgentAccount findAccountByMatricule(String matricule) {
         return agentAccountRepository.findByMatricule(matricule).orElseThrow(null);
+    }
+
+    public List<Account> findAllAccount(int idAgence) {
+        List<Account> accounts = accountRepository.findAll();
+        List<Account> result = new ArrayList<>(accounts);
+
+        for (Account account : accounts) {
+            if ((idAgence == 1 && account.getAgenceId() != 1) ||
+                    (idAgence != 1 && account.getAgenceId() == 1)) {
+                result.remove(account);
+            }
+        }
+        return result;
+    }
+
+    public List<AgentAccount> findAllAgentAccount(int idAgence) {
+        List<AgentAccount> accounts = agentAccountRepository.findAll();
+        List<AgentAccount> result = new ArrayList<>(accounts);
+
+        for (AgentAccount account : accounts) {
+            if ((idAgence == 1 && account.getAgenceId() != 1) ||
+                    (idAgence != 1 && account.getAgenceId() == 1)) {
+                result.remove(account);
+            }
+        }
+        return result;
     }
 
     @Transactional
@@ -88,7 +118,7 @@ public class AccountService {
     public void makeRetrait(RetraitEventConsumer retrait) {
         Account cible = findAccountByNumber(retrait.getNumero_cible());
         Account agent = findAccountByMatricule(retrait.getMatricule_agent());
-        Double agentGain = (retrait.getFrais() * 0.25 ) ;
+        Double agentGain = (retrait.getFrais() * 0.25);
         incrementSolde(agent, retrait.getMontant() + agentGain);
         decrementSolde(cible, retrait.getMontant() + retrait.getFrais());
 
@@ -96,7 +126,7 @@ public class AccountService {
         rabbitTemplate.convertAndSend("transactionExchange", "retrait.done.agence", retrait);
         rabbitTemplate.convertAndSend("transactionExchange", "retrait.done.message", retrait);
     }
-    
+
     @Transactional
     public void makeRecharge(RechargeEventConsumer recharge) {
         Account account = findAccountByNumber(recharge.getNumero());
@@ -106,12 +136,12 @@ public class AccountService {
     }
 
     @Transactional
-    public void makeDepot(DepotEventConsumer depot) { 
+    public void makeDepot(DepotEventConsumer depot) {
         Account cible = findAccountByNumber(depot.getNumero_cible());
         Account source = findAccountByNumber(depot.getNumero_source());
 
         incrementSolde(cible, depot.getMontant());
-        decrementSolde(source, depot.getMontant()); 
+        decrementSolde(source, depot.getMontant());
 
         rabbitTemplate.convertAndSend("transactionExchange", "depot.done", depot);
         rabbitTemplate.convertAndSend("transactionExchange", "depot.done.message", depot);

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 
 
+
 @RestController
 @RequestMapping("/transactions")
 public class TransactionController {
@@ -47,6 +48,11 @@ public class TransactionController {
     @GetMapping("/get-all")
     public List<TransactionEvent> getTransactions() {
         return transactionService.getAllTransactions();
+    }
+
+    @GetMapping("/get-all-by-agence/{id}")
+    public List<TransactionEvent> getByAgence(@PathVariable int id) {
+        return transactionService.getTransactionByAgence(id);
     }
     
 }

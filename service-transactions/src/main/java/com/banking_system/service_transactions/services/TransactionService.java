@@ -124,4 +124,32 @@ public class TransactionService {
         return transactions;
     }
 
+    public List<TransactionEvent> getTransactionByAgence(int idAgence) {
+
+        List<TransactionEvent> result = new ArrayList<>();
+        try {
+            List<ResolvedEvent> events = eventStoreDBClient.readStream("transactionsStream", ReadStreamOptions.get())
+                    .get().getEvents();
+
+            for (ResolvedEvent resolvedEvent : events) {
+                String jsonData = new String(resolvedEvent.getEvent().getEventData(), StandardCharsets.UTF_8);
+
+                if (jsonData.startsWith("\"") && jsonData.endsWith("\"")) {
+                    jsonData = jsonData.substring(1, jsonData.length() - 1);
+                }
+
+                jsonData = jsonData.replace("\\\"", "\"");
+
+                TransactionEvent transactionEvent = objectMapper.readValue(jsonData, TransactionEvent.class);
+
+                if ((transactionEvent.getAgenceId() == idAgence)){
+                    result.add(transactionEvent);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
 }
