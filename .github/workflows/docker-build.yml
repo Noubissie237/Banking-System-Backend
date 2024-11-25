@@ -19,7 +19,14 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.MY_DOCKER_HUB_TOKEN }}
 
+      # Service proxy
+      - name: Build Docker image for service-proxy
+        run: docker build -t noubissie237/service-proxy:latest ./service-proxy/.
 
+      - name: Push Docker image to Docker Hub
+        run: docker push noubissie237/service-proxy:latest
+
+        
       # Service config
       - name: Build Docker image for service-config
         run: docker build -t noubissie237/service-config:latest ./service-config/.
@@ -33,14 +40,6 @@ jobs:
 
       - name: Push Docker image to Docker Hub
         run: docker push noubissie237/service-registry:latest
-
-
-      # Service proxy
-      - name: Build Docker image for service-proxy
-        run: docker build -t noubissie237/service-proxy:latest ./service-proxy/.
-
-      - name: Push Docker image to Docker Hub
-        run: docker push noubissie237/service-proxy:latest
 
 
       # Service users

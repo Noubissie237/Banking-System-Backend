@@ -1,4 +1,4 @@
-package com.banking_system.service_proxy.config;
+package com.banking_system.service_proxy;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +14,7 @@ public class CorsConfig {
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(Arrays.asList("https://proxy.quick-send.site", "https://admin.quick-send.site")); 
+        config.setAllowedOriginPatterns(Arrays.asList("https://admin.quick-send.site, http://185.218.126.7:2371")); 
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         config.setAllowCredentials(true);
