@@ -14,7 +14,10 @@ public class CorsConfig {
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOriginPatterns(Arrays.asList("https://admin.quick-send.site, http://185.218.126.7:2371")); 
+        config.setAllowedOriginPatterns(Arrays.asList(
+            "https://admin.quick-send.site", 
+            "http://185.218.126.7:2371"
+        ));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         config.setAllowCredentials(true);
