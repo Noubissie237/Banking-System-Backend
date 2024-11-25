@@ -1,4 +1,4 @@
-package com.banking_system.service_proxy;
+package com.banking_system.service_proxy.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
