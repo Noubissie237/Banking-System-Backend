@@ -156,6 +156,7 @@ public class RabbitConfig {
         return BindingBuilder.bind(agentAccountQueue).to(clientExchange).with("agent-account.create");
     }
   
+    @Bean
     public Binding binding3(TopicExchange transactionExchange, Queue rechargeByAgenceDone) {
         return BindingBuilder.bind(rechargeByAgenceDone).to(transactionExchange).with("recharge.done");
     }
