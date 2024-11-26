@@ -29,7 +29,6 @@ public class AccountService {
     @Autowired
     private AgentAccountRepository agentAccountRepository;
 
-
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
@@ -131,8 +130,9 @@ public class AccountService {
     public void makeRecharge(RechargeEventConsumer recharge) {
         Account account = findAccountByNumber(recharge.getNumero());
         incrementSolde(account, recharge.getMontant());
-
+        System.out.println("Envoie au service de transactions");
         rabbitTemplate.convertAndSend("transactionExchange", "recharge.done", recharge);
+        System.out.println("Fin d'Envoie au service de transactions");
     }
 
     @Transactional
