@@ -19,7 +19,7 @@ public class DepotProducer {
     @JsonProperty("numero_cible")
     private String numero_cible;
     @JsonProperty("montant")
-    private Double montant;
+    private double montant;
     @JsonProperty("agence")
     private int agence;
 }

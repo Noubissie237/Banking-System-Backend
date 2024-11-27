@@ -20,7 +20,7 @@ public class RetraitTemplate {
     @JsonProperty("matricule_agent")
     private String matricule_agent;
     @JsonProperty("montant")
-    private Double montant;
+    private double montant;
     @JsonProperty("agence")
     private int agence;
 }

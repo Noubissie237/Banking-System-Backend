@@ -19,10 +19,10 @@ public class RetraitEventConsumer {
     @JsonProperty("matricule_agent")
     private String matricule_agent;
     @JsonProperty("montant")
-    private Double montant;
+    private double montant;
     @JsonProperty("agence")
     private int agence;
     @JsonProperty("frais")
-    private Double frais;
+    private double frais;
     
 }

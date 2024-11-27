@@ -129,7 +129,7 @@ public class Util {
         }
     }
 
-    public double getFrais(Double montant, int agence) {
+    public double getFrais(double montant, int agence) {
         return agence == 1 ? ((montant * 2) / 100) : ((montant * 1.5) / 100);
     }
 }

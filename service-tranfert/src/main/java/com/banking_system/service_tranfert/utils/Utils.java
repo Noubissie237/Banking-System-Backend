@@ -12,10 +12,10 @@ import com.banking_system.service_tranfert.events.Account;
 @Component
 public class Utils {
 
-    public static final Double FRAIS_TRANSFERT_ORANGE_MONEY_TO_ORANGE_MONEY = 0.5;
-    public static final Double FRAIS_TRANSFERT_ORANGE_MONEY_TO_MOBILE_MONEY = 1.9;
-    public static final Double FRAIS_TRANSFERT_MOBILE_MONEY_TO_MOBILE_MONEY = 1.0;
-    public static final Double FRAIS_TRANSFERT_MOBILE_MONEY_TO_ORANGE_MONEY = 1.5;
+    public static final double FRAIS_TRANSFERT_ORANGE_MONEY_TO_ORANGE_MONEY = 0.5;
+    public static final double FRAIS_TRANSFERT_ORANGE_MONEY_TO_MOBILE_MONEY = 1.9;
+    public static final double FRAIS_TRANSFERT_MOBILE_MONEY_TO_MOBILE_MONEY = 1.0;
+    public static final double FRAIS_TRANSFERT_MOBILE_MONEY_TO_ORANGE_MONEY = 1.5;
 
     
     private final RestTemplate restTemplate = new RestTemplate();
@@ -36,7 +36,7 @@ public class Utils {
         }
     }
 
-    public Double getFrais(int sourceAgenceId, int cibleAgenceId) {
+    public double getFrais(int sourceAgenceId, int cibleAgenceId) {
         if (sourceAgenceId == 1 && cibleAgenceId == 1) {
             return FRAIS_TRANSFERT_MOBILE_MONEY_TO_MOBILE_MONEY;
         } else if (sourceAgenceId == 1 && cibleAgenceId == 2) {
@@ -50,8 +50,8 @@ public class Utils {
         }
     }
 
-    public Double getToDebit(Double montant, int sourceAgenceId, int cibleAgenceId) {
-        Double frais = getFrais(sourceAgenceId, cibleAgenceId);
+    public double getToDebit(double montant, int sourceAgenceId, int cibleAgenceId) {
+        double frais = getFrais(sourceAgenceId, cibleAgenceId);
         return (montant * frais) / 100;
     }
 

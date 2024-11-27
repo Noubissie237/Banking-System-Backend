@@ -19,5 +19,5 @@ public class RechargeEventConsumer {
     @JsonProperty("numero")
     private String numero;
     @JsonProperty("montant")
-    private Double montant;
+    private double montant;
 }

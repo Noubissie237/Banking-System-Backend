@@ -33,7 +33,7 @@ public class AgenceController {
     }
     
     @GetMapping("/get-solde-agence/{id}")
-    public Double getSoldeAgence(@PathVariable int id) {
+    public double getSoldeAgence(@PathVariable int id) {
         return agenceService.getSolde(id);
     }
 

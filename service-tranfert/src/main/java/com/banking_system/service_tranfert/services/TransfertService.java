@@ -38,7 +38,7 @@ public class TransfertService {
             throw new IllegalArgumentException("Le compte cible avec le numéro " + event.getNumero_cible() + " n'existe pas.");
         }
 
-        Double frais = utils.getToDebit(event.getMontant(), sourceAccount.getAgenceId(), cibleAccount.getAgenceId());
+        double frais = utils.getToDebit(event.getMontant(), sourceAccount.getAgenceId(), cibleAccount.getAgenceId());
         if (sourceAccount.getSolde() >= (event.getMontant() + frais)) {
             TransfertEventProducer transEvent = new TransfertEventProducer();
             transEvent.setAgence(event.getAgence());

@@ -12,5 +12,5 @@ public class Agence {
     private String nom;
     private String login;
     private String password;
-    private Double capital;
+    private double capital;
 }

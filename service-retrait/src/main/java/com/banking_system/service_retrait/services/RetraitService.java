@@ -32,7 +32,7 @@ public class RetraitService {
             throw new IllegalArgumentException("Aucun compte enregistré avec ce numéro " + event.getNumero_cible());
         }
 
-        Double frais = utils.getToRemove(event.getMontant(), Accountcible.getAgenceId());
+        double frais = utils.getToRemove(event.getMontant(), Accountcible.getAgenceId());
 
         if (Accountcible.getSolde() >= (event.getMontant() + frais)) {
             RetraitEventProducer retraitEvent = new RetraitEventProducer();

@@ -98,7 +98,7 @@ public class AdminService {
         return eventAgent;
     }
 
-    public void chargeAccount(int idAgence, String number, Double montant) {
+    public void chargeAccount(int idAgence, String number, double montant) {
         RechargeEventProducer event = new RechargeEventProducer();
         event.setAgence(idAgence);
         event.setNumero(number);

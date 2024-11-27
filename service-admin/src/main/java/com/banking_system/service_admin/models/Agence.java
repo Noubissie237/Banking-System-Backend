@@ -20,10 +20,10 @@ public class Agence {
     private String nom;
     private String login;
     private String password;
-    private Double capital;
+    private double capital;
 
 
-    public Agence(String nom, String login, String password, Double capital) {
+    public Agence(String nom, String login, String password, double capital) {
         this.nom = nom;
         this.login = login;
         this.password = password;

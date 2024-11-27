@@ -12,8 +12,8 @@ import com.banking_system.service_retrait.events.Account;
 @Component
 public class Utils {
 
-    public static final Double FRAIS_RETRAIT_ORANGE = 1.5;
-    public static final Double FRAIS_RETRAIT_MTN = 2.0;
+    public static final double FRAIS_RETRAIT_ORANGE = 1.5;
+    public static final double FRAIS_RETRAIT_MTN = 2.0;
 
     private final RestTemplate restTemplate = new RestTemplate();
 
@@ -32,7 +32,7 @@ public class Utils {
             throw new IOException("Erreur de connexion au service distant", e);
         }
     }
-    public Double getFraisRetrait(int AgenceId){
+    public double getFraisRetrait(int AgenceId){
         if (AgenceId == 1 ){
             return FRAIS_RETRAIT_MTN;
         } else if (AgenceId == 2){
@@ -43,8 +43,8 @@ public class Utils {
 
 
     }
-    public Double getToRemove(Double montant,int AgenceId) {
-        Double frais = getFraisRetrait(AgenceId);
+    public double getToRemove(double montant,int AgenceId) {
+        double frais = getFraisRetrait(AgenceId);
         return (montant * frais) / 100;
     }
 

@@ -20,7 +20,7 @@ public class AgenceService {
         return agenceRepository.save(agence);
     }
 
-    public void incrementCapital(int idAgence, Double montant) {
+    public void incrementCapital(int idAgence, double montant) {
         Agence agence;
         agence = agenceRepository.findById(idAgence)
                 .orElseThrow(() -> new IllegalArgumentException("Agence non trouvée !"));
@@ -34,7 +34,7 @@ public class AgenceService {
         agenceRepository.save(agence);
     }
 
-    public void decrementCapital(int idAgence, Double montant) {
+    public void decrementCapital(int idAgence, double montant) {
         Agence agence;
         agence = agenceRepository.findById(idAgence)
                 .orElseThrow(() -> new IllegalArgumentException("Agence non trouvée !"));

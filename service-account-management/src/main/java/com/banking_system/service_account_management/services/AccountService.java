@@ -57,7 +57,7 @@ public class AccountService {
         }
     }
 
-    public void incrementSolde(Account account, Double montant) {
+    public void incrementSolde(Account account, double montant) {
         if (account == null)
             throw new IllegalArgumentException("Account ou montant ne peut pas être null");
 
@@ -69,7 +69,7 @@ public class AccountService {
         account.setSolde(newSolde);
     }
 
-    public void decrementSolde(Account account, Double montant) {
+    public void decrementSolde(Account account, double montant) {
         if (account == null)
             throw new IllegalArgumentException("Account ou montant ne peut pas être null");
 
@@ -131,7 +131,7 @@ public class AccountService {
     public void makeRetrait(RetraitEventConsumer retrait) {
         Account cible = findAccountByNumber(retrait.getNumero_cible());
         Account agent = findAccountByMatricule(retrait.getMatricule_agent());
-        Double agentGain = (retrait.getFrais() * 0.25);
+        double agentGain = (retrait.getFrais() * 0.25);
         incrementSolde(agent, (retrait.getMontant() + agentGain));
         decrementSolde(cible, (retrait.getMontant() + retrait.getFrais()));
 
