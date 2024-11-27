@@ -1,5 +1,7 @@
 package com.banking_system.service_account_management.services;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,14 +59,26 @@ public class AccountService {
 
     public void incrementSolde(Account account, Double montant) {
         if (account == null)
-            return;
-        account.setSolde(account.getSolde() + montant);
+            throw new IllegalArgumentException("Account ou montant ne peut pas être null");
+
+        double newSolde = BigDecimal.valueOf(account.getSolde())
+                .add(BigDecimal.valueOf(montant))
+                .setScale(2, RoundingMode.HALF_UP)
+                .doubleValue();
+
+        account.setSolde(newSolde);
     }
 
     public void decrementSolde(Account account, Double montant) {
         if (account == null)
-            return;
-        account.setSolde(account.getSolde() - montant);
+            throw new IllegalArgumentException("Account ou montant ne peut pas être null");
+
+        double newSolde = BigDecimal.valueOf(account.getSolde())
+                .subtract(BigDecimal.valueOf(montant))
+                .setScale(2, RoundingMode.HALF_UP)
+                .doubleValue();
+
+        account.setSolde(newSolde);
     }
 
     public Account findAccountByNumber(String numero) {
@@ -106,7 +120,7 @@ public class AccountService {
         Account cible = findAccountByNumber(transfert.getNumero_cible());
         Account source = findAccountByNumber(transfert.getNumero_source());
         incrementSolde(cible, transfert.getMontant());
-        decrementSolde(source, transfert.getMontant() + transfert.getFrais());
+        decrementSolde(source, (transfert.getMontant() + transfert.getFrais()));
 
         rabbitTemplate.convertAndSend("transactionExchange", "transfert.done", transfert);
         rabbitTemplate.convertAndSend("transactionExchange", "transfert.done.agence", transfert);
@@ -118,8 +132,8 @@ public class AccountService {
         Account cible = findAccountByNumber(retrait.getNumero_cible());
         Account agent = findAccountByMatricule(retrait.getMatricule_agent());
         Double agentGain = (retrait.getFrais() * 0.25);
-        incrementSolde(agent, retrait.getMontant() + agentGain);
-        decrementSolde(cible, retrait.getMontant() + retrait.getFrais());
+        incrementSolde(agent, (retrait.getMontant() + agentGain));
+        decrementSolde(cible, (retrait.getMontant() + retrait.getFrais()));
 
         rabbitTemplate.convertAndSend("transactionExchange", "retrait.done", retrait);
         rabbitTemplate.convertAndSend("transactionExchange", "retrait.done.agence", retrait);

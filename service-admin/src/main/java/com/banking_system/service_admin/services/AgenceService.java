@@ -1,5 +1,7 @@
 package com.banking_system.service_admin.services;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,7 @@ import com.banking_system.service_admin.repositories.AgenceRepository;
 
 @Service
 public class AgenceService {
-    
+
     @Autowired
     AgenceRepository agenceRepository;
 
@@ -20,15 +22,29 @@ public class AgenceService {
 
     public void incrementCapital(int idAgence, Double montant) {
         Agence agence;
-        agence = agenceRepository.findById(idAgence).orElseThrow(() -> new IllegalArgumentException("Agence non trouvée !"));
-        agence.setCapital((agence.getCapital() + montant));
+        agence = agenceRepository.findById(idAgence)
+                .orElseThrow(() -> new IllegalArgumentException("Agence non trouvée !"));
+
+        double newCapital = BigDecimal.valueOf(agence.getCapital())
+                .add(BigDecimal.valueOf(montant))
+                .setScale(2, RoundingMode.HALF_UP)
+                .doubleValue();
+
+        agence.setCapital(newCapital);
         agenceRepository.save(agence);
     }
 
     public void decrementCapital(int idAgence, Double montant) {
         Agence agence;
-        agence = agenceRepository.findById(idAgence).orElseThrow(() -> new IllegalArgumentException("Agence non trouvée !"));
-        agence.setCapital((agence.getCapital() - montant));
+        agence = agenceRepository.findById(idAgence)
+                .orElseThrow(() -> new IllegalArgumentException("Agence non trouvée !"));
+
+        double newCapital = BigDecimal.valueOf(agence.getCapital())
+                .subtract(BigDecimal.valueOf(montant))
+                .setScale(2, RoundingMode.HALF_UP)
+                .doubleValue();
+
+        agence.setCapital(newCapital);
         agenceRepository.save(agence);
     }
 
@@ -37,9 +53,9 @@ public class AgenceService {
     }
 
     public double getSolde(int idAgence) {
-        Agence agence = agenceRepository.findById(idAgence).orElseThrow(() -> new IllegalArgumentException("Agence non trouvée !"));
+        Agence agence = agenceRepository.findById(idAgence)
+                .orElseThrow(() -> new IllegalArgumentException("Agence non trouvée !"));
         return agence.getCapital();
     }
-
 
 }
