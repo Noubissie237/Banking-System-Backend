@@ -19,27 +19,27 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.MY_DOCKER_HUB_TOKEN }}
 
-      # # Service proxy
-      # - name: Build Docker image for service-proxy
-      #   run: docker build -t noubissie237/service-proxy:latest ./service-proxy/.
+      # Service proxy
+      - name: Build Docker image for service-proxy
+        run: docker build -t noubissie237/service-proxy:latest ./service-proxy/.
 
-      # - name: Push Docker image to Docker Hub
-      #   run: docker push noubissie237/service-proxy:latest
+      - name: Push Docker image to Docker Hub
+        run: docker push noubissie237/service-proxy:latest
 
         
-      # # Service config
-      # - name: Build Docker image for service-config
-      #   run: docker build -t noubissie237/service-config:latest ./service-config/.
+      # Service config
+      - name: Build Docker image for service-config
+        run: docker build -t noubissie237/service-config:latest ./service-config/.
 
-      # - name: Push Docker image to Docker Hub
-      #   run: docker push noubissie237/service-config:latest
+      - name: Push Docker image to Docker Hub
+        run: docker push noubissie237/service-config:latest
 
-      # # Service registry
-      # - name: Build Docker image for service-registry
-      #   run: docker build -t noubissie237/service-registry:latest ./service-registry/.
+      # Service registry
+      - name: Build Docker image for service-registry
+        run: docker build -t noubissie237/service-registry:latest ./service-registry/.
 
-      # - name: Push Docker image to Docker Hub
-      #   run: docker push noubissie237/service-registry:latest
+      - name: Push Docker image to Docker Hub
+        run: docker push noubissie237/service-registry:latest
 
 
       # Service users
