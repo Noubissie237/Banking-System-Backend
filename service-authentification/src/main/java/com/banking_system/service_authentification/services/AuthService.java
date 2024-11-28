@@ -103,13 +103,13 @@ public ResponseEntity<?> loginAdmin(String login, String password) {
     }
 
     private Person[] getUsers() {
-        String allUsers = "http://service-proxy:8079/SERVICE-USERS/api/get-persons";
+        String allUsers = "http://localhost:8079/SERVICE-USERS/api/get-persons";
         ResponseEntity<Person[]> response = restTemplate.getForEntity(allUsers, Person[].class);
         return response.getBody();
     }
 
     private Agence[] getAgence() {
-        String allAgences = "http://service-proxy:8079/SERVICE-ADMIN/api/agence/get-agences";
+        String allAgences = "http://localhost:8079/SERVICE-ADMIN/api/agence/get-agences";
         ResponseEntity<Agence[]> response = restTemplate.getForEntity(allAgences, Agence[].class);
         return response.getBody();
     }

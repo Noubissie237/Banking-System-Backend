@@ -16,7 +16,7 @@ public class Util {
     private final RestTemplate restTemplate = new RestTemplate();
 
     public Account getEmail(String number) throws IOException {
-        String url = "http://service-proxy:8079/SERVICE-USERS/api/get-user/" + number;
+        String url = "http://localhost:8079/SERVICE-USERS/api/get-user/" + number;
 
         try {
             Account account = restTemplate.getForObject(url, Account.class);
@@ -32,7 +32,7 @@ public class Util {
     }
 
     public Account getEmailAgent(String number) throws IOException {
-        String url = "http://service-proxy:8079/SERVICE-USERS/api/agent/get/" + number;
+        String url = "http://localhost:8079/SERVICE-USERS/api/agent/get/" + number;
 
         try {
             Account account = restTemplate.getForObject(url, Account.class);
@@ -48,7 +48,7 @@ public class Util {
     }
 
     public Account getUserEmailByNum(String number) throws IOException {
-        String url = "http://service-proxy:8079/SERVICE-USERS/api/get-user/" + number;
+        String url = "http://localhost:8079/SERVICE-USERS/api/get-user/" + number;
 
         try {
             Account account = restTemplate.getForObject(url, Account.class);
@@ -64,7 +64,7 @@ public class Util {
     }
 
     public AccountAgent getAgentEmailByNum(String number) throws IOException {
-        String url = "http://service-proxy:8079/SERVICE-USERS/api/get-user/" + number;
+        String url = "http://localhost:8079/SERVICE-USERS/api/get-user/" + number;
 
         try {
             AccountAgent account = restTemplate.getForObject(url, AccountAgent.class);
@@ -80,7 +80,7 @@ public class Util {
     }
 
     public AccountAgent getAgentEmailByMat(String matricule) throws IOException {
-        String url = "http://service-proxy:8079/SERVICE-USERS/api/get-agent/" + matricule;
+        String url = "http://localhost:8079/SERVICE-USERS/api/get-agent/" + matricule;
 
         try {
             AccountAgent account = restTemplate.getForObject(url, AccountAgent.class);
@@ -96,7 +96,7 @@ public class Util {
     }
 
     public Solde getSoldeAgent(String number) throws IOException {
-            String url = "http://service-proxy:8079/SERVICE-ACCOUNT-MANAGEMENT/api/account/get/" + number;
+            String url = "http://localhost:8079/SERVICE-ACCOUNT-MANAGEMENT/api/account/get/" + number;
 
         try {
             Solde account = restTemplate.getForObject(url, Solde.class);
@@ -113,7 +113,7 @@ public class Util {
     }
 
     public Solde getsoldeClient(String number) throws IOException {
-        String url = "http://service-proxy:8079/SERVICE-ACCOUNT-MANAGEMENT/api/account/get/" + number;
+        String url = "http://localhost:8079/SERVICE-ACCOUNT-MANAGEMENT/api/account/get/" + number;
 
         try {
             Solde account = restTemplate.getForObject(url, Solde.class);

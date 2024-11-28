@@ -75,7 +75,7 @@ public class ClientService {
     }
 
     public String login(String phone, String password) {
-        String url = "http://service-proxy:8079/SERVICE-AUTHENTIFICATION/auth/login";
+        String url = "http://localhost:8079/SERVICE-AUTHENTIFICATION/auth/login";
         LoginRequest loginRequest = new LoginRequest();
 
         loginRequest.setPhone(phone);

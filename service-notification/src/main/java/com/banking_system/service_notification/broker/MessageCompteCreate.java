@@ -31,7 +31,7 @@ public class MessageCompteCreate {
 
     @RabbitListener(queues = "clientAccountQueueMessage")
     public void accountCreatedClient(ClientAccountCreated event) {
-        String link = "http://service-proxy:8079/SERVICE-USERS/api/get-user/" + event.getNumeroClient();
+        String link = "http://localhost:8079/SERVICE-USERS/api/get-user/" + event.getNumeroClient();
 
         try {
             User user = restTemplate.getForObject(link, User.class);
