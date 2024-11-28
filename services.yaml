@@ -1,4 +1,3 @@
-# service-config
 apiVersion: v1
 kind: Service
 metadata:
@@ -6,13 +5,13 @@ metadata:
   namespace: banking-system-app
 spec:
   selector:
-    app: config-registry-proxy
+    app: service-config
   type: LoadBalancer
   ports:
-    - port: 2370
+    - protocol: TCP
+      port: 2370
       targetPort: 2370
 ---
-# service-registry
 apiVersion: v1
 kind: Service
 metadata:
@@ -20,13 +19,13 @@ metadata:
   namespace: banking-system-app
 spec:
   selector:
-    app: config-registry-proxy
+    app: service-registry
   type: LoadBalancer
   ports:
-    - port: 8761
+    - protocol: TCP
+      port: 8761
       targetPort: 8761
 ---
-# service-proxy
 apiVersion: v1
 kind: Service
 metadata:
@@ -34,13 +33,13 @@ metadata:
   namespace: banking-system-app
 spec:
   selector:
-    app: config-registry-proxy
+    app: service-proxy
   type: LoadBalancer
   ports:
-    - port: 8079
+    - protocol: TCP
+      port: 8079
       targetPort: 8079
 ---
-# service-mysql
 apiVersion: v1
 kind: Service
 metadata:
@@ -55,7 +54,6 @@ spec:
       targetPort: 3306
   type: LoadBalancer
 ---
-# service-rabbitmq
 apiVersion: v1
 kind: Service
 metadata:
@@ -65,18 +63,16 @@ spec:
   selector:
     app: rabbitmq
   ports:
-    # - name: amqp
-    #   protocol: TCP
-    #   port: 5672
-    #   targetPort: 5672
+    - name: amqp
+      protocol: TCP
+      port: 5672
+      targetPort: 5672
     - name: management
       protocol: TCP
       port: 15672
       targetPort: 15672
-      nodePort: 30000
   type: NodePort
 ---
-# service-eventstore
 apiVersion: v1
 kind: Service
 metadata:
@@ -91,7 +87,6 @@ spec:
       targetPort: 2113
   type: LoadBalancer
 ---
-# service-authentification
 apiVersion: v1
 kind: Service
 metadata:
@@ -106,7 +101,6 @@ spec:
       port: 8081
       targetPort: 8081
 ---
-# service-users
 apiVersion: v1
 kind: Service
 metadata:
@@ -121,7 +115,6 @@ spec:
       port: 8082
       targetPort: 8082
 ---
-# service-admin
 apiVersion: v1
 kind: Service
 metadata:
@@ -136,7 +129,6 @@ spec:
       port: 8083
       targetPort: 8083
 ---
-# service-account-management
 apiVersion: v1
 kind: Service
 metadata:
@@ -151,7 +143,6 @@ spec:
       port: 8084
       targetPort: 8084
 ---
-# service-depot
 apiVersion: v1
 kind: Service
 metadata:
@@ -166,7 +157,6 @@ spec:
       port: 8085
       targetPort: 8085
 ---
-# service-retrait
 apiVersion: v1
 kind: Service
 metadata:
@@ -181,7 +171,6 @@ spec:
       port: 8086
       targetPort: 8086
 ---
-# service-tranfert
 apiVersion: v1
 kind: Service
 metadata:
@@ -196,7 +185,6 @@ spec:
       port: 8087
       targetPort: 8087
 ---
-# service-transactions
 apiVersion: v1
 kind: Service
 metadata:

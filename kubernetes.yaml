@@ -1,21 +1,17 @@
-# Pod, pour la première couche : config - registry - proxy
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: config-registry-proxy
+  name: service-config
   namespace: banking-system-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: config-registry-proxy
+      app: service-config
   template:
     metadata:
       labels:
-        app: config-registry-proxy
-        service-config: "true"
-        service-registry: "true"
-        service-proxy: "true"
+        app: service-config
     spec:
       containers:
         - name: service-config
@@ -33,7 +29,23 @@ spec:
               port: 2370
             initialDelaySeconds: 5
             periodSeconds: 10
-
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-registry
+  namespace: banking-system-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-registry
+  template:
+    metadata:
+      labels:
+        app: service-registry
+    spec:
+      containers:
         - name: service-registry
           image: noubissie237/service-registry:latest
           ports:
@@ -42,14 +54,30 @@ spec:
             - name: SPRING_APPLICATION_NAME
               value: "service-registry"
             - name: SPRING_CONFIG_IMPORT
-              value:  "configserver:http://service-config:2370"
+              value: "configserver:http://localhost:2370"
           readinessProbe:
             httpGet:
               path: /actuator/health
               port: 8761
             initialDelaySeconds: 5
             periodSeconds: 10
-
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-proxy
+  namespace: banking-system-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-proxy
+  template:
+    metadata:
+      labels:
+        app: service-proxy
+    spec:
+      containers:
         - name: service-proxy
           image: noubissie237/service-proxy:latest
           ports:
@@ -58,16 +86,14 @@ spec:
             - name: SPRING_APPLICATION_NAME
               value: "service-proxy"
             - name: SPRING_CONFIG_IMPORT
-              value:  "configserver:http://service-config:2370"
+              value: "configserver:http://localhost:2370"
           readinessProbe:
             httpGet:
               path: /actuator/health
               port: 8079
             initialDelaySeconds: 5
             periodSeconds: 10
-# ------------------------------- | DEPLOIEMENTS Pour les BD| -------------------------------#
 ---
-# mysql Deployment
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -106,7 +132,6 @@ spec:
           requests:
             storage: 10Gi
 ---
-# RabbitMQ Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -129,7 +154,6 @@ spec:
             - containerPort: 5672 
             - containerPort: 15672
 ---
-# EventStoreDB StatefulSet
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -181,9 +205,7 @@ spec:
         resources:
           requests:
             storage: 20Gi
-# ------------------------------- | DEPLOIEMENTS pour tous mes autres services | -------------------------------#
 ---
-# Déploiement pour Authentification
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -208,7 +230,7 @@ spec:
             - name: SPRING_APPLICATION_NAME
               value: "service-authentification"
             - name: SPRING_CONFIG_IMPORT
-              value: "configserver:http://service-config:2370"
+              value: "configserver:http://localhost:2370"
           readinessProbe:
             httpGet:
               path: /actuator/health
@@ -222,7 +244,6 @@ spec:
             initialDelaySeconds: 10
             periodSeconds: 20
 ---
-# Déploiement pour Users
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -247,7 +268,7 @@ spec:
             - name: SPRING_APPLICATION_NAME
               value: "service-users"
             - name: SPRING_CONFIG_IMPORT
-              value: "configserver:http://service-config:2370"
+              value: "configserver:http://localhost:2370"
           readinessProbe:
             httpGet:
               path: /actuator/health
@@ -261,7 +282,6 @@ spec:
             initialDelaySeconds: 10
             periodSeconds: 20
 ---
-# Déploiement pour Admin
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -286,7 +306,7 @@ spec:
             - name: SPRING_APPLICATION_NAME
               value: "service-admin"
             - name: SPRING_CONFIG_IMPORT
-              value: "configserver:http://service-config:2370"
+              value: "configserver:http://localhost:2370"
           readinessProbe:
             httpGet:
               path: /actuator/health
@@ -300,7 +320,6 @@ spec:
             initialDelaySeconds: 10
             periodSeconds: 20
 ---
-# Déploiement pour Account-management
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -325,7 +344,7 @@ spec:
             - name: SPRING_APPLICATION_NAME
               value: "service-account-management"
             - name: SPRING_CONFIG_IMPORT
-              value: "configserver:http://service-config:2370"
+              value: "configserver:http://localhost:2370"
           readinessProbe:
             httpGet:
               path: /actuator/health
@@ -339,7 +358,6 @@ spec:
             initialDelaySeconds: 10
             periodSeconds: 20
 ---
-# Deploiement pour le service depot
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -364,7 +382,7 @@ spec:
             - name: SPRING_APPLICATION_NAME
               value: "service-depot"
             - name: SPRING_CONFIG_IMPORT
-              value: "configserver:http://service-config:2370"
+              value: "configserver:http://localhost:2370"
           readinessProbe:
             httpGet:
               path: /actuator/health
@@ -378,7 +396,6 @@ spec:
             initialDelaySeconds: 10
             periodSeconds: 20
 ---
-# Deploiement pour le service des retraits
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -403,7 +420,7 @@ spec:
             - name: SPRING_APPLICATION_NAME
               value: "service-retrait"
             - name: SPRING_CONFIG_IMPORT
-              value: "configserver:http://service-config:2370"
+              value: "configserver:http://localhost:2370"
           readinessProbe:
             httpGet:
               path: /actuator/health
@@ -417,7 +434,6 @@ spec:
             initialDelaySeconds: 10
             periodSeconds: 20
 ---
-# Deploiement pour le service des transferts
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -442,7 +458,7 @@ spec:
             - name: SPRING_APPLICATION_NAME
               value: "service-tranfert"
             - name: SPRING_CONFIG_IMPORT
-              value: "configserver:http://service-config:2370"
+              value: "configserver:http://localhost:2370"
           readinessProbe:
             httpGet:
               path: /actuator/health
@@ -456,7 +472,6 @@ spec:
             initialDelaySeconds: 10
             periodSeconds: 20
 ---
-# Deploiement pour le servcie des transactions
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -481,7 +496,7 @@ spec:
             - name: SPRING_APPLICATION_NAME
               value: "service-transactions"
             - name: SPRING_CONFIG_IMPORT
-              value: "configserver:http://service-config:2370"
+              value: "configserver:http://localhost:2370"
           readinessProbe:
             httpGet:
               path: /actuator/health
