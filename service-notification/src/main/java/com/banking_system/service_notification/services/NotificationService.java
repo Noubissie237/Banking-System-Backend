@@ -27,8 +27,8 @@ public class NotificationService {
     private EmailSender mailservice;
 
     public void askRetrait(RetraitProducer retrait) throws IOException, MessagingException {
-        String agentUrl = "https://proxy.quick-send.site/SERVICE-USERS/api/get-agent/" + retrait.getMatricule_agent();
-        String clientUrl = "https://proxy.quick-send.site/SERVICE-USERS/api/client/get/" + retrait.getNumero_cible();
+        String agentUrl = "http://service-proxy:8079/SERVICE-USERS/api/get-agent/" + retrait.getMatricule_agent();
+        String clientUrl = "http://service-proxy:8079/SERVICE-USERS/api/client/get/" + retrait.getNumero_cible();
 
         try {
             AccountAgent agent = restTemplate.getForObject(agentUrl, AccountAgent.class);
