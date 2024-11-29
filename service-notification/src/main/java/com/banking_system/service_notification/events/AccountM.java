@@ -9,11 +9,13 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Setter
 @Getter
 @NoArgsConstructor
+@ToString
 public class AccountM {
     
     @Id

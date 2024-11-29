@@ -1,5 +1,6 @@
 package com.banking_system.service_notification.models;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -10,6 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@Entity
 public class Notification {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
