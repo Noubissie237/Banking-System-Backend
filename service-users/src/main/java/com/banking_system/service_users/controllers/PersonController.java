@@ -34,6 +34,11 @@ public class PersonController {
         return userService.getAllUsers();
     }
 
+    @GetMapping("/get-persons/{idAgence}")
+    public List<Person> getPersonByAgence(@PathVariable("idAgence") int idAgence) {
+        return userService.getPersonByAgence(idAgence);
+    }
+
     @GetMapping("/delete-user/{id}")
     public List<Person> deleteUserController(@PathVariable("id") int id){
         return userService.deleteUser(id);
