@@ -42,8 +42,8 @@ public class NotificationController {
     }
 
     @GetMapping("/get-notification/{number}")
-    public List<Notification> getNotificationsUser(@PathVariable String number) {
+    public List<Notification> getNotificationsUser(@PathVariable String number) throws IOException {
         return notificationService.getAllNotificationsUser(number);
-    }    
+    }
     
 }

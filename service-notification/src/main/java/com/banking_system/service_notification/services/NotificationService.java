@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.banking_system.service_notification.events.Account;
 import com.banking_system.service_notification.events.AccountAgent;
+import com.banking_system.service_notification.events.Person;
 import com.banking_system.service_notification.events.RetraitProducer;
 import com.banking_system.service_notification.models.Notification;
 import com.banking_system.service_notification.repositories.Repository;
@@ -53,7 +54,8 @@ public class NotificationService {
                         + agent.getPrenom().toUpperCase()
                         + " MATRICULE " + agent.getMatricule() + "<br><br>"
                         + " Veuillez fournir le code à usage unique ci dessous à l'agent pour confirmer la transaction<br><br>"
-                        + "<a href='#' style='padding:10px 20px; background-color:green; color:white; text-decoration:none; border-radius:5px;'>"+retrait.getPass()+"</a> ";
+                        + "<a href='#' style='padding:10px 20px; background-color:green; color:white; text-decoration:none; border-radius:5px;'>"
+                        + retrait.getPass() + "</a> ";
 
                 mailservice.sendMail(client.getEmail(), "Demande de retrait", message);
             }
@@ -73,7 +75,23 @@ public class NotificationService {
         return notificationRepository.findAll();
     }
 
-    public List<Notification> getAllNotificationsUser(String number) {
-        return notificationRepository.findByDestinataire(number);
+    public List<Notification> getAllNotificationsUser(String number) throws IOException {
+        List<Notification> list = notificationRepository.findByDestinataire(number);
+        List<Notification> allUser = notificationRepository.findByDestinataire("tous les utilisateurs");
+        List<Notification> allClient = notificationRepository.findByDestinataire("tous les clients");
+        List<Notification> allAgent = notificationRepository.findByDestinataire("tous les agents");
+
+        list.addAll(allUser);
+
+        Person person = util.getPerson(number);
+
+        if (person.getRole().equals("CLIENT")) {
+            list.addAll(allClient);
+        } else {
+            list.addAll(allAgent);
+        }
+
+        return list;
     }
+
 }
