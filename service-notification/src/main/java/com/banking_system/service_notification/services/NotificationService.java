@@ -10,6 +10,8 @@ import org.springframework.web.client.RestTemplate;
 import com.banking_system.service_notification.events.Account;
 import com.banking_system.service_notification.events.AccountAgent;
 import com.banking_system.service_notification.events.RetraitProducer;
+import com.banking_system.service_notification.models.Notification;
+import com.banking_system.service_notification.repositories.Repository;
 import com.banking_system.service_notification.util.Util;
 
 import jakarta.mail.MessagingException;
@@ -25,6 +27,9 @@ public class NotificationService {
 
     @Autowired
     private EmailSender mailservice;
+
+    @Autowired
+    Repository notificationRepository;
 
     public void askRetrait(RetraitProducer retrait) throws IOException, MessagingException {
         String agentUrl = "http://localhost:8079/SERVICE-USERS/api/get-agent/" + retrait.getMatricule_agent();
@@ -57,4 +62,7 @@ public class NotificationService {
         }
     }
 
+    public void sendNotification(Notification notif) {
+        notificationRepository.save(notif);
+    }
 }
