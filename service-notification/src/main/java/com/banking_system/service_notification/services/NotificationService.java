@@ -72,4 +72,8 @@ public class NotificationService {
     public List<Notification> getAllNotifications() {
         return notificationRepository.findAll();
     }
+
+    public List<Notification> getAllNotificationsUser(String number) {
+        return notificationRepository.findByDestinataire(number);
+    }
 }

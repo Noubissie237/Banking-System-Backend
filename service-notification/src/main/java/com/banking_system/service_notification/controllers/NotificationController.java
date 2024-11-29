@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 
 @RestController
@@ -39,6 +40,10 @@ public class NotificationController {
     public List<Notification> getNotifications() {
         return notificationService.getAllNotifications();
     }
-    
+
+    @GetMapping("/get-notification/{number}")
+    public List<Notification> getNotificationsUser(@PathVariable String number) {
+        return notificationService.getAllNotificationsUser(number);
+    }    
     
 }
