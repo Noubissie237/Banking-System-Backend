@@ -1,6 +1,8 @@
 package com.banking_system.service_notification.services;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,6 +65,11 @@ public class NotificationService {
     }
 
     public void sendNotification(Notification notif) {
+        notif.setDate(LocalDateTime.now());
         notificationRepository.save(notif);
+    }
+
+    public List<Notification> getAllNotifications() {
+        return notificationRepository.findAll();
     }
 }

@@ -10,10 +10,12 @@ import com.banking_system.service_notification.services.NotificationService;
 import jakarta.mail.MessagingException;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
 
 
 @RestController
@@ -31,6 +33,11 @@ public class NotificationController {
     @PostMapping("/send-notification")
     public void postMethodName(@RequestBody Notification entity) {
         notificationService.sendNotification(entity);
+    }
+    
+    @GetMapping("/get-notification")
+    public List<Notification> getNotifications() {
+        return notificationService.getAllNotifications();
     }
     
     

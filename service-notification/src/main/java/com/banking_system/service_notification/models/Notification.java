@@ -1,5 +1,7 @@
 package com.banking_system.service_notification.models;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,4 +22,5 @@ public class Notification {
     private String message;
     private int idAgence;
     private String destinataire;
+    private LocalDateTime date;
 }
