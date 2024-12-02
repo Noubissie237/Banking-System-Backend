@@ -13,7 +13,7 @@ public class RechargeConsumer {
     @Autowired
     private AccountService accountService;
 
-    @RabbitListener(queues = "rechargeByAgence")
+    @RabbitListener(queues = "rechargeByAgenceSendQueue")
     public void receiveRechargeEvent(RechargeEventConsumer event) {
         accountService.makeRecharge(event);
     }

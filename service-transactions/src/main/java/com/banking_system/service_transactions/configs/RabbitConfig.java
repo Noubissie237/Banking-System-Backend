@@ -50,7 +50,7 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Queue rechargeByAgenceDone() {
-        return new Queue("rechargeByAgenceDone", true, false, false);
+    public Queue rechargeByAgenceDoneQueue() {
+        return new Queue("rechargeByAgenceDoneQueue", true, false, false);
     }
 }

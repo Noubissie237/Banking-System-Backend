@@ -122,14 +122,14 @@ public class RabbitConfig {
     
 
     @Bean
-    public Queue rechargeByAgence() {
-        return new Queue("rechargeByAgence", true, false, false);
+    public Queue rechargeByAgenceSendQueue() {
+        return new Queue("rechargeByAgenceSendQueue", true, false, false);
     }
 
 
     @Bean
-    public Queue rechargeByAgenceDone() {
-        return new Queue("rechargeByAgenceDone", true, false, false);
+    public Queue rechargeByAgenceDoneQueue() {
+        return new Queue("rechargeByAgenceDoneQueue", true, false, false);
     }
 
     @Bean
@@ -149,8 +149,8 @@ public class RabbitConfig {
     }
   
     @Bean
-    public Binding binding3(TopicExchange transactionExchange, Queue rechargeByAgenceDone) {
-        return BindingBuilder.bind(rechargeByAgenceDone).to(transactionExchange).with("recharge.done");
+    public Binding binding3(TopicExchange transactionExchange, Queue rechargeByAgenceDoneQueue) {
+        return BindingBuilder.bind(rechargeByAgenceDoneQueue).to(transactionExchange).with("recharge.done");
     }
 
     @Bean
