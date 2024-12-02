@@ -16,7 +16,6 @@ public class AccountService {
     public void createAccount() {
         try {
             String message = "Compte créé avec succès ! Vous pouvez à présent profiter de nos services 😀 ";
-            rabbitTemplate.convertAndSend("clientExchange", "client-account-create", message);
         } catch (Exception e) {
             throw new RuntimeException("Account Creation Error : ",e);
         }
