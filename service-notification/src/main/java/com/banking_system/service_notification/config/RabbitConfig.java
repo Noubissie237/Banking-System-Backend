@@ -51,10 +51,6 @@ public class RabbitConfig {
         return new Queue("agentAccountCreateForMessageQueue", true, false, false);
     }
 
-    @Bean
-    public Queue retraitMoneyQueue() {
-        return new Queue("retraitMoneyQueue", true, false, false);
-    }
 
     @Bean
     public Queue retraitAgenceQueue(){
