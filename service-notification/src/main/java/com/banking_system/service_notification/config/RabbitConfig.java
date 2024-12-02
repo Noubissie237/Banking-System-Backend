@@ -1,7 +1,5 @@
 package com.banking_system.service_notification.config;
 
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
@@ -78,16 +76,4 @@ public class RabbitConfig {
         return new Queue("transfertDoneForMessageQueue", true, false, false);
     }
 
-    @Bean
-    public Queue comptecreateagent(){
-        return new Queue("comptecreateagent", true, false, false);
-    }
-
- 
-    @Bean
-    public Binding binding6(TopicExchange clientExchange, Queue comptecreateagent){
-        return  BindingBuilder.bind(comptecreateagent).to(clientExchange).with("agent-account-create");
-    }
-
-   
 }
