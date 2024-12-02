@@ -61,11 +61,6 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Queue transfertMoneyQueue() {
-        return new Queue("transfertMoneyQueue", true, false, false);
-    }
-
-    @Bean
     public Binding binding1(TopicExchange clientExchange, Queue clientCreateQueue) {
         return BindingBuilder.bind(clientCreateQueue).to(clientExchange).with("client.create");
     }
@@ -73,11 +68,6 @@ public class RabbitConfig {
     @Bean
     public Binding binding2(TopicExchange clientExchange, Queue agentCreateAddMatriculeQueue) {
         return BindingBuilder.bind(agentCreateAddMatriculeQueue).to(clientExchange).with("agent.create");
-    }
-
-    @Bean
-    public Binding binding3(TopicExchange transactionExchange, Queue transfertMoneyQueue) {
-        return BindingBuilder.bind(transfertMoneyQueue).to(transactionExchange).with("start-transfert");
     }
 
 }
