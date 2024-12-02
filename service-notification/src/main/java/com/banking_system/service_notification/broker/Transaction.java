@@ -77,7 +77,7 @@ public class Transaction {
         }
     }
 
-    @RabbitListener(queues = "retraitm")
+    @RabbitListener(queues = "retraitDoneForMessageQueue")
     public void retrait(RetraitEventProducer retrait) {
         retraitAgent(retrait);
         retraitClient(retrait);

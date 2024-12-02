@@ -78,8 +78,8 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Queue retraitm() {
-        return new Queue("retraitm", true, false, false);
+    public Queue retraitDoneForMessageQueue() {
+        return new Queue("retraitDoneForMessageQueue", true, false, false);
     }
     
     @Bean

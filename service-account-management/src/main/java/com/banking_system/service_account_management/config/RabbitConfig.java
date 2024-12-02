@@ -114,8 +114,8 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Queue retraitm() {
-        return new Queue("retraitm", true, false, false);
+    public Queue retraitDoneForMessageQueue() {
+        return new Queue("retraitDoneForMessageQueue", true, false, false);
     }
 
     /* ------------------------------------- */
@@ -185,8 +185,8 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Binding binding11(TopicExchange transactionExchange, Queue retraitm) {
-        return BindingBuilder.bind(retraitm).to(transactionExchange).with("retrait.done.message");
+    public Binding binding11(TopicExchange transactionExchange, Queue retraitDoneForMessageQueue) {
+        return BindingBuilder.bind(retraitDoneForMessageQueue).to(transactionExchange).with("retrait.done.message");
     }
 
     @Bean
