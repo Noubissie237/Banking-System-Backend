@@ -43,10 +43,6 @@ public class RabbitConfig {
         return new Queue("acceptDemandeQueue", true, false,false);
     }
 
-    @Bean
-    public Queue clientAccountCreateQueue() {
-        return new Queue("clientAccountCreateQueue", true, false, false);
-    }
 
     @Bean
     public Queue agentAccountQueue() {
@@ -141,10 +137,6 @@ public class RabbitConfig {
         return new Queue("clientAccountQueueMessage", true, false, false);
     }
 
-    @Bean
-    public Binding binding(TopicExchange clientExchange, Queue clientAccountCreateQueue) {
-        return BindingBuilder.bind(clientAccountCreateQueue).to(clientExchange).with("client-account.create");
-    }
 
     @Bean
     public Binding binding1(TopicExchange clientExchange, Queue clientAccountQueueMessage) {

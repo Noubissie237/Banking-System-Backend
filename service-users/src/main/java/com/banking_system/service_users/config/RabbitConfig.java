@@ -44,11 +44,6 @@ public class RabbitConfig {
         return new Queue("clientCreateQueue", true, false, false);
     }
 
-    @Bean
-    public Queue clientAccountCreateQueue() {
-        return new Queue("clientAccountCreateQueue", true, false, false);
-    }
-
 
     @Bean
     public Queue agentCreateNoMatriculeQueue() {
