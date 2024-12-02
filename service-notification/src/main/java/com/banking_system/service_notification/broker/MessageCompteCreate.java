@@ -89,7 +89,7 @@ public class MessageCompteCreate {
         }
     }
 
-    @RabbitListener(queues = "agentAccountCreateQueue")
+    @RabbitListener(queues = "agentAccountCreateForMessageQueue")
     public void accountCreatedAgent(AgentEvent event) throws IOException {
 
         Account sourceAccount;
