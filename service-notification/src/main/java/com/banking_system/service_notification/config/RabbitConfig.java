@@ -68,8 +68,8 @@ public class RabbitConfig {
 
 
     @Bean
-    public Queue rechargeByAgenceo() {
-        return new Queue("rechargeByAgenceo", true, false, false);
+    public Queue rechargeDoneForMessageQueue() {
+        return new Queue("rechargeDoneForMessageQueue", true, false, false);
     }
 
     @Bean

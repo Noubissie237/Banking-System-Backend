@@ -177,7 +177,7 @@ public class Transaction {
         }
     }
 
-    @RabbitListener(queues = "rechargeByAgenceo")
+    @RabbitListener(queues = "rechargeDoneForMessageQueue")
     public void rechargeByAgence(RechargeEventConsumer rechargeEventConsumer) {
         Solde sourceAccount;
         Account mail;
