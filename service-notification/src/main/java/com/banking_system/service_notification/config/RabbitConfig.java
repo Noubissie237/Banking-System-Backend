@@ -80,10 +80,6 @@ public class RabbitConfig {
     
 
     @Bean
-    public Queue depotmessageQueue() {
-        return new Queue("depotmessageQueue", true, false, false);
-    }
-    @Bean
     public Queue retraitmessageQueue() {
         return new Queue("retraitmessageQueue", true, false, false);
     }
@@ -118,12 +114,6 @@ public class RabbitConfig {
         return  BindingBuilder.bind(comptecreateagent).to(clientExchange).with("agent-account-create");
     }
 
-
-    @Bean
-    public Binding binding5(TopicExchange transactionExchange, Queue depotmessageQueue) {
-        return BindingBuilder.bind(depotmessageQueue).to(transactionExchange).with("depotenvoyeurmessage");
-    }
-   
     @Bean
     public Binding binding7(TopicExchange transactionExchange, Queue retraitmessageQueue) {
         return BindingBuilder.bind(retraitmessageQueue).to(transactionExchange).with("retraitclientmessage");
