@@ -6,7 +6,7 @@ services:
       - "2370:2370"
     environment:
       - SPRING_APPLICATION_NAME=service-config
-      - SPRING_CLOUD_CONFIG_SERVER_GIT_URI=https://github.com/Noubissie237/banking-system-cloud-conf/tree/docker-compose
+      - SPRING_CLOUD_CONFIG_SERVER_GIT_URI=https://github.com/Noubissie237/cloud-conf-deployment
     networks:
       - banking-system-network
 
