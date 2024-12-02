@@ -42,8 +42,8 @@ public class RabbitConfig {
 
 
     @Bean
-    public Queue clientAccountQueueMessage() {
-        return new Queue("clientAccountQueueMessage", true, false, false);
+    public Queue clientAccountCreateForMessageQueue() {
+        return new Queue("clientAccountCreateForMessageQueue", true, false, false);
     }
 
     @Bean

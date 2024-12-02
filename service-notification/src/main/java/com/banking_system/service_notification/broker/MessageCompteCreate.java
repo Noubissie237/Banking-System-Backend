@@ -29,7 +29,7 @@ public class MessageCompteCreate {
     @Autowired
     private RestTemplate restTemplate;
 
-    @RabbitListener(queues = "clientAccountQueueMessage")
+    @RabbitListener(queues = "clientAccountCreateForMessageQueue")
     public void accountCreatedClient(ClientAccountCreated event) {
         String link = "https://proxy.quick-send.site/SERVICE-USERS/api/get-user/" + event.getNumeroClient();
 

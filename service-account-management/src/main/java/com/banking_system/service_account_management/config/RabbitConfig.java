@@ -133,14 +133,14 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Queue clientAccountQueueMessage() {
-        return new Queue("clientAccountQueueMessage", true, false, false);
+    public Queue clientAccountCreateForMessageQueue() {
+        return new Queue("clientAccountCreateForMessageQueue", true, false, false);
     }
 
 
     @Bean
-    public Binding binding1(TopicExchange clientExchange, Queue clientAccountQueueMessage) {
-        return BindingBuilder.bind(clientAccountQueueMessage).to(clientExchange).with("client-account.create.message");
+    public Binding binding1(TopicExchange clientExchange, Queue clientAccountCreateForMessageQueue) {
+        return BindingBuilder.bind(clientAccountCreateForMessageQueue).to(clientExchange).with("client-account.create.message");
     }
 
     @Bean
