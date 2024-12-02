@@ -18,7 +18,7 @@ public class AgentConsumer {
     @Autowired
     AgentRepository agentRepository;
     
-    @RabbitListener(queues = "agentQueue")
+    @RabbitListener(queues = "agentCreateNoMatriculeQueue")
     public void agentCreate(AgentEventConsumer event) {
         Agent agent = new Agent();
         agent.setNom(event.getNom());

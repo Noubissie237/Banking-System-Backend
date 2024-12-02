@@ -51,8 +51,8 @@ public class RabbitConfig {
 
 
     @Bean
-    public Queue agentQueue() {
-        return new Queue("agentQueue", true, false, false);
+    public Queue agentCreateNoMatriculeQueue() {
+        return new Queue("agentCreateNoMatriculeQueue", true, false, false);
     }
 
     @Bean

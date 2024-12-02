@@ -53,8 +53,8 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Queue agentQueue() {
-        return new Queue("agentQueue", true, false, false);
+    public Queue agentCreateNoMatriculeQueue() {
+        return new Queue("agentCreateNoMatriculeQueue", true, false, false);
     }
 
     @Bean
@@ -88,8 +88,8 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Binding binding3(TopicExchange clientExchange, Queue agentQueue) {
-        return BindingBuilder.bind(agentQueue).to(clientExchange).with("agent.demande");
+    public Binding binding3(TopicExchange clientExchange, Queue agentCreateNoMatriculeQueue) {
+        return BindingBuilder.bind(agentCreateNoMatriculeQueue).to(clientExchange).with("agent.demande");
     }
 
     @Bean
