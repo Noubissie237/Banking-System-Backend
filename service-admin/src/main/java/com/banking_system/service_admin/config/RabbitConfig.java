@@ -38,8 +38,8 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Queue clientQueue() {
-        return new Queue("clientQueue", true, false, false);
+    public Queue clientCreateQueue() {
+        return new Queue("clientCreateQueue", true, false, false);
     }
 
     @Bean

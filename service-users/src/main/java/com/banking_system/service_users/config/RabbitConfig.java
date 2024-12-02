@@ -40,8 +40,8 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Queue clientQueue(){
-        return new Queue("clientQueue", true, false, false);
+    public Queue clientCreateQueue(){
+        return new Queue("clientCreateQueue", true, false, false);
     }
 
     @Bean
@@ -66,8 +66,8 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Binding binding1(TopicExchange clientExchange, Queue clientQueue) {
-        return BindingBuilder.bind(clientQueue).to(clientExchange).with("client.create");
+    public Binding binding1(TopicExchange clientExchange, Queue clientCreateQueue) {
+        return BindingBuilder.bind(clientCreateQueue).to(clientExchange).with("client.create");
     }
 
     @Bean

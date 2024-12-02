@@ -18,7 +18,7 @@ public class ClientEventConsumer {
     @Autowired
     private AdminRepository adminRepo;
 
-    @RabbitListener(queues = "clientQueue")
+    @RabbitListener(queues = "clientCreateQueue")
     public void receiveClientEvent(ClientEventConsumerJson event) {
         Demande demande = new Demande();
         demande.setTitre("Demande d'ouverture de compte");
