@@ -230,7 +230,7 @@ spec:
             - name: SPRING_APPLICATION_NAME
               value: "service-authentification"
             - name: SPRING_CONFIG_IMPORT
-              value: "configserver:http://localhost:2370"
+              value: "configserver:https://config.quick-send.site"
           readinessProbe:
             httpGet:
               path: /actuator/health
@@ -268,7 +268,7 @@ spec:
             - name: SPRING_APPLICATION_NAME
               value: "service-users"
             - name: SPRING_CONFIG_IMPORT
-              value: "configserver:http://localhost:2370"
+              value: "configserver:https://config.quick-send.site"
           readinessProbe:
             httpGet:
               path: /actuator/health
@@ -306,7 +306,7 @@ spec:
             - name: SPRING_APPLICATION_NAME
               value: "service-admin"
             - name: SPRING_CONFIG_IMPORT
-              value: "configserver:http://localhost:2370"
+              value: "configserver:https://config.quick-send.site"
           readinessProbe:
             httpGet:
               path: /actuator/health
@@ -344,7 +344,7 @@ spec:
             - name: SPRING_APPLICATION_NAME
               value: "service-account-management"
             - name: SPRING_CONFIG_IMPORT
-              value: "configserver:http://localhost:2370"
+              value: "configserver:https://config.quick-send.site"
           readinessProbe:
             httpGet:
               path: /actuator/health
@@ -382,7 +382,7 @@ spec:
             - name: SPRING_APPLICATION_NAME
               value: "service-depot"
             - name: SPRING_CONFIG_IMPORT
-              value: "configserver:http://localhost:2370"
+              value: "configserver:https://config.quick-send.site"
           readinessProbe:
             httpGet:
               path: /actuator/health
@@ -420,7 +420,7 @@ spec:
             - name: SPRING_APPLICATION_NAME
               value: "service-retrait"
             - name: SPRING_CONFIG_IMPORT
-              value: "configserver:http://localhost:2370"
+              value: "configserver:https://config.quick-send.site"
           readinessProbe:
             httpGet:
               path: /actuator/health
@@ -458,7 +458,7 @@ spec:
             - name: SPRING_APPLICATION_NAME
               value: "service-tranfert"
             - name: SPRING_CONFIG_IMPORT
-              value: "configserver:http://localhost:2370"
+              value: "configserver:https://config.quick-send.site"
           readinessProbe:
             httpGet:
               path: /actuator/health
@@ -496,7 +496,7 @@ spec:
             - name: SPRING_APPLICATION_NAME
               value: "service-transactions"
             - name: SPRING_CONFIG_IMPORT
-              value: "configserver:http://localhost:2370"
+              value: "configserver:https://config.quick-send.site"
           readinessProbe:
             httpGet:
               path: /actuator/health
