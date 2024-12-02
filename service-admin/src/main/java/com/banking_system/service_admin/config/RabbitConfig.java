@@ -48,8 +48,8 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Queue rejectDemandeQueue() {
-        return new Queue("rejectDemandeQueue", true, false, false);
+    public Queue demandeRejectForMessageQueue() {
+        return new Queue("demandeRejectForMessageQueue", true, false, false);
     }
 
     @Bean
@@ -83,8 +83,8 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Binding binding2(TopicExchange clientExchange, Queue rejectDemandeQueue) {
-        return BindingBuilder.bind(rejectDemandeQueue).to(clientExchange).with("demande.reject");
+    public Binding binding2(TopicExchange clientExchange, Queue demandeRejectForMessageQueue) {
+        return BindingBuilder.bind(demandeRejectForMessageQueue).to(clientExchange).with("demande.reject");
     }
 
     @Bean

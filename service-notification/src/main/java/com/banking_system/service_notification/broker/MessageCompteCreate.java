@@ -71,7 +71,7 @@ public class MessageCompteCreate {
         }
     }
 
-    @RabbitListener(queues = "rejectDemandeQueue")
+    @RabbitListener(queues = "demandeRejectForMessageQueue")
     public void accountNotCreated(ClientAccountCreated event) throws IOException {
 
         Account sourceAccount;

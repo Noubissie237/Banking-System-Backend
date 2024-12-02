@@ -62,8 +62,8 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Queue rejectDemandeQueue() {
-        return new Queue("rejectDemandeQueue", true, false, false);
+    public Queue demandeRejectForMessageQueue() {
+        return new Queue("demandeRejectForMessageQueue", true, false, false);
     }
 
 
