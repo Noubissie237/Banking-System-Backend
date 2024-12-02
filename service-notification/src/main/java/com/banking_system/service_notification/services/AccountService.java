@@ -34,7 +34,6 @@ public class AccountService {
     public void createRejetAccount() {
         try {
             String message = "Echec de creation du Compte ! <br> Veillez vous rapporcher de l'agence.<br><br> Cordialement,";
-            rabbitTemplate.convertAndSend("clientExchange", "account.rejet", message);
         } catch (Exception e) {
             throw new RuntimeException("Account Creation Error : ",e);
         }

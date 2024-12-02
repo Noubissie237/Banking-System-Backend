@@ -77,12 +77,6 @@ public class RabbitConfig {
     public Queue transfertDoneForMessageQueue() {
         return new Queue("transfertDoneForMessageQueue", true, false, false);
     }
-    
-
-    @Bean
-    public Queue compterejet(){
-        return new Queue("compterejet", true, false, false);
-    }
 
     @Bean
     public Queue comptecreatclient(){
@@ -94,11 +88,6 @@ public class RabbitConfig {
         return new Queue("comptecreateagent", true, false, false);
     }
 
-
-    @Bean
-    public Binding binding1(TopicExchange clientExchange, Queue compterejet){
-        return  BindingBuilder.bind(compterejet).to(clientExchange).with("account.rejet");
-    }
  
     @Bean
     public Binding binding2(TopicExchange clientExchange, Queue comptecreatclient){
