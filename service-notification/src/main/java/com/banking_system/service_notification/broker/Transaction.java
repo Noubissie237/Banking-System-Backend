@@ -125,7 +125,7 @@ public class Transaction {
         }
     }
 
-    @RabbitListener(queues = "depotm")
+    @RabbitListener(queues = "depotDoneForMessageQueue")
     public void depot(DepotEventConsumer depot) {
         depotEnvoyeur(depot);
         depotRecepteur(depot);

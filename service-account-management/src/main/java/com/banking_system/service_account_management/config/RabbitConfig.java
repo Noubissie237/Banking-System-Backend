@@ -91,8 +91,8 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Queue depotm() {
-        return new Queue("depotm", true, false, false);
+    public Queue depotDoneForMessageQueue() {
+        return new Queue("depotDoneForMessageQueue", true, false, false);
     }
 
     // ******************************************
@@ -190,8 +190,8 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Binding binding12(TopicExchange transactionExchange, Queue depotm) {
-        return BindingBuilder.bind(depotm).to(transactionExchange).with("depot.done.message");
+    public Binding binding12(TopicExchange transactionExchange, Queue depotDoneForMessageQueue) {
+        return BindingBuilder.bind(depotDoneForMessageQueue).to(transactionExchange).with("depot.done.message");
     }
 
 }

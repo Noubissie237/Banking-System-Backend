@@ -73,8 +73,8 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Queue depotm() {
-        return new Queue("depotm", true, false, false);
+    public Queue depotDoneForMessageQueue() {
+        return new Queue("depotDoneForMessageQueue", true, false, false);
     }
 
     @Bean
