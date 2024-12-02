@@ -40,10 +40,7 @@ public class RabbitConfig {
         return new TopicExchange("transactionExchange", true, false);
     }
 
-    @Bean
-    public Queue acceptDemandeQueue() {
-        return new Queue("acceptDemandeQueue");
-    }
+
     @Bean
     public Queue clientAccountQueueMessage() {
         return new Queue("clientAccountQueueMessage", true, false, false);

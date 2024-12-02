@@ -16,7 +16,7 @@ public class AccountConsumer {
     @Autowired
     private AccountService accountService;
 
-    @RabbitListener(queues = "acceptDemandeQueue")
+    @RabbitListener(queues = "demandeAcceptedQueue")
     public void receiveAccountEvent(AccountEventJson event) {
         Account account = new Account();
         account.setAgenceId(event.getIdAgence());
