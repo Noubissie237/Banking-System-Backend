@@ -44,8 +44,8 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Queue clientAccountQueue() {
-        return new Queue("clientAccountQueue", true, false, false);
+    public Queue clientAccountCreateQueue() {
+        return new Queue("clientAccountCreateQueue", true, false, false);
     }
 
     @Bean
@@ -142,8 +142,8 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Binding binding(TopicExchange clientExchange, Queue clientAccountQueue) {
-        return BindingBuilder.bind(clientAccountQueue).to(clientExchange).with("client-account.create");
+    public Binding binding(TopicExchange clientExchange, Queue clientAccountCreateQueue) {
+        return BindingBuilder.bind(clientAccountCreateQueue).to(clientExchange).with("client-account.create");
     }
 
     @Bean
