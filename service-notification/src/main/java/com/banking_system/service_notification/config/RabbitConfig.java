@@ -53,11 +53,6 @@ public class RabbitConfig {
 
 
     @Bean
-    public Queue retraitAgenceQueue(){
-        return new Queue("retraitAgenceQueue", true, false, false);
-    }
-
-    @Bean
     public Queue demandeRejectForMessageQueue() {
         return new Queue("demandeRejectForMessageQueue", true, false, false);
     }
