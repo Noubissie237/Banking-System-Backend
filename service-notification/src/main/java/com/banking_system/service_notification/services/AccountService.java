@@ -1,7 +1,5 @@
 package com.banking_system.service_notification.services;
 
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.banking_system.service_notification.events.AgentEvent;
@@ -10,9 +8,6 @@ import com.banking_system.service_notification.events.AgentEvent;
 @Service
 public class AccountService {
     
-    @Autowired
-    private RabbitTemplate rabbitTemplate;
-
     public void createAccount() {
         try {
             String message = "Compte créé avec succès ! Vous pouvez à présent profiter de nos services 😀 ";
