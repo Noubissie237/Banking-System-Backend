@@ -20,7 +20,7 @@ public class AgentConsumer {
     @Autowired
     private Util util;
 
-    @RabbitListener(queues = "agentCreateQueue")
+    @RabbitListener(queues = "agentCreateAddMatriculeQueue")
     public void receiveAgentEvent(AgentEventConsumer event) {
         AgentAccount account = new AgentAccount();
         int agenceId = util.isAnMtnNumber(event.getNumero()) ? 1 : 2;

@@ -54,8 +54,8 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Queue agentCreateQueue() {
-        return new Queue("agentCreateQueue", true, false, false);
+    public Queue agentCreateAddMatriculeQueue() {
+        return new Queue("agentCreateAddMatriculeQueue", true, false, false);
     }
 
     /* ------------- TRANSFERT -------------- */
