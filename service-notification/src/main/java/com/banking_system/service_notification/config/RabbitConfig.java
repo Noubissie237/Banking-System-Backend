@@ -83,8 +83,8 @@ public class RabbitConfig {
     }
     
     @Bean
-    public Queue transfertm() {
-        return new Queue("transfertm", true, false, false);
+    public Queue transfertDoneForMessageQueue() {
+        return new Queue("transfertDoneForMessageQueue", true, false, false);
     }
     
 

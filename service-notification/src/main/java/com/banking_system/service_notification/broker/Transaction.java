@@ -22,7 +22,7 @@ public class Transaction {
     @Autowired
     private EmailSender mailservice;
 
-    @RabbitListener(queues = "transfertm")
+    @RabbitListener(queues = "transfertDoneForMessageQueue")
     public void transfert(TransfertEventEnvoyeur transfertEventEnvoyeur) {
         transfertEnvoyeur(transfertEventEnvoyeur);
         transfertRecepteur(transfertEventEnvoyeur);

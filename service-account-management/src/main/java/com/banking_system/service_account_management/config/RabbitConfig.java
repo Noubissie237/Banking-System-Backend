@@ -72,8 +72,8 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Queue transfertm() {
-        return new Queue("transfertm", true, false, false);
+    public Queue transfertDoneForMessageQueue() {
+        return new Queue("transfertDoneForMessageQueue", true, false, false);
     }
 
     /* --------------------------------------- */
@@ -180,8 +180,8 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Binding binding10(TopicExchange transactionExchange, Queue transfertm) {
-        return BindingBuilder.bind(transfertm).to(transactionExchange).with("transfert.done.message");
+    public Binding binding10(TopicExchange transactionExchange, Queue transfertDoneForMessageQueue) {
+        return BindingBuilder.bind(transfertDoneForMessageQueue).to(transactionExchange).with("transfert.done.message");
     }
 
     @Bean
