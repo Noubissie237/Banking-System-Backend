@@ -1,45 +1,46 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: service-config
-  namespace: banking-system-app
-spec:
-  selector:
-    app: service-config
-  type: LoadBalancer
-  ports:
-    - protocol: TCP
-      port: 2370
-      targetPort: 2370
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: service-registry
-  namespace: banking-system-app
-spec:
-  selector:
-    app: service-registry
-  type: LoadBalancer
-  ports:
-    - protocol: TCP
-      port: 8761
-      targetPort: 8761
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: service-proxy
-  namespace: banking-system-app
-spec:
-  selector:
-    app: service-proxy
-  type: LoadBalancer
-  ports:
-    - protocol: TCP
-      port: 8079
-      targetPort: 8079
----
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: service-config
+#   namespace: banking-system-app
+# spec:
+#   type: NodePort
+#   selector:
+#     app: service-config
+#   ports:
+#     - protocol: TCP
+#       port: 2370       
+#       targetPort: 2370 
+#       nodePort: 32370  
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: service-registry
+#   namespace: banking-system-app
+# spec:
+#   selector:
+#     app: service-registry
+#   type: LoadBalancer
+#   ports:
+#     - protocol: TCP
+#       port: 8761
+#       targetPort: 8761
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: service-proxy
+#   namespace: banking-system-app
+# spec:
+#   selector:
+#     app: service-proxy
+#   type: LoadBalancer
+#   ports:
+#     - protocol: TCP
+#       port: 8079
+#       targetPort: 8079
+# ---
 apiVersion: v1
 kind: Service
 metadata:
@@ -50,7 +51,7 @@ spec:
     app: mysql
   ports:
     - protocol: TCP
-      port: 3306
+      port: 3307
       targetPort: 3306
   type: LoadBalancer
 ---
@@ -65,13 +66,13 @@ spec:
   ports:
     - name: amqp
       protocol: TCP
-      port: 5672
+      port: 5673
       targetPort: 5672
     - name: management
       protocol: TCP
-      port: 15672
+      port: 15673
       targetPort: 15672
-  type: NodePort
+  type: LoadBalancer
 ---
 apiVersion: v1
 kind: Service
@@ -83,118 +84,118 @@ spec:
     app: eventstoredb
   ports:
     - protocol: TCP
-      port: 2113
+      port: 2114
       targetPort: 2113
   type: LoadBalancer
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: service-authentification
-  namespace: banking-system-app
-spec:
-  selector:
-    app: service-authentification
-  type: LoadBalancer
-  ports:
-    - protocol: TCP
-      port: 8081
-      targetPort: 8081
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: service-users
-  namespace: banking-system-app
-spec:
-  selector:
-    app: service-users
-  type: LoadBalancer
-  ports:
-    - protocol: TCP
-      port: 8082
-      targetPort: 8082
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: service-admin
-  namespace: banking-system-app
-spec:
-  selector:
-    app: service-admin
-  type: LoadBalancer
-  ports:
-    - protocol: TCP
-      port: 8083
-      targetPort: 8083
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: service-account-management
-  namespace: banking-system-app
-spec:
-  selector:
-    app: service-account-management
-  type: LoadBalancer
-  ports:
-    - protocol: TCP
-      port: 8084
-      targetPort: 8084
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: service-depot
-  namespace: banking-system-app
-spec:
-  selector:
-    app: service-depot
-  type: LoadBalancer
-  ports:
-    - protocol: TCP
-      port: 8085
-      targetPort: 8085
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: service-retrait
-  namespace: banking-system-app
-spec:
-  selector:
-    app: service-retrait
-  type: LoadBalancer
-  ports:
-    - protocol: TCP
-      port: 8086
-      targetPort: 8086
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: service-tranfert
-  namespace: banking-system-app
-spec:
-  selector:
-    app: service-tranfert
-  type: LoadBalancer
-  ports:
-    - protocol: TCP
-      port: 8087
-      targetPort: 8087
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: service-transactions
-  namespace: banking-system-app
-spec:
-  selector:
-    app: service-transactions
-  type: LoadBalancer
-  ports:
-    - protocol: TCP
-      port: 8088
-      targetPort: 8088
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: service-authentification
+#   namespace: banking-system-app
+# spec:
+#   selector:
+#     app: service-authentification
+#   type: LoadBalancer
+#   ports:
+#     - protocol: TCP
+#       port: 8081
+#       targetPort: 8081
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: service-users
+#   namespace: banking-system-app
+# spec:
+#   selector:
+#     app: service-users
+#   type: LoadBalancer
+#   ports:
+#     - protocol: TCP
+#       port: 8082
+#       targetPort: 8082
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: service-admin
+#   namespace: banking-system-app
+# spec:
+#   selector:
+#     app: service-admin
+#   type: LoadBalancer
+#   ports:
+#     - protocol: TCP
+#       port: 8083
+#       targetPort: 8083
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: service-account-management
+#   namespace: banking-system-app
+# spec:
+#   selector:
+#     app: service-account-management
+#   type: LoadBalancer
+#   ports:
+#     - protocol: TCP
+#       port: 8084
+#       targetPort: 8084
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: service-depot
+#   namespace: banking-system-app
+# spec:
+#   selector:
+#     app: service-depot
+#   type: LoadBalancer
+#   ports:
+#     - protocol: TCP
+#       port: 8085
+#       targetPort: 8085
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: service-retrait
+#   namespace: banking-system-app
+# spec:
+#   selector:
+#     app: service-retrait
+#   type: LoadBalancer
+#   ports:
+#     - protocol: TCP
+#       port: 8086
+#       targetPort: 8086
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: service-tranfert
+#   namespace: banking-system-app
+# spec:
+#   selector:
+#     app: service-tranfert
+#   type: LoadBalancer
+#   ports:
+#     - protocol: TCP
+#       port: 8087
+#       targetPort: 8087
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: service-transactions
+#   namespace: banking-system-app
+# spec:
+#   selector:
+#     app: service-transactions
+#   type: LoadBalancer
+#   ports:
+#     - protocol: TCP
+#       port: 8088
+#       targetPort: 8088
