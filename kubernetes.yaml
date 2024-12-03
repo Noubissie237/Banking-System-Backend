@@ -162,7 +162,7 @@ spec:
             - name: SPRING_APPLICATION_NAME
               value: "service-registry"
             - name: SPRING_CONFIG_IMPORT
-              value: "configserver:http://service-config:2370"
+              value: "configserver:https://config.quick-send.site"
 ---
 # Déploiement du service proxy
 apiVersion: apps/v1
@@ -189,7 +189,7 @@ spec:
             - name: SPRING_APPLICATION_NAME
               value: "service-proxy"
             - name: SPRING_CONFIG_IMPORT
-              value: "configserver:http://service-config:2370"
+              value: "configserver:https://config.quick-send.site"
 ---
 # Déploiement du service d'authentification
 apiVersion: apps/v1
@@ -216,7 +216,7 @@ spec:
             - name: SPRING_APPLICATION_NAME
               value: "service-authentification"
             - name: SPRING_CONFIG_IMPORT
-              value: "configserver:http://service-config:2370"
+              value: "configserver:https://config.quick-send.site"
 ---
 # Deploiement du service de depot
 apiVersion: apps/v1
@@ -243,7 +243,7 @@ spec:
             - name: SPRING_APPLICATION_NAME
               value: "service-depot"
             - name: SPRING_CONFIG_IMPORT
-              value: "configserver:http://service-config:2370"
+              value: "configserver:https://config.quick-send.site"
 ---
 # Deploiement du service de retrait
 apiVersion: apps/v1
@@ -270,7 +270,7 @@ spec:
             - name: SPRING_APPLICATION_NAME
               value: "service-retrait"
             - name: SPRING_CONFIG_IMPORT
-              value: "configserver:http://service-config:2370"
+              value: "configserver:https://config.quick-send.site"
 ---
 # Deploiement du service de transfert
 apiVersion: apps/v1
@@ -297,7 +297,7 @@ spec:
             - name: SPRING_APPLICATION_NAME
               value: "service-tranfert"
             - name: SPRING_CONFIG_IMPORT
-              value: "configserver:http://service-config:2370"
+              value: "configserver:https://config.quick-send.site"
 ---
 # Deploiement du service de transactions
 apiVersion: apps/v1
@@ -324,7 +324,7 @@ spec:
             - name: SPRING_APPLICATION_NAME
               value: "service-transactions"
             - name: SPRING_CONFIG_IMPORT
-              value: "configserver:http://service-config:2370"
+              value: "configserver:https://config.quick-send.site"
 ---
 # Deploiement du service users
 apiVersion: apps/v1
@@ -351,7 +351,7 @@ spec:
             - name: SPRING_APPLICATION_NAME
               value: "service-users"
             - name: SPRING_CONFIG_IMPORT
-              value: "configserver:http://service-config:2370"
+              value: "configserver:https://config.quick-send.site"
 ---
 # Deploiement du service admin
 apiVersion: apps/v1
@@ -378,7 +378,7 @@ spec:
             - name: SPRING_APPLICATION_NAME
               value: "service-admin"
             - name: SPRING_CONFIG_IMPORT
-              value: "configserver:http://service-config:2370"
+              value: "configserver:https://config.quick-send.site"
 ---
 # Deploiement du service account management
 apiVersion: apps/v1
@@ -405,7 +405,7 @@ spec:
             - name: SPRING_APPLICATION_NAME
               value: "service-account-management"
             - name: SPRING_CONFIG_IMPORT
-              value: "configserver:http://service-config:2370"
+              value: "configserver:https://config.quick-send.site"
 ---
 # Deploiement du service de notification
 apiVersion: apps/v1
@@ -432,4 +432,4 @@ spec:
             - name: SPRING_APPLICATION_NAME
               value: "service-notification"
             - name: SPRING_CONFIG_IMPORT
-              value: "configserver:http://service-config:2370"
+              value: "configserver:https://config.quick-send.site"
