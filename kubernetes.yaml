@@ -128,7 +128,7 @@ spec:
     spec:
       containers:
         - name: service-config
-          image: noubissie237/service-config:latest
+          image: noubissie237/kubernetes-service-config:latest
           ports:
             - containerPort: 2370
           env:
@@ -155,7 +155,7 @@ spec:
     spec:
       containers:
         - name: service-registry
-          image: noubissie237/service-registry:latest
+          image: noubissie237/kubernetes-service-registry:latest
           ports:
             - containerPort: 8761
           env:
@@ -182,7 +182,7 @@ spec:
     spec:
       containers:
         - name: service-proxy
-          image: noubissie237/service-proxy:latest
+          image: noubissie237/kubernetes-service-proxy:latest
           ports:
             - containerPort: 8079
           env:
@@ -209,7 +209,7 @@ spec:
     spec:
       containers:
         - name: service-authentification
-          image: noubissie237/service-authentification:latest
+          image: noubissie237/kubernetes-service-authentification:latest
           ports:
             - containerPort: 8081
           env:
@@ -236,7 +236,7 @@ spec:
     spec:
       containers:
         - name: service-depot
-          image: noubissie237/service-depot:latest
+          image: noubissie237/kubernetes-service-depot:latest
           ports:
             - containerPort: 8085
           env:
@@ -263,7 +263,7 @@ spec:
     spec:
       containers:
         - name: service-retrait
-          image: noubissie237/service-retrait:latest
+          image: noubissie237/kubernetes-service-retrait:latest
           ports:
             - containerPort: 8086
           env:
@@ -290,7 +290,7 @@ spec:
     spec:
       containers:
         - name: service-tranfert
-          image: noubissie237/service-tranfert:latest
+          image: noubissie237/kubernetes-service-tranfert:latest
           ports:
             - containerPort: 8087
           env:
@@ -317,7 +317,7 @@ spec:
     spec:
       containers:
         - name: service-transactions
-          image: noubissie237/service-transactions:latest
+          image: noubissie237/kubernetes-service-transactions:latest
           ports:
             - containerPort: 8088
           env:
@@ -344,7 +344,7 @@ spec:
     spec:
       containers:
         - name: service-users
-          image: noubissie237/service-users:latest
+          image: noubissie237/kubernetes-service-users:latest
           ports:
             - containerPort: 8082
           env:
@@ -371,7 +371,7 @@ spec:
     spec:
       containers:
         - name: service-admin
-          image: noubissie237/service-admin:latest
+          image: noubissie237/kubernetes-service-admin:latest
           ports:
             - containerPort: 8083
           env:
@@ -398,7 +398,7 @@ spec:
     spec:
       containers:
         - name: service-account-management
-          image: noubissie237/service-account-management:latest
+          image: noubissie237/kubernetes-service-account-management:latest
           ports:
             - containerPort: 8084
           env:
@@ -425,7 +425,7 @@ spec:
     spec:
       containers:
         - name: service-notification
-          image: noubissie237/service-notification:latest
+          image: noubissie237/kubernetes-service-notification:latest
           ports:
             - containerPort: 8089
           env:
