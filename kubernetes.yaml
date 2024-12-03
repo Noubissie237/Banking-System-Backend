@@ -1,100 +1,4 @@
 apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: service-config
-  namespace: banking-system-app
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: service-config
-  template:
-    metadata:
-      labels:
-        app: service-config
-    spec:
-      containers:
-        - name: service-config
-          image: noubissie237/service-config:latest
-          ports:
-            - containerPort: 2370
-          env:
-            - name: SPRING_APPLICATION_NAME
-              value: "service-config"
-            - name: SPRING_CLOUD_CONFIG_SERVER_GIT_URI
-              value: "https://github.com/Noubissie237/banking-system-cloud-conf"
-          # readinessProbe:
-          #   httpGet:
-          #     path: /applications/head
-          #     port: 2370
-          #   initialDelaySeconds: 5
-          #   periodSeconds: 10
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: service-registry
-  namespace: banking-system-app
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: service-registry
-  template:
-    metadata:
-      labels:
-        app: service-registry
-    spec:
-      containers:
-        - name: service-registry
-          image: noubissie237/service-registry:latest
-          ports:
-            - containerPort: 8761
-          env:
-            - name: SPRING_APPLICATION_NAME
-              value: "service-registry"
-            - name: SPRING_CONFIG_IMPORT
-              value: "configserver:http://service-config:2370"
-          # readinessProbe:
-          #   httpGet:
-          #     path: /actuator/health
-          #     port: 8761
-          #   initialDelaySeconds: 5
-          #   periodSeconds: 10
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: service-proxy
-  namespace: banking-system-app
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: service-proxy
-  template:
-    metadata:
-      labels:
-        app: service-proxy
-    spec:
-      containers:
-        - name: service-proxy
-          image: noubissie237/service-proxy:latest
-          ports:
-            - containerPort: 8079
-          env:
-            - name: SPRING_APPLICATION_NAME
-              value: "service-proxy"
-            - name: SPRING_CONFIG_IMPORT
-              value: "configserver:http://service-config:2370"
-          # readinessProbe:
-          #   httpGet:
-          #     path: /actuator/health
-          #     port: 8079
-          #   initialDelaySeconds: 5
-          #   periodSeconds: 10
----
-apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: mysql
@@ -206,6 +110,88 @@ spec:
           requests:
             storage: 20Gi
 ---
+# Déploiement du service config
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-config
+  namespace: banking-system-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-config
+  template:
+    metadata:
+      labels:
+        app: service-config
+    spec:
+      containers:
+        - name: service-config
+          image: noubissie237/service-config:latest
+          ports:
+            - containerPort: 2370
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: "service-config"
+            - name: SPRING_CLOUD_CONFIG_SERVER_GIT_URI
+              value: "https://github.com/Noubissie237/banking-system-cloud-conf"
+---
+# Déploiement du service registry
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-registry
+  namespace: banking-system-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-registry
+  template:
+    metadata:
+      labels:
+        app: service-registry
+    spec:
+      containers:
+        - name: service-registry
+          image: noubissie237/service-registry:latest
+          ports:
+            - containerPort: 8761
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: "service-registry"
+            - name: SPRING_CONFIG_IMPORT
+              value: "configserver:http://service-config:2370"
+---
+# Déploiement du service proxy
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-proxy
+  namespace: banking-system-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-proxy
+  template:
+    metadata:
+      labels:
+        app: service-proxy
+    spec:
+      containers:
+        - name: service-proxy
+          image: noubissie237/service-proxy:latest
+          ports:
+            - containerPort: 8079
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: "service-proxy"
+            - name: SPRING_CONFIG_IMPORT
+              value: "configserver:http://service-config:2370"
+---
+# Déploiement du service d'authentification
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -232,84 +218,7 @@ spec:
             - name: SPRING_CONFIG_IMPORT
               value: "configserver:http://service-config:2370"
 ---
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: service-users
-  namespace: banking-system-app
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: service-users
-  template:
-    metadata:
-      labels:
-        app: service-users
-    spec:
-      containers:
-        - name: service-users
-          image: noubissie237/service-users:latest
-          ports:
-            - containerPort: 8082
-          env:
-            - name: SPRING_APPLICATION_NAME
-              value: "service-users"
-            - name: SPRING_CONFIG_IMPORT
-              value: "configserver:http://service-config:2370"
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: service-admin
-  namespace: banking-system-app
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: service-admin
-  template:
-    metadata:
-      labels:
-        app: service-admin
-    spec:
-      containers:
-        - name: service-admin
-          image: noubissie237/service-admin:latest
-          ports:
-            - containerPort: 8083
-          env:
-            - name: SPRING_APPLICATION_NAME
-              value: "service-admin"
-            - name: SPRING_CONFIG_IMPORT
-              value: "configserver:http://service-config:2370"
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: service-account-management
-  namespace: banking-system-app
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: service-account-management
-  template:
-    metadata:
-      labels:
-        app: service-account-management
-    spec:
-      containers:
-        - name: service-account-management
-          image: noubissie237/service-account-management:latest
-          ports:
-            - containerPort: 8084
-          env:
-            - name: SPRING_APPLICATION_NAME
-              value: "service-account-management"
-            - name: SPRING_CONFIG_IMPORT
-              value: "configserver:http://service-config:2370"
----
+# Deploiement du service de depot
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -336,6 +245,7 @@ spec:
             - name: SPRING_CONFIG_IMPORT
               value: "configserver:http://service-config:2370"
 ---
+# Deploiement du service de retrait
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -362,6 +272,7 @@ spec:
             - name: SPRING_CONFIG_IMPORT
               value: "configserver:http://service-config:2370"
 ---
+# Deploiement du service de transfert
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -388,6 +299,7 @@ spec:
             - name: SPRING_CONFIG_IMPORT
               value: "configserver:http://service-config:2370"
 ---
+# Deploiement du service de transactions
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -411,5 +323,113 @@ spec:
           env:
             - name: SPRING_APPLICATION_NAME
               value: "service-transactions"
+            - name: SPRING_CONFIG_IMPORT
+              value: "configserver:http://service-config:2370"
+---
+# Deploiement du service users
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-users
+  namespace: banking-system-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-users
+  template:
+    metadata:
+      labels:
+        app: service-users
+    spec:
+      containers:
+        - name: service-users
+          image: noubissie237/service-users:latest
+          ports:
+            - containerPort: 8082
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: "service-users"
+            - name: SPRING_CONFIG_IMPORT
+              value: "configserver:http://service-config:2370"
+---
+# Deploiement du service admin
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-admin
+  namespace: banking-system-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-admin
+  template:
+    metadata:
+      labels:
+        app: service-admin
+    spec:
+      containers:
+        - name: service-admin
+          image: noubissie237/service-admin:latest
+          ports:
+            - containerPort: 8083
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: "service-admin"
+            - name: SPRING_CONFIG_IMPORT
+              value: "configserver:http://service-config:2370"
+---
+# Deploiement du service account management
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-account-management
+  namespace: banking-system-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-account-management
+  template:
+    metadata:
+      labels:
+        app: service-account-management
+    spec:
+      containers:
+        - name: service-account-management
+          image: noubissie237/service-account-management:latest
+          ports:
+            - containerPort: 8084
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: "service-account-management"
+            - name: SPRING_CONFIG_IMPORT
+              value: "configserver:http://service-config:2370"
+---
+# Deploiement du service de notification
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-notification
+  namespace: banking-system-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-notification
+  template:
+    metadata:
+      labels:
+        app: service-notification
+    spec:
+      containers:
+        - name: service-notification
+          image: noubissie237/service-notification:latest
+          ports:
+            - containerPort: 8089
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: "service-notification"
             - name: SPRING_CONFIG_IMPORT
               value: "configserver:http://service-config:2370"

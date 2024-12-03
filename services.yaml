@@ -1,45 +1,6 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: service-config
-  namespace: banking-system-app
-spec:
-  type: LoadBalancer
-  selector:
-    app: service-config
-  ports:
-    - port: 2370       
-      targetPort: 2370 
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: service-registry
-  namespace: banking-system-app
-spec:
-  selector:
-    app: service-registry
-  type: LoadBalancer
-  ports:
-    - port: 8761
-      targetPort: 8761
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: service-proxy
-  namespace: banking-system-app
-spec:
-  selector:
-    app: service-proxy
-  type: LoadBalancer
-  ports:
-    - port: 8079
-      targetPort: 8079
----
-apiVersion: v1
-kind: Service
-metadata:
   name: mysql-service
   namespace: banking-system-app
 spec:
@@ -84,6 +45,49 @@ spec:
       targetPort: 2113
   type: LoadBalancer
 ---
+# Exposition du service config
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-config
+  namespace: banking-system-app
+spec:
+  type: LoadBalancer
+  selector:
+    app: service-config
+  ports:
+    - port: 2370       
+      targetPort: 2370 
+---
+# Exposition du service registry
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-registry
+  namespace: banking-system-app
+spec:
+  selector:
+    app: service-registry
+  type: LoadBalancer
+  ports:
+    - port: 8761
+      targetPort: 8761
+---
+# Exposition du service proxy
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-proxy
+  namespace: banking-system-app
+spec:
+  selector:
+    app: service-proxy
+  type: LoadBalancer
+  ports:
+    - port: 8079
+      targetPort: 8079
+---
+# Exposition du service d'authentification
 apiVersion: v1
 kind: Service
 metadata:
@@ -97,45 +101,7 @@ spec:
     - port: 8081
       targetPort: 8081
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: service-users
-  namespace: banking-system-app
-spec:
-  selector:
-    app: service-users
-  type: LoadBalancer
-  ports:
-    - port: 8082
-      targetPort: 8082
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: service-admin
-  namespace: banking-system-app
-spec:
-  selector:
-    app: service-admin
-  type: LoadBalancer
-  ports:
-    - port: 8083
-      targetPort: 8083
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: service-account-management
-  namespace: banking-system-app
-spec:
-  selector:
-    app: service-account-management
-  type: LoadBalancer
-  ports:
-    - port: 8084
-      targetPort: 8084
----
+# Exposition du service de depot
 apiVersion: v1
 kind: Service
 metadata:
@@ -149,6 +115,7 @@ spec:
     - port: 8085
       targetPort: 8085
 ---
+# Exposition du service de retrait
 apiVersion: v1
 kind: Service
 metadata:
@@ -162,6 +129,7 @@ spec:
     - port: 8086
       targetPort: 8086
 ---
+# Exposition du service de transfert
 apiVersion: v1
 kind: Service
 metadata:
@@ -175,6 +143,7 @@ spec:
     - port: 8087
       targetPort: 8087
 ---
+# Exposition du service de transactions
 apiVersion: v1
 kind: Service
 metadata:
@@ -187,3 +156,59 @@ spec:
   ports:
     - port: 8088
       targetPort: 8088
+---
+# Exposition du service users
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-users
+  namespace: banking-system-app
+spec:
+  selector:
+    app: service-users
+  type: LoadBalancer
+  ports:
+    - port: 8082
+      targetPort: 8082
+---
+# Exposition du service admin
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-admin
+  namespace: banking-system-app
+spec:
+  selector:
+    app: service-admin
+  type: LoadBalancer
+  ports:
+    - port: 8083
+      targetPort: 8083
+---
+# Exposition du service account management
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-account-management
+  namespace: banking-system-app
+spec:
+  selector:
+    app: service-account-management
+  type: LoadBalancer
+  ports:
+    - port: 8084
+      targetPort: 8084
+---
+# Exposition du service de notification
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-notification
+  namespace: banking-system-app
+spec:
+  selector:
+    app: service-notification
+  type: LoadBalancer
+  ports:
+    - port: 8089
+      targetPort: 8089
