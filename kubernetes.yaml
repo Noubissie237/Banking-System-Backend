@@ -191,6 +191,20 @@ spec:
           volumeMounts:
             - name: eventstore-pv
               mountPath: /var/lib/eventstore
+          readinessProbe:
+            httpGet:
+              path: /health/live
+              port: 2113
+            initialDelaySeconds: 15
+            periodSeconds: 10
+  volumeClaimTemplates:
+    - metadata:
+        name: eventstore-pv
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 20Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
