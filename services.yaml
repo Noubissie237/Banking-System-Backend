@@ -83,115 +83,107 @@ spec:
       port: 2114
       targetPort: 2113
   type: LoadBalancer
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: service-authentification
-#   namespace: banking-system-app
-# spec:
-#   selector:
-#     app: service-authentification
-#   type: LoadBalancer
-#   ports:
-#     - protocol: TCP
-#       port: 8081
-#       targetPort: 8081
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: service-users
-#   namespace: banking-system-app
-# spec:
-#   selector:
-#     app: service-users
-#   type: LoadBalancer
-#   ports:
-#     - protocol: TCP
-#       port: 8082
-#       targetPort: 8082
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: service-admin
-#   namespace: banking-system-app
-# spec:
-#   selector:
-#     app: service-admin
-#   type: LoadBalancer
-#   ports:
-#     - protocol: TCP
-#       port: 8083
-#       targetPort: 8083
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: service-account-management
-#   namespace: banking-system-app
-# spec:
-#   selector:
-#     app: service-account-management
-#   type: LoadBalancer
-#   ports:
-#     - protocol: TCP
-#       port: 8084
-#       targetPort: 8084
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: service-depot
-#   namespace: banking-system-app
-# spec:
-#   selector:
-#     app: service-depot
-#   type: LoadBalancer
-#   ports:
-#     - protocol: TCP
-#       port: 8085
-#       targetPort: 8085
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: service-retrait
-#   namespace: banking-system-app
-# spec:
-#   selector:
-#     app: service-retrait
-#   type: LoadBalancer
-#   ports:
-#     - protocol: TCP
-#       port: 8086
-#       targetPort: 8086
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: service-tranfert
-#   namespace: banking-system-app
-# spec:
-#   selector:
-#     app: service-tranfert
-#   type: LoadBalancer
-#   ports:
-#     - protocol: TCP
-#       port: 8087
-#       targetPort: 8087
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: service-transactions
-#   namespace: banking-system-app
-# spec:
-#   selector:
-#     app: service-transactions
-#   type: LoadBalancer
-#   ports:
-#     - protocol: TCP
-#       port: 8088
-#       targetPort: 8088
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-authentification
+  namespace: banking-system-app
+spec:
+  selector:
+    app: service-authentification
+  type: LoadBalancer
+  ports:
+    - port: 8081
+      targetPort: 8081
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-users
+  namespace: banking-system-app
+spec:
+  selector:
+    app: service-users
+  type: LoadBalancer
+  ports:
+    - port: 8082
+      targetPort: 8082
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-admin
+  namespace: banking-system-app
+spec:
+  selector:
+    app: service-admin
+  type: LoadBalancer
+  ports:
+    - port: 8083
+      targetPort: 8083
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-account-management
+  namespace: banking-system-app
+spec:
+  selector:
+    app: service-account-management
+  type: LoadBalancer
+  ports:
+    - port: 8084
+      targetPort: 8084
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-depot
+  namespace: banking-system-app
+spec:
+  selector:
+    app: service-depot
+  type: LoadBalancer
+  ports:
+    - port: 8085
+      targetPort: 8085
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-retrait
+  namespace: banking-system-app
+spec:
+  selector:
+    app: service-retrait
+  type: LoadBalancer
+  ports:
+    - port: 8086
+      targetPort: 8086
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-tranfert
+  namespace: banking-system-app
+spec:
+  selector:
+    app: service-tranfert
+  type: LoadBalancer
+  ports:
+    - port: 8087
+      targetPort: 8087
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-transactions
+  namespace: banking-system-app
+spec:
+  selector:
+    app: service-transactions
+  type: LoadBalancer
+  ports:
+    - port: 8088
+      targetPort: 8088
