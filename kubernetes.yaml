@@ -1,99 +1,99 @@
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: service-config
-#   namespace: banking-system-app
-# spec:
-#   replicas: 1
-#   selector:
-#     matchLabels:
-#       app: service-config
-#   template:
-#     metadata:
-#       labels:
-#         app: service-config
-#     spec:
-#       containers:
-#         - name: service-config
-#           image: noubissie237/service-config:latest
-#           ports:
-#             - containerPort: 2370
-#           env:
-#             - name: SPRING_APPLICATION_NAME
-#               value: "service-config"
-#             - name: SPRING_CLOUD_CONFIG_SERVER_GIT_URI
-#               value: "https://github.com/Noubissie237/banking-system-cloud-conf"
-#           readinessProbe:
-#             httpGet:
-#               path: /applications/head
-#               port: 2370
-#             initialDelaySeconds: 5
-#             periodSeconds: 10
-# ---
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: service-registry
-#   namespace: banking-system-app
-# spec:
-#   replicas: 1
-#   selector:
-#     matchLabels:
-#       app: service-registry
-#   template:
-#     metadata:
-#       labels:
-#         app: service-registry
-#     spec:
-#       containers:
-#         - name: service-registry
-#           image: noubissie237/service-registry:latest
-#           ports:
-#             - containerPort: 8761
-#           env:
-#             - name: SPRING_APPLICATION_NAME
-#               value: "service-registry"
-#             - name: SPRING_CONFIG_IMPORT
-#               value: "configserver:http://127.0.0.1:2370"
-#           readinessProbe:
-#             httpGet:
-#               path: /actuator/health
-#               port: 8761
-#             initialDelaySeconds: 5
-#             periodSeconds: 10
-# ---
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: service-proxy
-#   namespace: banking-system-app
-# spec:
-#   replicas: 1
-#   selector:
-#     matchLabels:
-#       app: service-proxy
-#   template:
-#     metadata:
-#       labels:
-#         app: service-proxy
-#     spec:
-#       containers:
-#         - name: service-proxy
-#           image: noubissie237/service-proxy:latest
-#           ports:
-#             - containerPort: 8079
-#           env:
-#             - name: SPRING_APPLICATION_NAME
-#               value: "service-proxy"
-#             - name: SPRING_CONFIG_IMPORT
-#               value: "configserver:http://service-config:2370"
-#           readinessProbe:
-#             httpGet:
-#               path: /actuator/health
-#               port: 8079
-#             initialDelaySeconds: 5
-#             periodSeconds: 10
-# ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-config
+  namespace: banking-system-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-config
+  template:
+    metadata:
+      labels:
+        app: service-config
+    spec:
+      containers:
+        - name: service-config
+          image: noubissie237/service-config:latest
+          ports:
+            - containerPort: 2370
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: "service-config"
+            - name: SPRING_CLOUD_CONFIG_SERVER_GIT_URI
+              value: "https://github.com/Noubissie237/banking-system-cloud-conf"
+          # readinessProbe:
+          #   httpGet:
+          #     path: /applications/head
+          #     port: 2370
+          #   initialDelaySeconds: 5
+          #   periodSeconds: 10
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-registry
+  namespace: banking-system-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-registry
+  template:
+    metadata:
+      labels:
+        app: service-registry
+    spec:
+      containers:
+        - name: service-registry
+          image: noubissie237/service-registry:latest
+          ports:
+            - containerPort: 8761
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: "service-registry"
+            - name: SPRING_CONFIG_IMPORT
+              value: "configserver:http://service-config:2370"
+          # readinessProbe:
+          #   httpGet:
+          #     path: /actuator/health
+          #     port: 8761
+          #   initialDelaySeconds: 5
+          #   periodSeconds: 10
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-proxy
+  namespace: banking-system-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-proxy
+  template:
+    metadata:
+      labels:
+        app: service-proxy
+    spec:
+      containers:
+        - name: service-proxy
+          image: noubissie237/service-proxy:latest
+          ports:
+            - containerPort: 8079
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: "service-proxy"
+            - name: SPRING_CONFIG_IMPORT
+              value: "configserver:http://service-config:2370"
+          # readinessProbe:
+          #   httpGet:
+          #     path: /actuator/health
+          #     port: 8079
+          #   initialDelaySeconds: 5
+          #   periodSeconds: 10
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -230,7 +230,7 @@ spec:
 #             - name: SPRING_APPLICATION_NAME
 #               value: "service-authentification"
 #             - name: SPRING_CONFIG_IMPORT
-#               value: "configserver:http://localhost:2370"
+#               value: "configserver:http://service-config:2370"
 #           readinessProbe:
 #             httpGet:
 #               path: /actuator/health
@@ -268,7 +268,7 @@ spec:
 #             - name: SPRING_APPLICATION_NAME
 #               value: "service-users"
 #             - name: SPRING_CONFIG_IMPORT
-#               value: "configserver:http://localhost:2370"
+#               value: "configserver:http://service-config:2370"
 #           readinessProbe:
 #             httpGet:
 #               path: /actuator/health
@@ -306,7 +306,7 @@ spec:
 #             - name: SPRING_APPLICATION_NAME
 #               value: "service-admin"
 #             - name: SPRING_CONFIG_IMPORT
-#               value: "configserver:http://localhost:2370"
+#               value: "configserver:http://service-config:2370"
 #           readinessProbe:
 #             httpGet:
 #               path: /actuator/health
@@ -344,7 +344,7 @@ spec:
 #             - name: SPRING_APPLICATION_NAME
 #               value: "service-account-management"
 #             - name: SPRING_CONFIG_IMPORT
-#               value: "configserver:http://localhost:2370"
+#               value: "configserver:http://service-config:2370"
 #           readinessProbe:
 #             httpGet:
 #               path: /actuator/health
@@ -382,7 +382,7 @@ spec:
 #             - name: SPRING_APPLICATION_NAME
 #               value: "service-depot"
 #             - name: SPRING_CONFIG_IMPORT
-#               value: "configserver:http://localhost:2370"
+#               value: "configserver:http://service-config:2370"
 #           readinessProbe:
 #             httpGet:
 #               path: /actuator/health
@@ -420,7 +420,7 @@ spec:
 #             - name: SPRING_APPLICATION_NAME
 #               value: "service-retrait"
 #             - name: SPRING_CONFIG_IMPORT
-#               value: "configserver:http://localhost:2370"
+#               value: "configserver:http://service-config:2370"
 #           readinessProbe:
 #             httpGet:
 #               path: /actuator/health
@@ -458,7 +458,7 @@ spec:
 #             - name: SPRING_APPLICATION_NAME
 #               value: "service-tranfert"
 #             - name: SPRING_CONFIG_IMPORT
-#               value: "configserver:http://localhost:2370"
+#               value: "configserver:http://service-config:2370"
 #           readinessProbe:
 #             httpGet:
 #               path: /actuator/health
@@ -496,7 +496,7 @@ spec:
 #             - name: SPRING_APPLICATION_NAME
 #               value: "service-transactions"
 #             - name: SPRING_CONFIG_IMPORT
-#               value: "configserver:http://localhost:2370"
+#               value: "configserver:http://service-config:2370"
 #           readinessProbe:
 #             httpGet:
 #               path: /actuator/health
