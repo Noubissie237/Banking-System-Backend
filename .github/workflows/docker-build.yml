@@ -67,6 +67,14 @@ jobs:
         run: docker push noubissie237/service-account-management:latest
 
 
+      # Service notification
+      - name: Build Docker image for service-notification
+        run: docker build -t noubissie237/service-notification:latest ./service-notification/.
+
+      - name: Push Docker image to Docker Hub
+        run: docker push noubissie237/service-notification:latest
+
+
       # Service tranfert
       - name: Build Docker image for service-tranfert
         run: docker build -t noubissie237/service-tranfert:latest ./service-tranfert/.
@@ -104,12 +112,3 @@ jobs:
 
       - name: Push Docker image to Docker Hub
         run: docker push noubissie237/service-transactions:latest
-
-        
-      # Service notification
-      - name: Build Docker image for service-notification
-        run: docker build -t noubissie237/service-notification:latest ./service-notification/.
-
-      - name: Push Docker image to Docker Hub
-        run: docker push noubissie237/service-notification:latest
-

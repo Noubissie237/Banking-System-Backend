@@ -172,10 +172,9 @@ services:
   mysql:
     image: mysql:latest
     environment:
-      - MYSQL_ROOT_PASSWORD=myPass 
-      - MYSQL_DATABASE=agence_bank   
-      - MYSQL_USER=nk-user
-      - MYSQL_PASSWORD=myPass
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_DATABASE=agence_bank
     ports:
       - "3307:3306"
     networks:
