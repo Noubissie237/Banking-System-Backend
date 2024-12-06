@@ -11,9 +11,11 @@ import org.springframework.stereotype.Service;
 import com.banking_system.service_admin.events.AgentEventProducer;
 import com.banking_system.service_admin.events.ClientEventProducer;
 import com.banking_system.service_admin.events.RechargeEventProducer;
+import com.banking_system.service_admin.models.Agence;
 import com.banking_system.service_admin.models.Demande;
 import com.banking_system.service_admin.models.StatutDemande;
 import com.banking_system.service_admin.repositories.AdminRepository;
+import com.banking_system.service_admin.repositories.AgenceRepository;
 import com.banking_system.service_admin.utils.Util;
 
 @Service
@@ -24,6 +26,9 @@ public class AdminService {
 
     @Autowired
     AgenceService agenceService;
+
+    @Autowired
+    AgenceRepository agenceRepository;
 
     @Autowired
     Util util;
@@ -99,14 +104,26 @@ public class AdminService {
     }
 
     public void chargeAccount(int idAgence, String number, double montant) {
-        RechargeEventProducer event = new RechargeEventProducer();
-        event.setAgence(idAgence);
-        event.setNumero(number);
-        event.setMontant(montant);
+        Optional<Agence> agence = agenceRepository.findById(idAgence);
 
-        rabbitTemplate.convertAndSend("transactionExchange", "recharge.send", event);
-        rabbitTemplate.convertAndSend("transactionExchange", "recharge.sen", event);
-        agenceService.decrementCapital(idAgence, montant);
+        if (agence == null) {
+            throw new RuntimeException("Agence introuvable !");
+        } else {
+
+            if (agence.get().getCapital() < montant) {
+                throw new RuntimeException("Solde insuffisant !");
+            } else {
+                RechargeEventProducer event = new RechargeEventProducer();
+                event.setAgence(idAgence);
+                event.setNumero(number);
+                event.setMontant(montant);
+        
+                rabbitTemplate.convertAndSend("transactionExchange", "recharge.send", event);
+                rabbitTemplate.convertAndSend("transactionExchange", "recharge.sen", event);
+                agenceService.decrementCapital(idAgence, montant);
+            }
+
+        }
     }
 
 }
