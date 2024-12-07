@@ -152,9 +152,10 @@ public class AccountService {
         Account source = findAccountByNumber(depot.getNumero_source());
 
         incrementSolde(cible, depot.getMontant());
-        decrementSolde(source, depot.getMontant());
+        decrementSolde(source, (depot.getMontant() + depot.getFrais()));
 
         rabbitTemplate.convertAndSend("transactionExchange", "depot.done", depot);
-        rabbitTemplate.convertAndSend("transactionExchange", "depot.done.message", depot);
+        rabbitTemplate.convertAndSend("transactionExchange", "transfert.done.agence", depot);        
+        rabbitTemplate.convertAndSend("transactionExchange", "depot.done.message", depot);        
     }
 }

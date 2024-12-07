@@ -12,6 +12,11 @@ import com.banking_system.service_depot.events.Account;
 @Component
 public class Utils {
 
+    public static final double FRAIS_TRANSFERT_ORANGE_MONEY_TO_ORANGE_MONEY = 0.0;
+    public static final double FRAIS_TRANSFERT_ORANGE_MONEY_TO_MOBILE_MONEY = 1.9;
+    public static final double FRAIS_TRANSFERT_MOBILE_MONEY_TO_MOBILE_MONEY = 0.0;
+    public static final double FRAIS_TRANSFERT_MOBILE_MONEY_TO_ORANGE_MONEY = 1.5;
+
     private final RestTemplate restTemplate = new RestTemplate();
 
     public Account getAccount(String number) throws IOException {
@@ -28,6 +33,25 @@ public class Utils {
         } catch (RestClientException e) {
             throw new IOException("Erreur de connexion au service distant", e);
         }
+    }
+
+    public double getFrais(int sourceAgenceId, int cibleAgenceId) {
+        if (sourceAgenceId == 1 && cibleAgenceId == 1) {
+            return FRAIS_TRANSFERT_MOBILE_MONEY_TO_MOBILE_MONEY;
+        } else if (sourceAgenceId == 1 && cibleAgenceId == 2) {
+            return FRAIS_TRANSFERT_MOBILE_MONEY_TO_ORANGE_MONEY;
+        } else if (sourceAgenceId == 2 && cibleAgenceId == 2) {
+            return FRAIS_TRANSFERT_ORANGE_MONEY_TO_ORANGE_MONEY;
+        } else if (sourceAgenceId == 2 && cibleAgenceId == 1) {
+            return FRAIS_TRANSFERT_ORANGE_MONEY_TO_MOBILE_MONEY;
+        } else {
+            throw new IllegalArgumentException("Les identifiants d'agence sont invalides.");
+        }
+    }
+
+    public double getToDebit(double montant, int sourceAgenceId, int cibleAgenceId) {
+        double frais = getFrais(sourceAgenceId, cibleAgenceId);
+        return (montant * frais) / 100;
     }
 
     public static boolean isANumber(String number) {
