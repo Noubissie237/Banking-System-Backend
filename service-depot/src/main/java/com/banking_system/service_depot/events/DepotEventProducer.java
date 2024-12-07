@@ -22,4 +22,6 @@ public class DepotEventProducer {
     private double montant;
     @JsonProperty("agence")
     private int agence;
+    @JsonProperty("frais")
+    private double frais;
 }

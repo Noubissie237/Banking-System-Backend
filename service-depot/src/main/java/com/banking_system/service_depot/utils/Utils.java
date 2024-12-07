@@ -12,6 +12,11 @@ import com.banking_system.service_depot.events.Account;
 @Component
 public class Utils {
 
+    public static final double FRAIS_TRANSFERT_ORANGE_MONEY_TO_ORANGE_MONEY = 0.0;
+    public static final double FRAIS_TRANSFERT_ORANGE_MONEY_TO_MOBILE_MONEY = 1.9;
+    public static final double FRAIS_TRANSFERT_MOBILE_MONEY_TO_MOBILE_MONEY = 0.0;
+    public static final double FRAIS_TRANSFERT_MOBILE_MONEY_TO_ORANGE_MONEY = 1.5;
+
     private final RestTemplate restTemplate = new RestTemplate();
 
     public Account getAccount(String number) throws IOException {
@@ -30,8 +35,28 @@ public class Utils {
         }
     }
 
+    public double getFrais(int sourceAgenceId, int cibleAgenceId) {
+        if (sourceAgenceId == 1 && cibleAgenceId == 1) {
+            return FRAIS_TRANSFERT_MOBILE_MONEY_TO_MOBILE_MONEY;
+        } else if (sourceAgenceId == 1 && cibleAgenceId == 2) {
+            return FRAIS_TRANSFERT_MOBILE_MONEY_TO_ORANGE_MONEY;
+        } else if (sourceAgenceId == 2 && cibleAgenceId == 2) {
+            return FRAIS_TRANSFERT_ORANGE_MONEY_TO_ORANGE_MONEY;
+        } else if (sourceAgenceId == 2 && cibleAgenceId == 1) {
+            return FRAIS_TRANSFERT_ORANGE_MONEY_TO_MOBILE_MONEY;
+        } else {
+            throw new IllegalArgumentException("Les identifiants d'agence sont invalides.");
+        }
+    }
+
+    public double getToDebit(double montant, int sourceAgenceId, int cibleAgenceId) {
+        double frais = getFrais(sourceAgenceId, cibleAgenceId);
+        return (montant * frais) / 100;
+    }
+
     public static boolean isANumber(String number) {
-        if (number == null || number.isEmpty()) return false;
+        if (number == null || number.isEmpty())
+            return false;
         try {
             Integer.parseInt(number);
             return true;
@@ -48,12 +73,12 @@ public class Utils {
         return value >= start && value <= end;
     }
 
-    public boolean isAnOrangeNumber(String number) {        
+    public boolean isAnOrangeNumber(String number) {
         int debut = Integer.parseInt(number.substring(1, 3));
         return isInRange(debut, 55, 59) || isInRange(debut, 85, 99);
     }
 
-    public boolean isAnMtnNumber(String number) {        
+    public boolean isAnMtnNumber(String number) {
         int debut = Integer.parseInt(number.substring(1, 3));
         return isInRange(debut, 50, 54) || isInRange(debut, 70, 84);
     }
@@ -61,7 +86,7 @@ public class Utils {
     public boolean isAValidNumber(String number) {
         if (!isANumber(number))
             throw new IllegalArgumentException("Le numéro de téléphone doit être constitué uniquement de chiffres");
-        
+
         if (!isBeginBy6(number))
             throw new IllegalArgumentException("Le numéro de téléphone doit commencer par 6");
 

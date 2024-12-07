@@ -31,18 +31,21 @@ public class DepotService {
             throw new IllegalArgumentException("Le compte source avec le numéro " + event.getNumero_source() + " n'existe pas.");
         }
 
+        Account cibleAccount;
         try {
-            utils.getAccount(event.getNumero_cible());
+           cibleAccount = utils.getAccount(event.getNumero_cible());
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Le compte cible avec le numéro " + event.getNumero_cible() + " n'existe pas.");
         }
 
-        if (sourceAccount.getSolde() >= (event.getMontant())) {
+        double frais = utils.getToDebit(event.getMontant(), sourceAccount.getAgenceId(), cibleAccount.getAgenceId());
+        if (sourceAccount.getSolde() >= (event.getMontant() + frais)) {
             DepotEventProducer transEvent = new DepotEventProducer();
             transEvent.setAgence(event.getAgence());
             transEvent.setNumero_source(event.getNumero_source());
             transEvent.setNumero_cible(event.getNumero_cible());
             transEvent.setMontant(event.getMontant());
+            transEvent.setFrais(frais);
             
             rabbitTemplate.convertAndSend("transactionExchange", "depot.send", transEvent);
 
