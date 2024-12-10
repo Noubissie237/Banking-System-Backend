@@ -17,7 +17,7 @@ public class CorsConfig {
         config.setAllowedOriginPatterns(Arrays.asList(
             "https://admin.quick-send.site", 
             "http://185.218.126.7:2371",
-            "https://config.quick-send.site"
+            "http://localhost:2370"
         ));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
