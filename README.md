@@ -126,3 +126,12 @@ Voici le scénario
 1. Effectue un push sur github depuis son editeur vscode
 2. Une fois le push sur github, github-workflows  build les images docker de la nouvelle version push ces images sur docker hub
 3. Jenkins quand à lui écoute également le projet github et lorsqu'il voit ce nouveau commit, il demarre kubernetes
+
+
+
+
+
+Création des admins
+```sh
+INSERT INTO `agence` (`id`, `capital`, `login`, `nom`, `password`) VALUES (NULL, '50000000', 'mtn', 'MTN Mobile Money', 'myPass'), (NULL, '50000000', 'orange', 'Orange Money OM', 'myPass')
+```
